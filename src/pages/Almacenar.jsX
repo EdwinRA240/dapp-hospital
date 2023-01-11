@@ -1,22 +1,20 @@
 import React, {Component} from 'react';
-import Layout from '../components/Layout'
 import Web3 from 'web3'
-import Almacenar from '../../build/contracts/Almacenar.json'
+import {Buffer} from "buffer";
+window.Buffer = Buffer; 
+import { create } from 'ipfs-http-client'
+import Layout from "../components/Layout";
 
 
 const projectid='2HE6500liSrLAhibQqMO1xM0bkq'
 const projectsecret='1ec2056ba2d6fd362d71a52f4e5c6ed0'
 const auth=
 'Basic ' + Buffer.from(projectid + ':' + projectsecret).toString('base64');
-const ipfsClient = require('ipfs-http-client')
-const ipfs = ipfsClient({
-    host: 'ipfs.infura.io',
-    port: 5001,
-    protocol: 'https',
+const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https',
     headers: {
         authorization: auth,
-    },
-});
+    }, })
+
 
 class App extends Component {
 
@@ -55,7 +53,7 @@ class App extends Component {
     this.state = {
         cuenta:'',
         contract:null,
-    	buffer: null,
+        buffer: null,
         hHash:''
     };
     }
@@ -71,31 +69,31 @@ class App extends Component {
         }
     }
 
-	captureFile = (event) => {
-	event.preventDefault()
-	//proceso de carga de archivo a ipfs
-	const file = event.target.files[0]
-	const reader = new window.FileReader()
-	reader.readAsArrayBuffer(file)
-	reader.onloadend = () => {
-		this.setState({buffer: Buffer(reader.result)})
-	}
+    captureFile = (event) => {
+    event.preventDefault()
+    //proceso de carga de archivo a ipfs
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+        this.setState({buffer: Buffer(reader.result)})
+    }
    }
     onSubmit = async (event) => {
-    	event.preventDefault()
-    	console.log("Mandando archivo ...");
-    	ipfs.add(this.state.buffer, (error, result) => {
-    		console.log("Ipfs result",result);
-    		const hHash = result[0].hash
-    		this.setState({hHash: hHash})
-    		if(error){
-    			console.error("error")
-    			return
-    		}
+        event.preventDefault()
+        console.log("Mandando archivo ...");
+        ipfs.add(this.state.buffer, (error, result) => {
+            console.log("Ipfs result",result);
+            const hHash = result[0].hash
+            this.setState({hHash: hHash})
+            if(error){
+                console.error("error")
+                return
+            }
             this.state.contract.methods.set(hHash).send({from:this.state.cuenta}).then((r)=>{
                 this.setState({hHash})
             })
-    	} )
+        } )
     }
 
 
@@ -120,9 +118,9 @@ class App extends Component {
           size="20"/>
 
         <br/><br/><br/>
-               <h2 className={styles.form}>Cargar Historial clinico</h2>
+               <h2>Cargar Historial clinico</h2>
                &nbsp;
-               <form onSubmit={this.onSubmit} className={styles.form} >
+               <form onSubmit={this.onSubmit}  >
                <input type='file' onChange = {this.captureFile}/>
                <input type='Submit' onSubmit/>
         </form>
