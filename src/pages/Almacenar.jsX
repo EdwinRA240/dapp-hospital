@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Layout from '../components/Layout'
-// import Web3 from 'web3'
+import Web3 from 'web3'
 import Almacenar from '../../build/contracts/Almacenar.json'
 
 
