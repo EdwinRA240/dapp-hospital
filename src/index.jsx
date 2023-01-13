@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import RegistroMed from "./pages/RegistroMed";
 import NavBar from "./components/NavBar";
 import Almacenar from "./pages/Almacenar";
+// import SignIn from "./pages/SignIn";
+import SignInCopy from "./pages/SignInCopy";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -16,6 +18,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Login />} />
+        {/* <Route path="signin" element={<SignIn />} /> */}
+        <Route path="signin" element={<SignInCopy />} />
         <Route path="/main" element={<Main />} />
         <Route path="/consulta" element={<Consulta />} />
         <Route path="/almacenar" element={<Almacenar />} />
