@@ -2,7 +2,6 @@
   "name": "dapp-hospital",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -23,6 +22,7 @@
     "chai-as-promised": "^7.1.1",
     "ipfs-http-client": "^59.0.0",
     "mocha": "^10.1.0",
+    "node": "16.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",

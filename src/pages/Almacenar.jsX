@@ -4,6 +4,7 @@ import {Buffer} from "buffer";
 window.Buffer = Buffer; 
 import { create } from 'ipfs-http-client'
 import Layout from "../components/Layout";
+import Almacenar from '/build/contracts/Almacenar.json'
 
 
 const projectid='2HE6500liSrLAhibQqMO1xM0bkq'
