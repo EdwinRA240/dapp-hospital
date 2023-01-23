@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import { useState } from "react";
 
 
-const Main = () => {
+const MainPat = () => {
 
   const [cuenta, setCuenta] = useState(null);
   if (window.ethereum && window.ethereum.isMetaMask) {
@@ -42,4 +42,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainPat;

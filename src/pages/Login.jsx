@@ -14,7 +14,7 @@ const Login = () => {
         .then((result) => {
           setCuenta(result[0]);
           setButtonText(null);
-          location.href = "/Main";
+          location.href = "/Signin";
         })
         .catch((error) => {
           setButtonText(error.message);
@@ -25,19 +25,22 @@ const Login = () => {
   };
 
   return (
-    <Container
-      sx={{
-        mt: 10,
-        mr: 2,
-        display: { md: "flex" },
-        fontFamily: "monospace",
-        fontWeight: 700,
-        letterSpacing: ".3rem",
-        color: "inherit",
-        textDecoration: "none",
-      }}
-    >
-      <Typography>
+     <Container maxWidth="sm">
+      <Typography
+        variant="h6"
+        component="a"
+        href="/main"
+        sx={{
+          mt: 20,
+          mr: 2,
+          display: { md: "flex" },
+          fontFamily: "monospace",
+          fontWeight: 700,
+          letterSpacing: ".3rem",
+          color: "inherit",
+          textDecoration: "none",
+        }}
+      >
         <hr1> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Bienvenido</hr1>
         &nbsp;
         <br />
@@ -48,6 +51,7 @@ const Login = () => {
             {cuenta}
           </button>
         </div>
+
       </Typography>
     </Container>
   );

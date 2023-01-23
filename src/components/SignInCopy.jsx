@@ -43,7 +43,7 @@ export default function BasicGrid() {
     const data = new FormData(event.currentTarget);
 
     setData({
-      user: data.get("user"),
+      PublicAddress: data.get("Public Address Patient "),
       password: data.get("password"),
     });
 
@@ -51,163 +51,159 @@ export default function BasicGrid() {
   };
 
   return (
-    <Container>
-      <Box sx={{ flexGrow: 1, mt: 10 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Item>
-              {" "}
-              <ThemeProvider theme={theme}>
-                <Container component="main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
-                  <CssBaseline />
-                  <Box
-                    sx={{
-                      marginTop: 5,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
+    <Container fixed sx={{ flexGrow: 1, mt: 15, display: "flex", whiteSpace: "normal" }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Item>
+            {" "}
+            <Container component="main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
+              <CssBaseline />
+              <Box
+                sx={{
+                  marginTop: 5,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Patient Login
+                </Typography>
+                <Box
+                  component="form"
+                  onBlur={handleSubmit}
+                  // onSubmit={handleSetData}
+                  noValidate
+                  href="/Empleado"
+                  sx={{ mt: 1 }}
+                >
+                  <TextField
+                    required
+                    margin="normal"
+                    fullWidth
+                    name="useer"
+                    label="Public Address Patient "
+                    autoComplete="Public Address Patient "
+                    autoFocus
+                  />
+                  <TextField
+                    required
+                    margin="normal"
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    autoComplete="current-password"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Remember me"
+                  />
+                  <Button
+                    type="submit"
+                    href="/Sigin"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
                   >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                      <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                      Sign in
-                    </Typography>
-                    <Box
-                      component="form"
-                      onBlur={handleSubmit}
-                      // onSubmit={handleSetData}
-                      noValidate
-                      href="/Empleado"
-                      sx={{ mt: 1 }}
-                    >
-                      <TextField
-                        margin="normal"
-                        fullWidth
-                        name="useer"
-                        label="User"
-                        autoComplete="user"
-                        autoFocus
-                      />
-                      <TextField
-                        margin="normal"
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                      />
-                      <Button
-                        type="submit"
-                        href="/Empleado"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                      >
-                        Sign In
-                      </Button>
-                      <Grid container>
-                        <Grid item xs>
-                          <Link href="#" variant="body2">
-                            Forgot password?
-                          </Link>
-                        </Grid>
-                        <Grid item>
-                          <Link href="#" variant="body2">
-                            {"Don't have an account? Sign Up"}
-                          </Link>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Box>
-                  <Copyright sx={{ mt: 5, mb: 4 }} />
-                </Container>
-              </ThemeProvider>
-            </Item>
-          </Grid>
-          <Grid item xs={6}>
-            <Item>
-              {" "}
-              <ThemeProvider theme={theme}>
-                <Container component="main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
-                  <CssBaseline />
-                  <Box
-                    sx={{
-                      marginTop: 5,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                      <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                      Sign in
-                    </Typography>
-                    <Box
-                      component="form"
-                      onBlur={handleSubmit}
-                      // onSubmit={handleSetData}
-                      noValidate
-                      href="/Empleado"
-                      sx={{ mt: 1 }}
-                    >
-                      <TextField
-                        margin="normal"
-                        fullWidth
-                        name="useer"
-                        label="User"
-                        autoComplete="user"
-                        autoFocus
-                      />
-                      <TextField
-                        margin="normal"
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                      />
-                      <Button
-                        type="submit"
-                        href="/Empleado"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                      >
-                        Sign In
-                      </Button>
-                      <Grid container>
-                        <Grid item xs>
-                          <Link href="#" variant="body2">
-                            Forgot password?
-                          </Link>
-                        </Grid>
-                        <Grid item>
-                          <Link href="#" variant="body2">
-                            {"Don't have an account? Sign Up"}
-                          </Link>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Box>
-                  <Copyright sx={{ mt: 5, mb: 4 }} />
-                </Container>
-              </ThemeProvider>
-            </Item>
-          </Grid>
+                    Sign In
+                  </Button>
+                  <Grid container>
+                    <Grid item xs>
+                      <Link href="#" variant="body2">
+                        Forgot password?
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <Link href="/RegistroPat" variant="body2">
+                        {"Don't have an account? Sign Up"}
+                      </Link>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+            </Container>
+          </Item>
         </Grid>
-      </Box>
+        <Grid item xs={12} sm={6}>
+          <Item>
+            {" "}
+            <Container component="main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
+              <CssBaseline />
+              <Box
+                sx={{
+                  marginTop: 5,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Doctor Login
+                </Typography>
+                <Box
+                  component="form"
+                  onBlur={handleSubmit}
+                  // onSubmit={handleSetData}
+                  noValidate
+                  href="/Empleado"
+                  sx={{ mt: 1 }}
+                >
+                  <TextField
+                    required
+                    margin="normal"
+                    fullWidth
+                    name="useer"
+                    label="Public Address Doctor"
+                    autoComplete="Public Address Doctor"
+                    autoFocus
+                  />
+                  <TextField
+                    required
+                    margin="normal"
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    autoComplete="current-password"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Remember me"
+                  />
+                  <Button
+                    type="submit"
+                    href="/Sigin"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Sign In
+                  </Button>
+                  <Grid container>
+                    <Grid item xs>
+                      <Link href="#" variant="body2">
+                        Forgot password?
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <Link href="/RegistroMed" variant="body2">
+                        {"Don't have an account? Sign Up"}
+                      </Link>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+            </Container>
+          </Item>
+        </Grid>
+      </Grid>
     </Container>
   );
 }

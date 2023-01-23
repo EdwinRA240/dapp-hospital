@@ -9,7 +9,7 @@ import {
 import React from "react";
 import NavBar from "../components/NavBar";
 
-const RegistroMed = () => {
+const RegistroPat = () => {
   return (
     <>
       <NavBar />
@@ -19,7 +19,7 @@ const RegistroMed = () => {
           mt: 15,
         }}
       >
-        <Typography>Registro de Personal de la Salud</Typography>
+        <Typography>Registro de Pacientes</Typography>
 
         <FormGroup>
           <TextField
@@ -53,20 +53,6 @@ const RegistroMed = () => {
           <TextField
             fullWidth
             sx={{ mt: 2 }}
-            label="Id de empleado"
-            id=""
-            // onChange={(event) => setMunicipio(event.target.value)}
-          />
-          <TextField
-            fullWidth
-            sx={{ mt: 2 }}
-            label="Especialidad"
-            id=""
-            // onChange={(event) => setMunicipio(event.target.value)}
-          />
-          <TextField
-            fullWidth
-            sx={{ mt: 2 }}
             label="Public Adress"
             id=""
             // onChange={(event) => setMunicipio(event.target.value)}
@@ -90,4 +76,4 @@ const RegistroMed = () => {
   );
 };
 
-export default RegistroMed;
+export default RegistroPat;
