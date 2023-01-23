@@ -14,7 +14,6 @@ import MenuItem from "@mui/material/MenuItem";
 import StorageIcon from "@mui/icons-material/Storage";
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
-const pages = ["Registro", "Almacenar","Consulta"];
 const settings = ["Account", "Sign out"];
 
 function NavBar() {

@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import MainPat from "./pages/MainPat";
 import NotFound from "./pages/NotFound";
-import Consulta from "./pages/Consulta";
-import ConsultaPat from "./pages/ConsultaPat";
+import Consultar from "./pages/Consultar";
+import ConsultarPat from "./pages/ConsultarPat";
 import Login from "./pages/Login";
 import RegistroMed from "./pages/RegistroMed";
 import RegistroPat from "./pages/RegistroPat";
@@ -42,11 +42,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="signin" element={<><SignInCopy/><NavBar2/> </>}/>
           <Route path="/main" element={<><Main/> <NavBar/></>} />
           <Route path="/mainPat" element={<><MainPat/> <NavBarPat/></>} />
-          <Route path="/consulta" element={<><Consulta/> <NavBar/></>} />
-          <Route path="/consultaPat" element={<><ConsultaPat/> <NavBarPat/></>} />
-          <Route path="/almacenar" element={<><Almacenar/> <NavBar/></>} />
-          <Route path="/RegistroMed" element={<><RegistroMed/> <NavBar2/></>} />
-          <Route path="/RegistroPat" element={<><RegistroPat/> <NavBar2/></>} />
+          <Route path="/Consultar" element={<><Consultar/> <NavBar/></>} />
+          <Route path="/ConsultarPat" element={<><ConsultarPat/> <NavBarPat/></>} />
+          <Route path="/Almacenar" element={<><Almacenar/> <NavBar/></>} />
+          <Route path="/registroMed" element={<><RegistroMed/> <NavBar2/></>} />
+          <Route path="/registroPat" element={<><RegistroPat/> <NavBar2/></>} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>

@@ -1,7 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import React from "react";
 
-const ConsultaPat = () => {
+const Consultar = () => {
   return (
     <Container maxWidth="sm">
       <Typography
@@ -25,4 +25,4 @@ const ConsultaPat = () => {
   );
 };
 
-export default ConsultaPat;
+export default Consultar;

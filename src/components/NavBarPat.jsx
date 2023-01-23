@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import StorageIcon from "@mui/icons-material/Storage";
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
-const pages = ["Consulta"];
+const pages = ["Consultar ECE"];
 const settings = ["Account", "Sign out"];
 
 function NavBar() {
@@ -93,7 +93,7 @@ function NavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} href={`/${page+"Pat"}`}>
+                <MenuItem key={page} onClick={handleCloseNavMenu} href={`/${page.split(" ",1) +"Pat"}`}>
                   <Typography textAlign="center" variant="h6">
                     {page}
                   </Typography>
@@ -128,7 +128,7 @@ function NavBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
-                href={`/${page+"Pat"}`}
+                href={`/${page.split(" ",1) +"Pat"}`}
               >
                 {page}
               </Button>

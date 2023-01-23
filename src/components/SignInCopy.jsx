@@ -70,7 +70,7 @@ export default function BasicGrid() {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Patient Login
+                  Inicio de sesion de Pacientes
                 </Typography>
                 <Box
                   component="form"
@@ -100,7 +100,7 @@ export default function BasicGrid() {
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
+                    label="Recuerdame"
                   />
                   <Button
                     type="submit"
@@ -109,17 +109,17 @@ export default function BasicGrid() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Sign In
+                    Iniciar Sesion
                   </Button>
                   <Grid container>
                     <Grid item xs>
                       <Link href="#" variant="body2">
-                        Forgot password?
+                        ¿Olvidaste tu contraseña?
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link href="/RegistroPat" variant="body2">
-                        {"Don't have an account? Sign Up"}
+                      <Link href="/registroPat" variant="body2">
+                        {"¿No tienes cuenta? Inscribete aqui"}
                       </Link>
                     </Grid>
                   </Grid>
@@ -145,7 +145,7 @@ export default function BasicGrid() {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Doctor Login
+                  Inicio de sesion de Personal Medico
                 </Typography>
                 <Box
                   component="form"
@@ -175,7 +175,7 @@ export default function BasicGrid() {
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
+                    label="Recuerdame"
                   />
                   <Button
                     type="submit"
@@ -184,17 +184,17 @@ export default function BasicGrid() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Sign In
+                    Iniciar Sesion
                   </Button>
                   <Grid container>
                     <Grid item xs>
                       <Link href="#" variant="body2">
-                        Forgot password?
+                        ¿Olvidaste tu contraseña?
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link href="/RegistroMed" variant="body2">
-                        {"Don't have an account? Sign Up"}
+                      <Link href="/registroMed" variant="body2">
+                        {"¿No tienes cuenta? Inscribete aqui"}
                       </Link>
                     </Grid>
                   </Grid>
