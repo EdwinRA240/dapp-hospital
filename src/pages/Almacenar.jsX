@@ -105,9 +105,10 @@ class App extends Component {
           variant="h6"
           component="a"
           href="/main"
+          textAlign="center"
           sx={{
             mt: 20,
-            mb: 5,
+            mb: 3,
             display: { md: "flex" },
             fontFamily: "monospace",
             fontWeight: 700,
@@ -119,12 +120,11 @@ class App extends Component {
           Almacenar expediente clinico
         </Typography>
 
-
-
-        {/* <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit}>
           <input type="file" onChange={this.captureFile} />
           <input type="Submit" />
-        </form> */}
+        </form>
+
         <Typography
           component="p"
           href="/main"
@@ -133,10 +133,6 @@ class App extends Component {
             mr: 2,
             display: { md: "flex" },
             fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
           }}
         >
           hash expediente: {this.state.hHash}
@@ -148,10 +144,6 @@ class App extends Component {
             mt: 2,
             mr: 2,
             fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
           }}
         >
           hash usuario: {this.state.cuenta}
