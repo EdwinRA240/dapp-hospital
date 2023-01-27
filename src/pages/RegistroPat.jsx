@@ -12,14 +12,14 @@ import NavBar from "../components/NavBar";
 const RegistroPat = () => {
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Container
         maxWidth="sm"
         sx={{
-          mt: 15,
+          mt: 10,
         }}
       >
-        <Typography>Registro de Pacientes</Typography>
+        <Typography>Registro de Paciente</Typography>
 
         <FormGroup>
           <TextField

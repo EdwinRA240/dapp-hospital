@@ -11,7 +11,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import StorageIcon from "@mui/icons-material/Storage";
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 const pages = ["Almacenar ECE","Consultar ECE"];
@@ -103,7 +102,7 @@ function NavBar() {
           </Box>
 
           {/* Nav and Menu Escritorio */}
-          <StorageIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <LocalHospitalIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -161,7 +160,7 @@ function NavBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Button href="/" textAlign="center">
+                  <Button href="/Signin" textAlign="center">
                     {setting}
                   </Button>
                 </MenuItem>

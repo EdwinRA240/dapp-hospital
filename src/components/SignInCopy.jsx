@@ -23,18 +23,6 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const theme = createTheme();
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {"DB_Sneaker "}
-      <Link color="inherit" href="https://mui.com/"></Link> {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 export default function BasicGrid() {
   const [Data, setData] = React.useState({});
 
@@ -104,7 +92,7 @@ export default function BasicGrid() {
                   />
                   <Button
                     type="submit"
-                    href="/Sigin"
+                    href="/MainPat"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
@@ -145,14 +133,14 @@ export default function BasicGrid() {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Inicio de sesion de Personal Medico
+                  Inicio de sesion de Medico
                 </Typography>
                 <Box
                   component="form"
                   onBlur={handleSubmit}
                   // onSubmit={handleSetData}
                   noValidate
-                  href="/Empleado"
+                  href="/main"
                   sx={{ mt: 1 }}
                 >
                   <TextField
@@ -179,7 +167,7 @@ export default function BasicGrid() {
                   />
                   <Button
                     type="submit"
-                    href="/Sigin"
+                    href="/Main"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}

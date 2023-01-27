@@ -12,11 +12,11 @@ import NavBar from "../components/NavBar";
 const RegistroMed = () => {
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <Container
         maxWidth="sm"
         sx={{
-          mt: 15,
+          mt: 10,
         }}
       >
         <Typography>Registro de Personal de la Salud</Typography>
