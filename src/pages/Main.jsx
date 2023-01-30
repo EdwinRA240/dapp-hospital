@@ -1,22 +1,72 @@
 import { Container, Typography } from "@mui/material";
-import React from "react";
+import React, {Component} from 'react';
 import NavBar from "../components/NavBar";
 import { useState } from "react";
+import Contrato from '/build/contracts/Contrato.json'
+import Web3 from 'web3'
+
+class App extends Component {
+
+    async componentWillMount(){
+        await this.loadWeb3()
+        await this.loadBloackchainData()
+    }
+
+    async loadWeb3(){
+        if(window.ethereum){
+            window.web3 = new Web3(window.ethereum)
+            await window.ethereum.request({method: 'eth_requestAccounts'})
+        }if(window.web3){
+            window.web3 = new Web3(window.web3.currentProvider)
+        }else{
+            window.alert('Inicia sesion en Metamask')
+        }
+    }
+
+    async loadBloackchainData(){
+        const web3=window.web3
+        const cuenta=await web3.eth.getAccounts()
+        this.setState({cuenta: cuenta[0]})
+        console.log(cuenta)
+        const coneccion_id=await web3.eth.net.getId()
+        console.log(coneccion_id)
+        const coneccion_data=Contrato.networks[coneccion_id]
+        const abi = Contrato.abi
+        const direccion = coneccion_data.address
+        const contract = new web3.eth.Contract(abi,direccion)
+        this.setState({contract})
+        console.log(contract)
+        const solo=await contract.methods.getMedInfo(cuenta[0]).call()
+        console.log(solo[0])
+        this.setState({solo})
+        console.log(solo)
+
+    }  
+
+    constructor(props) {
+    super(props);
+    this.state = {
+
+        nombre:'',
+        apellidos:'',
+        telefono:'',
+        correo:'',
+        address:'',
+        pass:'',
+        id:'',
+        cuenta:'',
+        solo:'',
+        contract:null
+        
+    };
+    }
 
 
-const Main = () => {
+   
 
-  const [cuenta, setCuenta] = useState(null);
-  if (window.ethereum && window.ethereum.isMetaMask) {
-      window.ethereum
-        .request({ method: "eth_requestAccounts" })
-        .then((result) => {
-        setCuenta(result[0]);;
-        })
-      }
-
-  return (
-    <>
+  render() {
+    return ( 
+<>
       <Container maxWidth="sm">
         <Typography
           variant="h6"
@@ -35,11 +85,16 @@ const Main = () => {
         >
           Bienvenido !!!
           <br/>
-          {cuenta}
+          {this.state.solo[0]} {" "} {this.state.solo[1]}
+          <br/>
+          Address: {this.state.cuenta}
+          <br/>
+          Id de empleado: {this.state.solo[6]}
         </Typography>
       </Container>
     </>
-  );
-};
+    );
+  }
+}
 
-export default Main;
+export default App;

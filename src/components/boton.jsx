@@ -3,25 +3,32 @@ import {useState} from 'react'
 
 export default function boton() {
 
-	const [buttonText, setButtonText] = useState('Conexion a Metamask')
-	const [cuenta, setCuenta] = useState(null)
-	const conectar = () => {
-		if(window.ethereum && window.ethereum.isMetaMask){
-			window.ethereum.request({method: 'eth_requestAccounts'}).then(result  => {
-			setAccount(result[0])
-			setButtonText (null)
-		})
-			.catch(error  =>{
-				setButtonText (error.message)
-			})
-	    } else{
-		setButtonText ('Necesitas tener Metamask instalado')
-	}
-}
+	async componentWillMount(){
+        await this.loadWeb3()
+    }
+
+    async loadWeb3(){
+        if(window.ethereum){
+            window.web3 = new Web3(window.ethereum)
+            await window.ethereum.request({method: 'eth_requestAccounts'})
+        }if(window.web3){
+            window.web3 = new Web3(window.web3.currentProvider)
+        }else{
+            window.alert('Inicia sesion en Metamask')
+        }
+    }
+
+ // Recolectar la información del formulario
+    const nombre = document.getElementById("Nombre").value;
+    const apellidos = document.getElementById("Apellidos").value;
+    const telfono = document.getElementById("Telefono").value;
+    const correo = document.getElementById("Correo").value;
+    const Adress = document.getElementById("Adress").value;
+    const Pass = document.getElementById("Pass").value;
 
 	return (
 
-		<button onClick={conectar}>{buttonText}{cuenta}</button>
+		
 
 	)
 }

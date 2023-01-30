@@ -1,8 +1,15 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { useState } from "react";
-import { Typography } from "@mui/material";
-import { Container } from "@mui/system";
+import {
+  Button,
+  Container,
+  FormGroup,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+
 
 const Login = () => {
   const [buttonText, setButtonText] = useState("Conexion a Metamask");
@@ -27,6 +34,7 @@ const Login = () => {
   return (
      <Container maxWidth="sm">
       <Typography
+      textAlign= 'center'
         variant="h6"
         component="a"
         //href="/Signin"
@@ -41,18 +49,18 @@ const Login = () => {
           textDecoration: "none",
         }}
       >
-        <hr1> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Bienvenido</hr1>
+        ¡¡¡Bienvenido!!!
         &nbsp;
         <br />
-        <hr2>Inicia sesion en Meteamask</hr2>
+        Inicia sesion en Meteamask
         <div>
-          <button onClick={conectar}>
+          <Button variant="contained" onClick={conectar}>
             {buttonText}
             {cuenta}
-          </button>
+          </Button>
         </div>
-
-      </Typography>
+          </Typography>
+      
     </Container>
   );
 };

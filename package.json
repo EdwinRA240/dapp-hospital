@@ -17,6 +17,7 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.3",
     "@mui/styled-engine-sc": "^5.11.0",
+    "@web3-react/core": "^8.0.35-beta.0",
     "buffer": "^6.0.3",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
@@ -27,6 +28,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",
     "styled-components": "^5.3.6",
+    "sweetalert": "^2.1.2",
     "truffle": "^5.0.5",
     "web3": "^1.8.1"
   },
@@ -35,6 +37,7 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
     "chai-bignumber": "^3.1.0",
+    "solc": "^0.8.17",
     "vite": "^4.0.0"
   }
 }

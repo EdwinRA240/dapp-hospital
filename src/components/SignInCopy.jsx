@@ -1,4 +1,5 @@
 import * as React from "react";
+import {Component} from 'react';
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -14,6 +15,8 @@ import Link from "@mui/material/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Web3 from 'web3'
+import Contrato from '/build/contracts/Contrato.json'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -35,22 +38,102 @@ function Copyright(props) {
   );
 }
 
-export default function BasicGrid() {
-  const [Data, setData] = React.useState({});
+class App extends Component {
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    async componentWillMount(){
+        await this.loadWeb3()
+        await this.loadBloackchainData()
+    }
 
-    setData({
-      PublicAddress: data.get("Public Address Patient "),
-      password: data.get("password"),
-    });
+    async loadWeb3(){
+        if(window.ethereum){
+            window.web3 = new Web3(window.ethereum)
+            await window.ethereum.request({method: 'eth_requestAccounts'})
+        }if(window.web3){
+            window.web3 = new Web3(window.web3.currentProvider)
+        }else{
+            window.alert('Inicia sesion en Metamask')
+        }
+    }
 
-    console.log(Data);
-  };
+    async loadBloackchainData(){
+        const web3=window.web3
+        const cuenta=await web3.eth.getAccounts()
+        this.setState({cuenta: cuenta[0]})
+        console.log(cuenta)
+        const coneccion_id=await web3.eth.net.getId()
+        console.log(coneccion_id)
+        const coneccion_data=Contrato.networks[coneccion_id]
+        if(coneccion_data){
+            const abi = Contrato.abi
+            const direccion = coneccion_data.address
+            const contract = new web3.eth.Contract(abi,direccion)
+            this.setState({contract})
+            console.log(contract)
+            const sol=await contract.methods.getMedInfo(cuenta[0]).call()
+            await contract.methods.getPatientInfo(cuenta[0]).call(console.log)
+            console.log(sol)
+        }else{
+            window.alert('Contrato Inteligente no desplegado en esta red')
+        }
+    }
 
-  return (
+    handleSubmitM = async (event) =>  {
+      this.setState({address: document.getElementById("addressM").value})
+      this.setState({pass: document.getElementById("passM").value})
+      const data2 = await this.state.contract.methods.medExists(this.state.cuenta).call()
+      const data = await this.state.contract.methods.loginMed(this.state.cuenta,this.state.pass).call()
+      if(data2 == true){
+        if(data == true){
+          window.alert('Inicio de sesion exitoso existoso')
+          window.location.assign("main")
+        }
+      }else { 
+        window.alert('Incorrect username or password.')
+      }
+    };
+
+    handleSubmitP = async (event) =>  {
+      this.setState({address: document.getElementById("addressP").value})
+      this.setState({pass: document.getElementById("passP").value})
+      const data2 = await this.state.contract.methods.patientExists(this.state.cuenta).call()
+      const data = await this.state.contract.methods.loginPatient(this.state.cuenta,this.state.pass).call()
+
+      if(data2 == true){
+        if(data == true){
+          window.alert('Inicio de sesion exitoso existoso')
+          window.location.assign("mainPat")
+        }
+      }else{
+        window.alert('Incorrect username or password.')
+      }
+
+    };
+       
+       
+
+    constructor(props) {
+    super(props);
+    this.state = {
+
+        nombre:'',
+        apellidos:'',
+        telefono:'',
+        correo:'',
+        address:'',
+        pass:'',
+        cuenta:'',
+        data:false,
+        data2:false,
+        sol:[],
+        contract:null
+        
+    };
+    }
+   
+
+  render() {
+return (
     <Container fixed sx={{ flexGrow: 1, mt: 15, display: "flex", whiteSpace: "normal" }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
@@ -74,10 +157,7 @@ export default function BasicGrid() {
                 </Typography>
                 <Box
                   component="form"
-                  onBlur={handleSubmit}
-                  // onSubmit={handleSetData}
                   noValidate
-                  href="/Empleado"
                   sx={{ mt: 1 }}
                 >
                   <TextField
@@ -85,6 +165,7 @@ export default function BasicGrid() {
                     margin="normal"
                     fullWidth
                     name="useer"
+                    id="addressP"
                     label="Public Address Patient "
                     autoComplete="Public Address Patient "
                     autoFocus
@@ -94,6 +175,7 @@ export default function BasicGrid() {
                     margin="normal"
                     fullWidth
                     name="password"
+                    id="passP"
                     label="Password"
                     type="password"
                     autoComplete="current-password"
@@ -103,10 +185,9 @@ export default function BasicGrid() {
                     label="Recuerdame"
                   />
                   <Button
-                    type="submit"
-                    href="/Sigin"
                     fullWidth
                     variant="contained"
+                    onClick={this.handleSubmitP}
                     sx={{ mt: 3, mb: 2 }}
                   >
                     Iniciar Sesion
@@ -149,10 +230,7 @@ export default function BasicGrid() {
                 </Typography>
                 <Box
                   component="form"
-                  onBlur={handleSubmit}
-                  // onSubmit={handleSetData}
                   noValidate
-                  href="/Empleado"
                   sx={{ mt: 1 }}
                 >
                   <TextField
@@ -160,6 +238,7 @@ export default function BasicGrid() {
                     margin="normal"
                     fullWidth
                     name="useer"
+                    id="addressM"
                     label="Public Address Doctor"
                     autoComplete="Public Address Doctor"
                     autoFocus
@@ -169,6 +248,7 @@ export default function BasicGrid() {
                     margin="normal"
                     fullWidth
                     name="password"
+                    id="passM"
                     label="Password"
                     type="password"
                     autoComplete="current-password"
@@ -178,8 +258,7 @@ export default function BasicGrid() {
                     label="Recuerdame"
                   />
                   <Button
-                    type="submit"
-                    href="/Sigin"
+                    onClick={this.handleSubmitM}
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
@@ -206,4 +285,6 @@ export default function BasicGrid() {
       </Grid>
     </Container>
   );
+  }
 }
+export default App;
