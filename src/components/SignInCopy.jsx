@@ -73,6 +73,7 @@ class App extends Component {
             const sol=await contract.methods.getMedInfo(cuenta[0]).call()
             await contract.methods.getPatientInfo(cuenta[0]).call(console.log)
             console.log(sol)
+            this.setState(sol)
         }else{
             window.alert('Contrato Inteligente no desplegado en esta red')
         }
@@ -81,6 +82,8 @@ class App extends Component {
     handleSubmitM = async (event) =>  {
       this.setState({address: document.getElementById("addressM").value})
       this.setState({pass: document.getElementById("passM").value})
+
+       //if (this.state.sol[5] == this.state.pass){
       const data2 = await this.state.contract.methods.medExists(this.state.cuenta).call()
       const data = await this.state.contract.methods.loginMed(this.state.cuenta,this.state.pass).call()
       if(data2 == true){
@@ -88,14 +91,15 @@ class App extends Component {
           window.alert('Inicio de sesion exitoso existoso')
           window.location.assign("main")
         }
-      }else { 
-        window.alert('Incorrect username or password.')
       }
+    //} else {window.alert('Incorrect username or password.')}
     };
 
     handleSubmitP = async (event) =>  {
       this.setState({address: document.getElementById("addressP").value})
       this.setState({pass: document.getElementById("passP").value})
+
+      //if (this.state.sol[5] == this.state.pass){
       const data2 = await this.state.contract.methods.patientExists(this.state.cuenta).call()
       const data = await this.state.contract.methods.loginPatient(this.state.cuenta,this.state.pass).call()
 
@@ -106,7 +110,8 @@ class App extends Component {
         }
       }else{
         window.alert('Incorrect username or password.')
-      }
+      } 
+      //} else {window.alert('Incorrect username or password.')}
 
     };
        
@@ -194,7 +199,7 @@ return (
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      <Link href="#" variant="body2">
+                      <Link href="PassPat" variant="body2">
                         ¿Olvidaste tu contraseña?
                       </Link>
                     </Grid>
@@ -267,7 +272,7 @@ return (
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      <Link href="#" variant="body2">
+                      <Link href="PassMed" variant="body2">
                         ¿Olvidaste tu contraseña?
                       </Link>
                     </Grid>

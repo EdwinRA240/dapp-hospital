@@ -103,8 +103,8 @@ class App extends Component {
         this.setState({buffer: Buffer(reader.result)})
         }
     }
-
-    onSubmit = async (event) => {
+    
+    handleChange = async (event) => {
         event.preventDefault()
         this.setState({dir: document.getElementById("dir").value})
         this.setState({nombre: document.getElementById("nombre").value})
@@ -112,6 +112,14 @@ class App extends Component {
         this.setState({diag: document.getElementById("diag").value})
         this.setState({trat: document.getElementById("trat").value})
         this.setState({date: document.getElementById("date").value})
+
+        
+
+    }
+
+    onSubmit = async (event) => {
+        event.preventDefault()
+        
 
         console.log("Mandando archivo ...")
         if(this.state.buffer){
@@ -147,36 +155,42 @@ class App extends Component {
             sx={{ mt: 2 }}
             label="Public Adress Patient"
             id="dir"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Nombre Completo del paciente"
             id="nombre"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Edad del paciente"
             id="edad"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Diagnostico del paciente"
             id="diag"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Tratamiento del paciente"
             id="trat"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Fecha"
             id="date"
+            onChange={this.handleChange}
           />
           <Typography textAlign= 'center' sx={{ mt: 2 }}>Adjunte archivo:</Typography> <input   type='file' onChange = {this.captureFile}/>
           

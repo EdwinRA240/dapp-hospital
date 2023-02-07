@@ -52,7 +52,7 @@ class App extends Component {
         }
     }
 
-    enviar = async (event) => {
+    handleChange = async (event) => {
         event.preventDefault()
         this.setState({nombre: document.getElementById("nombre").value})
         this.setState({apellidos: document.getElementById("apellidos").value})
@@ -60,6 +60,14 @@ class App extends Component {
         this.setState({correo: document.getElementById("correo").value})
         this.setState({address: document.getElementById("address").value})
         this.setState({pass: document.getElementById("pass").value})
+
+        
+
+    }
+
+    enviar = async (event) => {
+        event.preventDefault()
+        
 
         if (this.state.cuenta==this.state.address){
                 this.state.contract.methods.addPatient(this.state.nombre, this.state.apellidos, this.state.telefono,this.state.address,
@@ -110,36 +118,42 @@ class App extends Component {
             sx={{ mt: 2 }}
             label="Nombre"
             id="nombre"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Apellidos"
             id="apellidos"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Numero de Telefono"
             id="telefono"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Correo Electronico"
             id="correo"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Public Adress"
             id="address"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Contraseña"
             id="pass"
+            onChange={this.handleChange}
           />
         </FormGroup>
 

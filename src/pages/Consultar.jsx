@@ -26,10 +26,10 @@ const ipfs = ipfsHttpClient({ host: 'ipfs.infura.io', port: '5001', protocol: 'h
 
 class App extends Component {
 
-    async componentWillMount(){
+    async componentDidMount(){
         await this.loadWeb3()
         await this.loadBloackchainData()
-        await this.consulta()
+        
     }
 
     async loadWeb3(){
@@ -83,16 +83,24 @@ class App extends Component {
         ind:'',
         sol:[null],}
     };
+
+    handleChange = async (event) => {
+        event.preventDefault()
+        this.setState({dir: document.getElementById("dir").value})
+
+        
+
+    }
     
 
     consulta = async (event) => {
         event.preventDefault()
-        this.setState({dir: document.getElementById("dir").value})
+        
         console.log(this.state.dir)
         const sol= await this.state.contract.methods.getRecords(this.state.dir).call()
+        this.setState({sol})
         console.log(sol)
         console.log(sol[0][1])
-        this.setState({sol})
         this.setState({buttonPressed: true}) 
         
     }
@@ -149,6 +157,7 @@ class App extends Component {
             sx={{ mt: 2 }}
             label="Public Adress Patient"
             id="dir"
+            onChange={this.handleChange}
           />
           </FormGroup >
 

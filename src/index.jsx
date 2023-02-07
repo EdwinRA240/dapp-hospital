@@ -9,6 +9,8 @@ import ConsultarPat from "./pages/ConsultarPat";
 import Login from "./pages/Login";
 import RegistroMed from "./pages/RegistroMed";
 import RegistroPat from "./pages/RegistroPat";
+import PassPat from "./pages/PassPat";
+import PassMed from "./pages/PassMed";
 import NavBar from "./components/NavBar";
 import NavBar2 from "./components/NavBar2";
 import NavBarPat from "./components/NavBarPat";
@@ -40,6 +42,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/" element={<><Login /> <NavBar2 /></>}  />
           {/* <Route path="signin" element={<SignIn />} /> */}
           <Route path="signin" element={<><SignInCopy/><NavBar2/> </>}/>
+          <Route path="PassPat" element={<><PassPat/><NavBar2/> </>}/>}
+          <Route path="PassMed" element={<><PassMed/><NavBar2/> </>}/>
           <Route path="/main" element={<><Main/> <NavBar/></>} />
           <Route path="/mainPat" element={<><MainPat/> <NavBarPat/></>} />
           <Route path="/Consultar" element={<><Consultar/> <NavBar/></>} />

@@ -45,8 +45,9 @@ class App extends Component {
             const contract = new web3.eth.Contract(abi,direccion)
             this.setState({contract})
             console.log(contract)
-            const sol=await contract.methods.getMedInfo(cuenta[0]).call()
+            const sol=await contract.methods.getPatientInfo(cuenta[0]).call()
             console.log(sol)
+            this.setState({sol})
         }else{
             window.alert('Contrato Inteligente no desplegado en esta red')
         }
@@ -54,30 +55,29 @@ class App extends Component {
 
     handleChange = async (event) => {
         event.preventDefault()
-        this.setState({nombre: document.getElementById("nombre").value})
-        this.setState({apellidos: document.getElementById("apellidos").value})
-        this.setState({telefono: document.getElementById("telefono").value})
         this.setState({correo: document.getElementById("correo").value})
         this.setState({address: document.getElementById("address").value})
-        this.setState({pass: document.getElementById("pass").value})
-        this.setState({id: document.getElementById("id").value})
-        this.setState({esp: document.getElementById("esp").value})
   
 
     }
 
     enviar = async (event) => {
-        event.preventDefault() 
+        event.preventDefault()
 
         if (this.state.cuenta==this.state.address){
-                this.state.contract.methods.addMed(this.state.nombre, this.state.apellidos, this.state.telefono,this.state.address,
-                this.state.correo,this.state.pass,this.state.id,this.state.esp).send({from:this.state.cuenta}).then((r) => {
-                  window.alert('Registro existoso')
-                  window.location.assign("signin")
-                })
+            if (this.state.sol[4]==this.state.correo){
+
+                this.setState({buttonPressed: true}) 
+                this.setState({buttonPressed2: false}) 
+                           
+            } else{
+                window.alert("El correo ingresado no es el de esta cuenta")
+            }      
+                
         } else{
             window.alert("La public address ingresada no coincide con la de la cuenta activa de metamask")
         }
+
     }
        
 
@@ -85,6 +85,8 @@ class App extends Component {
     super(props);
     this.state = {
 
+        buttonPressed: false,
+        buttonPressed2: true,
         nombre:'',
         apellidos:'',
         telefono:'',
@@ -92,8 +94,6 @@ class App extends Component {
         address:'',
         pass:'',
         cuenta:'',
-        id:'',
-        esp:'',
         sol:[],
         contract:null
         
@@ -111,30 +111,10 @@ class App extends Component {
           mt: 15,
         }}
       >
-        <Typography>Registro de Personal Medico</Typography>
-
-        <FormGroup>
-          <TextField
-            fullWidth
-            sx={{ mt: 2 }}
-            label="Nombre"
-            id="nombre"
-            onChange={this.handleChange}
-          />
-          <TextField
-            fullWidth
-            sx={{ mt: 2 }}
-            label="Apellidos"
-            id="apellidos"
-            onChange={this.handleChange}
-          />
-          <TextField
-            fullWidth
-            sx={{ mt: 2 }}
-            label="Numero de Telefono"
-            id="telefono"
-            onChange={this.handleChange}
-          />
+        <Typography>Recuperar contraseña</Typography>
+        { this.state.buttonPressed2 &&  
+        <FormGroup >
+      
           <TextField
             fullWidth
             sx={{ mt: 2 }}
@@ -142,20 +122,7 @@ class App extends Component {
             id="correo"
             onChange={this.handleChange}
           />
-          <TextField
-            fullWidth
-            sx={{ mt: 2 }}
-            label="ID de empleado"
-            id="id"
-            onChange={this.handleChange}
-          />
-          <TextField
-            fullWidth
-            sx={{ mt: 2 }}
-            label="Especialidad"
-            id="esp"
-            onChange={this.handleChange}
-          />
+         
           <TextField
             fullWidth
             sx={{ mt: 2 }}
@@ -163,20 +130,15 @@ class App extends Component {
             id="address"
             onChange={this.handleChange}
           />
-          <TextField
-            fullWidth
-            sx={{ mt: 2 }}
-            label="Contraseña"
-            id="pass"
-            onChange={this.handleChange}
-          />
         </FormGroup>
+        } 
+
+        {this.state.buttonPressed && <Typography sx={{ mt: 2 }}>Tu contraseña es: {this.state.sol[5]}</Typography>} <br/>
 
         
         <Stack sx={{ mt: 2, justifyContent: "end"  }} direction="row" spacing={2}>
-          <Button onClick={this.enviar} variant="contained">Crear</Button>
-          <Button>Reset</Button>
-          <Button href="signin">Cancel</Button>
+          <Button  onClick={this.enviar} variant="contained">Recuperar</Button>
+          <Button href="signin">Regresar</Button>
         </Stack>
          
       </Container>
