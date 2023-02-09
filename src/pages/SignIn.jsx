@@ -1,12 +1,12 @@
 import React from "react";
-import SignIn from "../components/SignIn";
+import Signin from "../components/SignIn";
 
-const Signin = () => {
+const SignIn = () => {
   return (
     <>
-      <SignIn />
+      <Signin />
     </>
   );
 };
 
-export default Signin;
+export default SignIn;

@@ -1,4 +1,10 @@
 import * as React from "react";
+import { Component } from "react";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import { Container } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -6,121 +12,266 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Web3 from "web3";
+import Contrato from "/build/contracts/Contrato.json";
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {"DB_Sneaker "}
-      <Link color="inherit" href="https://mui.com/"></Link> {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
-// const theme = createTheme();
+class App extends Component {
+  async componentWillMount() {
+    await this.loadWeb3();
+    await this.loadBloackchainData();
+  }
 
-export default function SignIn() {
-  const [Data, setData] = React.useState({});
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+    }
+    if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      window.alert("Inicia sesion en Metamask");
+    }
+  }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  async loadBloackchainData() {
+    const web3 = window.web3;
+    const cuenta = await web3.eth.getAccounts();
+    this.setState({ cuenta: cuenta[0] });
+    console.log(cuenta);
+    const coneccion_id = await web3.eth.net.getId();
+    console.log(coneccion_id);
+    const coneccion_data = Contrato.networks[coneccion_id];
+    if (coneccion_data) {
+      const abi = Contrato.abi;
+      const direccion = coneccion_data.address;
+      const contract = new web3.eth.Contract(abi, direccion);
+      this.setState({ contract });
+      console.log(contract);
+      const sol = await contract.methods.getMedInfo(cuenta[0]).call();
+      await contract.methods.getPatientInfo(cuenta[0]).call(console.log);
+      console.log(sol);
+      this.setState(sol);
+    } else {
+      window.alert("Contrato Inteligente no desplegado en esta red");
+    }
+  }
 
-    setData({
-      user: data.get("user"),
-      password: data.get("password"),
-    });
+  handleSubmitM = async (event) => {
+    this.setState({ address: document.getElementById("addressM").value });
+    this.setState({ pass: document.getElementById("passM").value });
 
-    console.log(Data);
+    //if (this.state.sol[5] == this.state.pass){
+    const data2 = await this.state.contract.methods.medExists(this.state.cuenta).call();
+    const data = await this.state.contract.methods
+      .loginMed(this.state.cuenta, this.state.pass)
+      .call();
+    if (data2 == true) {
+      if (data == true) {
+        window.alert("Inicio de sesion exitoso existoso");
+        window.location.assign("main");
+      }
+    }
+    //} else {window.alert('Incorrect username or password.')}
   };
 
-  // const handleSetData = () =>{
+  handleSubmitP = async (event) => {
+    this.setState({ address: document.getElementById("addressP").value });
+    this.setState({ pass: document.getElementById("passP").value });
 
-  //   // if (Data.password === "PassUser") {
-  //   //   alert("Again! Password");
-  //   //   this.props.history.push('/foo');
-  //   //   return ;
-  //   // }
+    //if (this.state.sol[5] == this.state.pass){
+    const data2 = await this.state.contract.methods
+      .patientExists(this.state.cuenta)
+      .call();
+    const data = await this.state.contract.methods
+      .loginPatient(this.state.cuenta, this.state.pass)
+      .call();
 
-  // };
+    if (data2 == true) {
+      if (data == true) {
+        window.alert("Inicio de sesion exitoso existoso");
+        window.location.assign("mainPat");
+      }
+    } else {
+      window.alert("Incorrect username or password.");
+    }
+    //} else {window.alert('Incorrect username or password.')}
+  };
 
-  return (
-    // <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs" sx={{ mt: 22, mb: 5 }}>
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onBlur={handleSubmit}
-            // onSubmit={handleSetData}
-            noValidate
-            href="/Empleado"
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              fullWidth
-              name="useer"
-              label="User"
-              autoComplete="user"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              href="/Empleado"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+  constructor(props) {
+    super(props);
+    this.state = {
+      nombre: "",
+      apellidos: "",
+      telefono: "",
+      correo: "",
+      address: "",
+      pass: "",
+      cuenta: "",
+      data: false,
+      data2: false,
+      sol: [],
+      contract: null,
+    };
+  }
+
+  render() {
+    return (
+      <Container
+        fixed
+        sx={{ flexGrow: 1, mt: 15, display: "flex", whiteSpace: "normal" }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Item>
+              {" "}
+              <Container component="main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
+                <CssBaseline />
+                <Box
+                  sx={{
+                    marginTop: 5,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    Inicio de sesion de Pacientes
+                  </Typography>
+                  <Box component="form" noValidate sx={{ mt: 1 }}>
+                    <TextField
+                      required
+                      margin="normal"
+                      fullWidth
+                      name="useer"
+                      id="addressP"
+                      label="Public Address Patient "
+                      autoComplete="Public Address Patient "
+                      autoFocus
+                    />
+                    <TextField
+                      required
+                      margin="normal"
+                      fullWidth
+                      name="password"
+                      id="passP"
+                      label="Password"
+                      type="password"
+                      autoComplete="current-password"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
+                      label="Recuerdame"
+                    />
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      onClick={this.handleSubmitP}
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      Iniciar Sesion
+                    </Button>
+                    <Grid container>
+                      <Grid item xs>
+                        <Link href="PassPat" variant="body2">
+                          ¿Olvidaste tu contraseña?
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <Link href="/registroPat" variant="body2">
+                          {"¿No tienes cuenta? Inscribete aqui"}
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Container>
+            </Item>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Item>
+              {" "}
+              <Container component="main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
+                <CssBaseline />
+                <Box
+                  sx={{
+                    marginTop: 5,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    Inicio de sesion de Medicos
+                  </Typography>
+                  <Box component="form" noValidate sx={{ mt: 1 }}>
+                    <TextField
+                      required
+                      margin="normal"
+                      fullWidth
+                      name="useer"
+                      id="addressM"
+                      label="Public Address Doctor"
+                      autoComplete="Public Address Doctor"
+                      autoFocus
+                    />
+                    <TextField
+                      required
+                      margin="normal"
+                      fullWidth
+                      name="password"
+                      id="passM"
+                      label="Password"
+                      type="password"
+                      autoComplete="current-password"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
+                      label="Recuerdame"
+                    />
+                    <Button
+                      onClick={this.handleSubmitM}
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      Iniciar Sesion
+                    </Button>
+                    <Grid container>
+                      <Grid item xs>
+                        <Link href="PassMed" variant="body2">
+                          ¿Olvidaste tu contraseña?
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <Link href="/registroMed" variant="body2">
+                          {"¿No tienes cuenta? Inscribete aqui"}
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Box>
+              </Container>
+            </Item>
+          </Grid>
+        </Grid>
       </Container>
-    // </ThemeProvider>
-  );
+    );
+  }
 }
+export default App;

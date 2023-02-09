@@ -15,7 +15,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 const pages = ["Consultar ECE"];
-const settings = ["Account", "Sign out"];
+const settings = ["Sign out"];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -143,7 +143,7 @@ function NavBar() {
               </IconButton>
             </Tooltip>
             <Menu
-              href="/"
+              href="/SignIn"
               sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
@@ -161,7 +161,7 @@ function NavBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Button href="/" textAlign="center">
+                  <Button href="/SignIn" textAlign="center">
                     {setting}
                   </Button>
                 </MenuItem>
