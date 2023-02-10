@@ -62,20 +62,30 @@ class App extends Component {
       const contract = new web3.eth.Contract(abi, direccion);
       this.setState({ contract });
       console.log("ContraroIf: "+typeof(contract));
-      const sol = await contract.methods.getMedInfo(cuenta[0]).call();
-      await contract.methods.getPatientInfo(cuenta[0]).call(console.log);
-      console.log("SOl-Cuenta: "+sol);
-      this.setState(sol);
+      const passM = await contract.methods.getMedInfo(cuenta[0]).call();
+      const passP = await contract.methods.getPatientInfo(cuenta[0]).call();
+      this.setState({passM});
+      this.setState({passP});
+      console.log(passM)
+      console.log(passP)
+      console.log(passM[5])
+      console.log(passP[5])
+
     } else {
       window.alert("Contrato Inteligente no desplegado en esta red");
     }
   }
 
-  handleSubmitM = async (event) => {
-    this.setState({ address: document.getElementById("addressM").value });
-    this.setState({ pass: document.getElementById("passM").value });
+  handleChangeM = async (event) => {
+        event.preventDefault()
+        this.setState({ address: document.getElementById("addressM").value });
+        this.setState({ pass: document.getElementById("passM").value });
 
-    //if (this.state.sol[5] == this.state.pass){
+    }
+
+
+  handleSubmitM = async (event) => {   
+    if (this.state.passM[5] == this.state.pass){
     const data2 = await this.state.contract.methods.medExists(this.state.cuenta).call();
     const data = await this.state.contract.methods
       .loginMed(this.state.cuenta, this.state.pass)
@@ -86,14 +96,20 @@ class App extends Component {
         window.location.assign("mainMed");
       }
     }
-    //} else {window.alert('Incorrect username or password.')}
+    } else {
+
+      window.alert('Usuario o contraseña incorrecta.')}
   };
 
-  handleSubmitP = async (event) => {
-    this.setState({ address: document.getElementById("addressP").value });
-    this.setState({ pass: document.getElementById("passP").value });
+  handleChangeP = async (event) => {
+        event.preventDefault()
+        this.setState({ address: document.getElementById("addressP").value });
+        this.setState({ pass: document.getElementById("passP").value });
 
-    //if (this.state.sol[5] == this.state.pass){
+    }
+
+  handleSubmitP = async (event) => {
+    if (this.state.passP[5] == this.state.pass){
     const data2 = await this.state.contract.methods
       .patientExists(this.state.cuenta)
       .call();
@@ -109,7 +125,7 @@ class App extends Component {
     } else {
       window.alert("Incorrect username or password.");
     }
-    //} else {window.alert('Incorrect username or password.')}
+    } else {window.alert('Usuario o contraseña incorrecta.')}
   };
 
   constructor(props) {
@@ -124,7 +140,8 @@ class App extends Component {
       cuenta: "",
       data: false,
       data2: false,
-      sol: [],
+      passM: [],
+      passP:[],
       contract: null,
     };
   }
@@ -162,6 +179,7 @@ class App extends Component {
                       fullWidth
                       name="useer"
                       id="addressP"
+                      onChange={this.handleChangeP}
                       label="Public Address Patient "
                       autoComplete="Public Address Patient "
                       autoFocus
@@ -172,6 +190,7 @@ class App extends Component {
                       fullWidth
                       name="password"
                       id="passP"
+                      onChange={this.handleChangeP}
                       label="Password"
                       type="password"
                       autoComplete="current-password"
@@ -231,6 +250,7 @@ class App extends Component {
                       fullWidth
                       name="useer"
                       id="addressM"
+                      onChange={this.handleChangeM}
                       label="Public Address Doctor"
                       autoComplete="Public Address Doctor"
                       autoFocus
@@ -241,6 +261,7 @@ class App extends Component {
                       fullWidth
                       name="password"
                       id="passM"
+                      onChange={this.handleChangeM}
                       label="Password"
                       type="password"
                       autoComplete="current-password"

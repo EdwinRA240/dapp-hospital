@@ -66,8 +66,9 @@ class App extends Component {
   enviar = async (event) => {
     event.preventDefault();
 
-    if (this.state.cuenta == this.state.address) {
-      this.state.contract.methods
+     if (this.state.cuenta == this.state.address) {
+      try {
+      await this.state.contract.methods
         .addMed(
           this.state.nombre,
           this.state.apellidos,
@@ -82,7 +83,9 @@ class App extends Component {
         .then((r) => {
           window.alert("Registro existoso");
           window.location.assign("signin");
-        });
+        })} catch (error) {
+                       window.alert("Error al crear el usuario, por el siguiente error: " + error.message);
+                      };
     } else {
       window.alert(
         "La public address ingresada no coincide con la de la cuenta activa de metamask"
