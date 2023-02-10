@@ -78,7 +78,7 @@ class App extends Component {
     if (data2 == true) {
       if (data == true) {
         window.alert("Inicio de sesion exitoso existoso");
-        window.location.assign("main");
+        window.location.assign("mainMed");
       }
     }
     //} else {window.alert('Incorrect username or password.')}
@@ -203,7 +203,7 @@ class App extends Component {
           <Grid item xs={12} sm={6}>
             <Item>
               {" "}
-              <Container component="main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
+              <Container component="Main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
                 <CssBaseline />
                 <Box
                   sx={{

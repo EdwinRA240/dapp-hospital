@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/NavBarMed";
 import { useState } from "react";
 import Contrato from "/build/contracts/Contrato.json";
 import Web3 from "web3";

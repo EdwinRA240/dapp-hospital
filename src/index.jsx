@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Main from "./pages/Main";
+import MainMed from "./pages/MainMed";
 import MainPat from "./pages/MainPat";
 import NotFound from "./pages/NotFound";
 import Consultar from "./pages/Consultar";
@@ -11,8 +11,8 @@ import RegistroMed from "./pages/RegistroMed";
 import RegistroPat from "./pages/RegistroPat";
 import PassPat from "./pages/PassPat";
 import PassMed from "./pages/PassMed";
+import NavBarMed from "./components/NavBarMed";
 import NavBar from "./components/NavBar";
-import NavBar2 from "./components/NavBar2";
 import NavBarPat from "./components/NavBarPat";
 import Almacenar from "./pages/Almacenar";
 import SignIn from "./pages/SignIn";
@@ -37,18 +37,18 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<><NotFound/> <NavBar2/></>} />
-          <Route path="/" element={<><Index /> <NavBar2 /></>}  />
-          <Route path="signin" element={<><SignIn/><NavBar2/> </>}/>
-          <Route path="PassPat" element={<><PassPat/><NavBar2/> </>}/>
-          <Route path="PassMed" element={<><PassMed/><NavBar2/> </>}/>
-          <Route path="/main" element={<><Main/> <NavBar/></>} />
-          <Route path="/mainPat" element={<><MainPat/> <NavBarPat/></>} />
-          <Route path="/Consultar" element={<><Consultar/> <NavBar/></>} />
+          <Route path="*" element={<><NotFound/> <NavBar/></>} />
+          <Route path="/" element={<><Index /> <NavBar /></>}  />
+          <Route path="Signin" element={<><SignIn/><NavBar/> </>}/>
+          <Route path="PassPat" element={<><PassPat/><NavBar/> </>}/>
+          <Route path="PassMed" element={<><PassMed/><NavBar/> </>}/>
+          <Route path="/MainMed" element={<><MainMed/> <NavBarMed/></>} />
+          <Route path="/MainPat" element={<><MainPat/> <NavBarPat/></>} />
+          <Route path="/Consultar" element={<><Consultar/> <NavBarMed/></>} />
           <Route path="/ConsultarPat" element={<><ConsultarPat/> <NavBarPat/></>} />
-          <Route path="/Almacenar" element={<><Almacenar/> <NavBar/></>} />
-          <Route path="/registroMed" element={<><RegistroMed/> <NavBar2/></>} />
-          <Route path="/registroPat" element={<><RegistroPat/> <NavBar2/></>} />
+          <Route path="/Almacenar" element={<><Almacenar/> <NavBarMed/></>} />
+          <Route path="/registroMed" element={<><RegistroMed/> <NavBar/></>} />
+          <Route path="/registroPat" element={<><RegistroPat/> <NavBar/></>} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>

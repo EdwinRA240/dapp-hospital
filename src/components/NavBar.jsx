@@ -7,14 +7,9 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import StorageIcon from "@mui/icons-material/Storage";
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
-const pages = ["Almacenar ECE","Consultar ECE"];
 const settings = ["Sign out"];
 
 function NavBar() {
@@ -46,7 +41,7 @@ function NavBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/main"
+            href=""
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -92,13 +87,6 @@ function NavBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} href={`/${page.split(" ",1)}`}>
-                  <Typography textAlign="center" variant="h6">
-                    {page}
-                  </Typography>
-                </MenuItem>
-              ))}
             </Menu>
           </Box>
 
@@ -122,52 +110,9 @@ function NavBar() {
           >
             Hospital
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-                href={`/${page.split(" ",1)}`}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
 
           {/* Ajustes */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              href="/SignIn"
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Button href="/SignIn" textAlign="center">
-                    {setting}
-                  </Button>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+         
         </Toolbar>
       </Container>
     </AppBar>

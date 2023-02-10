@@ -1,11 +1,9 @@
-import { Box, CardMedia, Container, Typography } from "@mui/material";
+import { Box, CardMedia, Container, Stack, Typography } from "@mui/material";
 import React, { Component } from "react";
-import NavBar from "../components/NavBarMed";
-import { useState } from "react";
 import Contrato from "/build/contracts/Contrato.json";
 import Web3 from "web3";
-import patient from "./../assets/patient.png";
-import Footer from "./../components/Footer";
+import medico from "./../assets/medico.png";
+import Footer from "../components/Footer";
 
 class App extends Component {
   async componentWillMount() {
@@ -38,7 +36,7 @@ class App extends Component {
     const contract = new web3.eth.Contract(abi, direccion);
     this.setState({ contract });
     console.log(contract);
-    const solo = await contract.methods.getPatientInfo(cuenta[0]).call();
+    const solo = await contract.methods.getMedInfo(cuenta[0]).call();
     console.log(solo[0]);
     this.setState({ solo });
     console.log(solo);
@@ -53,6 +51,7 @@ class App extends Component {
       correo: "",
       address: "",
       pass: "",
+      id: "",
       cuenta: "",
       solo: "",
       contract: null,
@@ -66,7 +65,7 @@ class App extends Component {
           sx={{
             bgcolor: "background.paper",
             pt: 15,
-            pb: 10,
+            pb: 5,
           }}
         >
           <Container maxWidth="lg">
@@ -77,9 +76,12 @@ class App extends Component {
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Address: {this.state.cuenta}
             </Typography>
+            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+              Id de empleado: {this.state.solo[6]}
+            </Typography>
             <CardMedia
               component="img"
-              image={patient}
+              image={medico}
               sx={{
                 maxWidth: "30%",
                 margin: "auto",
