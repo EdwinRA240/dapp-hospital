@@ -42,6 +42,7 @@ contract Contrato {
     mapping (address => Med) meds;
     mapping(address => bool) authenticatedPatients;
     mapping(address => bool) authenticatedMed;
+    mapping(string => bool) idInUse;
 
 //-----------------------------------------------------Funciones
 
@@ -135,6 +136,8 @@ contract Contrato {
         }
         // Verifica si el string dado está en la lista de id autorizados
         require(checkID(_idM), "El id de empleado no existe");
+        require(!idInUse[_idM], "Este id ya esta en uso");
+        idInUse[_idM]=true;
         // Crea una nueva instancia del paciente
         Med memory newMed = Med({
                                                 nombreM:_nombreM, 
