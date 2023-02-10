@@ -47,19 +47,24 @@ class App extends Component {
     const web3 = window.web3;
     const cuenta = await web3.eth.getAccounts();
     this.setState({ cuenta: cuenta[0] });
-    console.log(cuenta);
+    console.log("Cuenta actual: "+cuenta);
+
     const coneccion_id = await web3.eth.net.getId();
-    console.log(coneccion_id);
+    console.log("Conexion: "+coneccion_id);
+    
     const coneccion_data = Contrato.networks[coneccion_id];
-    if (coneccion_data) {
+    console.log("ConexionData: "+typeof(coneccion_data));
+    console.log(coneccion_data==true);
+
+    if(coneccion_data){
       const abi = Contrato.abi;
       const direccion = coneccion_data.address;
       const contract = new web3.eth.Contract(abi, direccion);
       this.setState({ contract });
-      console.log(contract);
+      console.log("ContraroIf: "+typeof(contract));
       const sol = await contract.methods.getMedInfo(cuenta[0]).call();
       await contract.methods.getPatientInfo(cuenta[0]).call(console.log);
-      console.log(sol);
+      console.log("SOl-Cuenta: "+sol);
       this.setState(sol);
     } else {
       window.alert("Contrato Inteligente no desplegado en esta red");
