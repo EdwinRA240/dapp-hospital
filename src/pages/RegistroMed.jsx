@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Contrato from "/build/contracts/Contrato.json";
 import Web3 from "web3";
 import Footer from "../components/Footer";
 import {
