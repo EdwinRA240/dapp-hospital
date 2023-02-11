@@ -109,7 +109,7 @@ class App extends Component {
     }
 
   handleSubmitP = async (event) => {
-    if (this.state.passP[5] == this.state.pass){
+    if (this.state.passP[5] == this.state.pass & this.state.passP[3] == this.state.address ){
     const data2 = await this.state.contract.methods
       .patientExists(this.state.cuenta)
       .call();

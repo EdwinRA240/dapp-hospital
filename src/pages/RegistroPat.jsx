@@ -84,7 +84,7 @@ class App extends Component {
                        window.alert("Error al crear el usuario, por el siguiente error: " + error.message);
                       };;
     } else {
-      console.log(
+      window.alert(
         "La public address ingresada no coincide con la de la cuenta activa de metamask"
       );
     }
