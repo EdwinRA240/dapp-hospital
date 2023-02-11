@@ -121,8 +121,9 @@ class App extends Component {
         >
           <Typography>Registro de Personal Medico</Typography>
 
-          <FormGroup>
+          <FormGroup noValidate>
             <TextField
+              required
               fullWidth
               sx={{ mt: 2 }}
               label="Nombre"
@@ -166,6 +167,7 @@ class App extends Component {
             />
             <TextField
               fullWidth
+              required
               sx={{ mt: 2 }}
               label="Public Adress"
               id="address"
@@ -173,8 +175,10 @@ class App extends Component {
             />
             <TextField
               fullWidth
+              required
               sx={{ mt: 2 }}
               label="Contraseña"
+              type="password"
               id="pass"
               onChange={this.handleChange}
             />
