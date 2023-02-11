@@ -126,16 +126,13 @@ class App extends Component {
             const result = await ipfs.add(this.state.buffer);
             const hHash = result.path
             console.log("Hash del archivo en la ipfs:",hHash)
-            try {
-            await this.state.contract.methods.addRecord(this.state.dir,this.state.cuenta,this.state.nombre,this.state.edad,
+            this.state.contract.methods.addRecord(this.state.dir,this.state.cuenta,this.state.nombre,this.state.edad,
                 this.state.diag,this.state.trat,this.state.date,hHash).send({from:this.state.cuenta}).then((r)=>{
                     this.setState({hHash})
                     this.setState({dir})
                     window.alert('Expediente almacenado con exito  ')
                      window.location.assign("main")
-            })}catch (error) {
-                       window.alert("Error al Almacenar el ECE, por el siguiente error: " + error.message);
-                      };
+            })
         }
     }
    
