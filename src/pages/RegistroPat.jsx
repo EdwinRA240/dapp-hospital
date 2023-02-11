@@ -81,7 +81,7 @@ class App extends Component {
           window.location.assign("signin");
         });
     } else {
-      console.log(
+      window.alert(
         "La public address ingresada no coincide con la de la cuenta activa de metamask"
       );
     }
