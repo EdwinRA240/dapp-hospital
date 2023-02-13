@@ -16,6 +16,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Web3 from "web3";
 import Contrato from "/build/contracts/Contrato.json";
+import swal from "sweetalert";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -47,24 +48,24 @@ class App extends Component {
     const web3 = window.web3;
     const cuenta = await web3.eth.getAccounts();
     this.setState({ cuenta: cuenta[0] });
-    console.log("Cuenta actual: "+cuenta);
+    console.log("Cuenta actual: " + cuenta);
 
     const coneccion_id = await web3.eth.net.getId();
-    console.log("Conexion: "+coneccion_id);
-    
-    const coneccion_data = Contrato.networks[coneccion_id];
-    console.log("ConexionData: "+typeof(coneccion_data));
-    console.log(coneccion_data==true);
+    console.log("Conexion: " + coneccion_id);
 
-    if(coneccion_data){
+    const coneccion_data = Contrato.networks[coneccion_id];
+    console.log("ConexionData: " + typeof coneccion_data);
+    console.log(coneccion_data == true);
+
+    if (coneccion_data) {
       const abi = Contrato.abi;
       const direccion = coneccion_data.address;
       const contract = new web3.eth.Contract(abi, direccion);
       this.setState({ contract });
-      console.log("ContraroIf: "+typeof(contract));
+      console.log("ContraroIf: " + typeof contract);
       const sol = await contract.methods.getMedInfo(cuenta[0]).call();
       await contract.methods.getPatientInfo(cuenta[0]).call(console.log);
-      console.log("SOl-Cuenta: "+sol);
+      console.log("SOl-Cuenta: " + sol);
       this.setState(sol);
     } else {
       window.alert("Contrato Inteligente no desplegado en esta red");
@@ -82,8 +83,13 @@ class App extends Component {
       .call();
     if (data2 == true) {
       if (data == true) {
-        window.alert("Inicio de sesion exitoso existoso");
-        window.location.assign("mainMed");
+        swal(
+          "Inicio de sesion correcto",
+          "Presiona el boton para continuar",
+          "success"
+        ).then(() => {
+          window.location.assign("MainMed");
+        });
       }
     }
     //} else {window.alert('Incorrect username or password.')}
@@ -103,8 +109,13 @@ class App extends Component {
 
     if (data2 == true) {
       if (data == true) {
-        window.alert("Inicio de sesion exitoso existoso");
-        window.location.assign("mainPat");
+        swal(
+          "Inicio de sesion correcto",
+          "Presiona el boton para continuar",
+          "success"
+        ).then(() => {
+          window.location.assign("MainPat");
+        });
       }
     } else {
       window.alert("Incorrect username or password.");
