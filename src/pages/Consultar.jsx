@@ -100,6 +100,13 @@ class App extends Component {
         const sol= await this.state.contract.methods.getRecords(this.state.dir).call()
         this.setState({sol})
         console.log(sol)
+        if (sol.length == 0){
+            swal(
+              "Error",
+              "El paciente no tiene expedientes registrados",
+              "error"
+            );
+        }
         console.log(sol[0][1])
         this.setState({buttonPressed: true}) 
         
