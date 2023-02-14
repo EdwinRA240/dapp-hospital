@@ -61,32 +61,134 @@ class App extends Component {
     this.setState({ pass: document.getElementById("pass").value });
     this.setState({ id: document.getElementById("id").value });
     this.setState({ esp: document.getElementById("esp").value });
+
+    this.setState({ nomValid: /^[a-zA-Z ]+$/.test(this.state.nombre) });
+    this.setState({ apeValid: /^[a-zA-Z ]+$/.test(this.state.apellidos) });
+    this.setState({ telValid: /^[0-9]+$/.test(this.state.telefono) });
+    this.setState({
+      corValid: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+        this.state.correo
+      ),
+    });
+    this.setState({
+      pasValid: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-_])[A-Za-z\d@_-]{6,}$/.test(
+        this.state.pass
+      ),
+    });
+    this.setState({ espValid: /^[a-zA-Z ]+$/.test(this.state.esp) });
   };
 
   enviar = async (event) => {
     event.preventDefault();
 
-    if (this.state.cuenta == this.state.address) {
-      this.state.contract.methods
-        .addMed(
-          this.state.nombre,
-          this.state.apellidos,
-          this.state.telefono,
-          this.state.address,
-          this.state.correo,
-          this.state.pass,
-          this.state.id,
-          this.state.esp
-        )
-        .send({ from: this.state.cuenta })
-        .then((r) => {
-          window.alert("Registro existoso");
-          window.location.assign("signin");
-        });
+    if (!this.state.nomValid) {
+      this.setState({ span: "El nombre lleva solo letras" });
     } else {
-      window.alert(
-        "La public address ingresada no coincide con la de la cuenta activa de metamask"
+      this.setState({ span: "" });
+    }
+
+    if (!this.state.apeValid) {
+      this.setState({ span2: "El apellido lleva solo letras" });
+    } else {
+      this.setState({ span2: "" });
+    }
+
+    if (!this.state.telValid) {
+      this.setState({ span3: "El telefono lleva solo letras" });
+    } else {
+      this.setState({ span3: "" });
+    }
+
+    if (!this.state.corValid) {
+      this.setState({ span4: "No cumple con el formato de un correo electronico" });
+    } else {
+      this.setState({ span4: "" });
+    }
+
+    if (!this.state.pasValid) {
+      this.setState({
+        span5:
+          "Debe llevar al menos 1 mayusacula, un signo especial (- _) y almenos 6 caracteres ",
+      });
+    } else {
+      this.setState({ span5: "" });
+    }
+
+    if (!this.state.espValid) {
+      this.setState({ span6: "La especialidad lleva solo letras" });
+    } else {
+      this.setState({ span6: "" });
+    }
+    if (
+      !this.state.nombre ||
+      !this.state.apellidos ||
+      !this.state.telefono ||
+      !this.state.address ||
+      !this.state.correo ||
+      !this.state.pass
+    ) {
+      // alert("Todos los campos son obligatorios");
+      swal(
+        "Error",
+        "Todos los campos son obligatorios",
+        "error"
       );
+    } else {
+      if (
+        this.state.nomValid &&
+        this.state.apeValid &&
+        this.state.telValid &&
+        this.state.corValid &&
+        this.state.pasValid
+      ) {
+        if (this.state.cuenta == this.state.address) {
+          try {
+            await this.state.contract.methods
+              .addMed(
+                this.state.nombre,
+                this.state.apellidos,
+                this.state.telefono,
+                this.state.address,
+                this.state.correo,
+                this.state.pass,
+                this.state.id,
+                this.state.esp
+              )
+              .send({ from: this.state.cuenta })
+              .then((r) => {
+                // window.alert("Registro existoso");
+                // window.location.assign("signin");
+                swal(
+                  "Registro exitoso",
+                  "Presiona el boton para continuar",
+                  "success"
+                ).then(() => {
+                  window.location.assign("SignIn");
+                });
+              });
+          } catch (error) {
+            window.alert(
+              "Error al crear el usuario, por el siguiente error: " + error.message
+            );
+          }
+        } else {
+          // window.alert(
+          //   "La public address ingresada no coincide con la de la cuenta activa de metamask"
+          // );
+          swal(
+            "Error",
+            "La public address ingresada no coincide con la de la cuenta activa de metamask",
+            "error"
+          );
+        }
+      } else {
+        // alert("Llene correctamente los campos");
+        swal(
+          "Error",
+          "Llene correctamente los campos",
+          "error"
+        );
+      }
     }
   };
 
@@ -104,6 +206,18 @@ class App extends Component {
       esp: "",
       sol: [],
       contract: null,
+      nomValid: null,
+      apeValid: null,
+      telValid: null,
+      corValid: null,
+      pasValid: null,
+      espValid: null,
+      span: null,
+      span2: null,
+      span3: null,
+      span4: null,
+      span5: null,
+      span6: null,
     };
   }
 
@@ -127,6 +241,7 @@ class App extends Component {
               id="nombre"
               onChange={this.handleChange}
             />
+            <Typography color="red"> {<span>{this.state.span}</span>} </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -134,6 +249,7 @@ class App extends Component {
               id="apellidos"
               onChange={this.handleChange}
             />
+            <Typography color="red"> {<span>{this.state.span2}</span>} </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -141,6 +257,7 @@ class App extends Component {
               id="telefono"
               onChange={this.handleChange}
             />
+            <Typography color="red"> {<span>{this.state.span3}</span>} </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -148,6 +265,7 @@ class App extends Component {
               id="correo"
               onChange={this.handleChange}
             />
+            <Typography color="red"> {<span>{this.state.span4}</span>} </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -162,6 +280,7 @@ class App extends Component {
               id="esp"
               onChange={this.handleChange}
             />
+            <Typography color="red"> {<span>{this.state.span6}</span>} </Typography>
             <TextField
               fullWidth
               required
@@ -179,6 +298,7 @@ class App extends Component {
               id="pass"
               onChange={this.handleChange}
             />
+            <Typography color="red"> {<span>{this.state.span5}</span>} </Typography>
           </FormGroup>
 
           <Stack sx={{ mt: 2, justifyContent: "end" }} direction="row" spacing={2}>
