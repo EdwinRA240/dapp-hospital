@@ -34,12 +34,12 @@ contract Contrato {
         bool registradoM;
     }
 
-    string[] authorizedIDs = ["PS01","PS02","PS03","PS04","PS05"];
+    string[] authorizedIDs = ["M1","M2","M3","M4","M5"];
 
 //-------------------------------------------------------- Mapeo 
-    mapping (address => MedicalRecord[]) records;
-    mapping (address => Patient) public patients;
-    mapping (address => Med) meds;
+    mapping(address => MedicalRecord[]) records;
+    mapping(address => Patient) public patients;
+    mapping(address => Med) meds;
     mapping(address => bool) authenticatedPatients;
     mapping(address => bool) authenticatedMed;
     mapping(string => bool) idInUse;
@@ -86,7 +86,7 @@ contract Contrato {
         // Comprobar si el usuario ya existe en el mapping
         if (patients[_adressP].registradoP) {
             // Enviar una excepción si el usuario ya existe
-            revert("La addresd que estas ingresando ya esta registrada, ya existe este paciente");
+            revert("La address que estas ingresando ya esta registrada, ya existe este paciente");
         }
         // Crea una nueva instancia del paciente
         Patient memory newPatient = Patient({
@@ -133,7 +133,7 @@ contract Contrato {
         // Comprobar si el usuario ya existe en el mapping
         if (meds[_adressM].registradoM) {
             // Enviar una excepción si el usuario ya existe
-            revert("La addresd que estas ingresando ya esta registrada, ya existe este medico");
+            revert("La addres que estas ingresando ya esta registrada, ya existe este medico");
         }
         // Verifica si el string dado está en la lista de id autorizados
         require(checkID(_idM), "El id de empleado no existe");

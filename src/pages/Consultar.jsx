@@ -101,11 +101,7 @@ class App extends Component {
         this.setState({sol})
         console.log(sol)
         if (sol.length == 0){
-            swal(
-              "Error",
-              "El paciente no tiene expedientes registrados",
-              "error"
-            );
+            alert('El paciente no tiene expedientes registrados')
         }
         console.log(sol[0][1])
         this.setState({buttonPressed: true}) 

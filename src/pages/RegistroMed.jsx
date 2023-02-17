@@ -167,14 +167,29 @@ class App extends Component {
                 });
               });
           } catch (error) {
-            window.alert(
-              "Error al crear el usuario, por el siguiente error: " + error.message
-            );
-          }
+            JSON.stringify(error);
+            console.log(error);
+            console.log(error.code);
+            console.log(error.stack);
+
+            // 0x37E9DFb12160E9d7970d5696a4D70Be8A4efd234
+            
+            if(error.code == -32603){
+              swal(
+                "Error",
+                "Clave o llave publica no valida",
+                "error"
+              );
+            }else{
+              swal(
+                "Error",
+                "Se cancelo la transaccion",
+                "error"
+              );
+            }
+        }
+        
         } else {
-          // window.alert(
-          //   "La public address ingresada no coincide con la de la cuenta activa de metamask"
-          // );
           swal(
             "Error",
             "La public address ingresada no coincide con la de la cuenta activa de metamask",
