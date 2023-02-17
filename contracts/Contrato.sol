@@ -20,7 +20,7 @@ contract Contrato {
         address   adressP;
         string   correoP;
         string   passP;
-        bool registrado;
+        bool registradoP;
     }
     struct Med {
         string   nombreM;
@@ -31,8 +31,10 @@ contract Contrato {
         string   passM;
         string    idM;
         string   espM;
-        bool registrado;
+        bool registradoM;
     }
+
+    string[] authorizedIDs = ["PS01","PS02","PS03","PS04","PS05"];
 
 //-------------------------------------------------------- Mapeo 
     mapping (address => MedicalRecord[]) records;
@@ -44,9 +46,11 @@ contract Contrato {
 
 //-----------------------------------------------------Funciones
 
+
     function addRecord(address _adressP, address _adressM, string memory _patientName, uint _age, string memory _diagnosis, 
         string memory _treatment,string memory _date,string memory _fileHash) public {
-        MedicalRecord memory newRecord = MedicalRecord({
+        if (patients[_adressP].registradoP) {
+            MedicalRecord memory newRecord = MedicalRecord({
                                                         adressP: _adressP,
                                                         adressM: _adressM,
                                                         patientName: _patientName,
@@ -54,14 +58,17 @@ contract Contrato {
                                                         diagnosis: _diagnosis,
                                                         treatment: _treatment,
                                                         date: _date,
-                                                        fileHash: _fileHash});
-        records[_adressP].push(newRecord);
+                                                        fileHash: _fileHash
+                                                        });
+            records[_adressP].push(newRecord);} else {
+                revert("La addresd que estas ingresando no esta registrada, el paciente no existe");
+            }
     }
 
     // Función para consultar todos los expedientes de un paciente
     function getRecords(address _adressP) public view returns (MedicalRecord[] memory) {
         return records[_adressP];
-    }
+        } 
 
     // Función para consultar un expediente clínico
     //function getRecord(address _adressP, uint indice) public view returns (address, string, string) {
@@ -77,9 +84,9 @@ contract Contrato {
     function addPatient(string memory  _nombreP, string memory  _apellidosP, string memory  _telefonoP, address  _adressP,
         string memory  _correoP, string memory  _passP) public {
         // Comprobar si el usuario ya existe en el mapping
-        if (patients[_adressP].registrado) {
+        if (patients[_adressP].registradoP) {
             // Enviar una excepción si el usuario ya existe
-            revert("El usuario ya existe en el mapping");
+            revert("La addresd que estas ingresando ya esta registrada, ya existe este paciente");
         }
         // Crea una nueva instancia del paciente
         Patient memory newPatient = Patient({
@@ -89,7 +96,7 @@ contract Contrato {
                                                 adressP:_adressP,
                                                 correoP:_correoP,
                                                 passP:_passP,
-                                                registrado:true});
+                                                registradoP:true});
         // Asigna el paciente al mapeo
         //patients[_id] = Patient(_name, _id, _age, _gender, _address);
         patients[msg.sender] = newPatient;
@@ -98,7 +105,7 @@ contract Contrato {
     }
 
     function patientExists(address _patientAddress) public view returns (bool) {
-    return patients[_patientAddress].registrado;
+    return patients[_patientAddress].registradoP;
     }
 
     // Función Iniciar sesion paciente
@@ -124,15 +131,14 @@ contract Contrato {
     function addMed(string memory  _nombreM, string memory  _apellidosM, string memory  _telefonoM, address  _adressM,
         string memory  _correoM, string memory  _passM, string memory  _idM, string memory  _espM) public {
         // Comprobar si el usuario ya existe en el mapping
-        if (meds[_adressM].registrado) {
+        if (meds[_adressM].registradoM) {
             // Enviar una excepción si el usuario ya existe
-            revert("El usuario ya existe en el mapping");
+            revert("La addresd que estas ingresando ya esta registrada, ya existe este medico");
         }
-        // // Verifica si el string dado está en la lista de id autorizados
-        // require(checkID[_idM], "El id de empleado no existe");
-        // checkID[_idM] = false;
-        // require(!idInUse[_idM], "Este id ya esta en uso"); 
-        // idInUse[_idM]=true;
+        // Verifica si el string dado está en la lista de id autorizados
+        require(checkID(_idM), "El id de empleado no existe");
+        require(!idInUse[_idM], "Este id ya esta en uso");
+        idInUse[_idM]=true;
         // Crea una nueva instancia del paciente
         Med memory newMed = Med({
                                                 nombreM:_nombreM, 
@@ -143,7 +149,7 @@ contract Contrato {
                                                 passM:_passM,
                                                 idM:_idM,
                                                 espM:_espM,
-                                                registrado:true});
+                                                registradoM:true});
         // Asigna el paciente al mapeo
         //patients[_id] = Patient(_name, _id, _age, _gender, _address);
         meds[msg.sender] = newMed;
@@ -152,7 +158,7 @@ contract Contrato {
     }
 
     function medExists(address _patientAddress) public view returns (bool) {
-    return meds[_patientAddress].registrado;
+    return meds[_patientAddress].registradoM;
     }
 
     // Función Iniciar trabajador de la salud
@@ -168,6 +174,17 @@ contract Contrato {
         string memory, string memory, string memory ) {
         Med memory med = meds[_med];
         return (med.nombreM, med.apellidosM, med.telefonoM,med.adressM, med.correoM, med.passM, med.idM, med.espM);
+    }
+
+    // Función para comprobar si un id está en la lista de id autorizados
+    function checkID(string memory _idM) public view returns (bool) {
+        // Verifica si el id dado está en la lista de strings autorizados
+        for (uint i = 0; i < authorizedIDs.length; i++) {
+            if (keccak256(abi.encodePacked(_idM)) == keccak256(abi.encodePacked(authorizedIDs[i]))) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
