@@ -123,7 +123,7 @@ class App extends Component {
                     this.setState({hHash})
                     this.setState({dir})
                     window.alert('Expediente almacenado con exito  ')
-                     window.location.assign("main")
+                     window.location.assign("mainMed")
             })
         }
     }
@@ -184,7 +184,7 @@ class App extends Component {
 
         <Stack sx={{ mt: 2, justifyContent: "end"  }} direction="row" spacing={2}>
           <Button onClick = {this.onSubmit} variant="contained">Guardar</Button>
-          <Button href="main">Cancel</Button>
+          <Button href="mainMed">Cancel</Button>
         </Stack>
       
     </Container>
