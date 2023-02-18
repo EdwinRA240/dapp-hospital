@@ -91,8 +91,9 @@ class App extends Component {
           window.location.assign("MainMed");
         });
       }
+    } else {
+      swal("Contraseña incorrecta", "Vuelva a intentar", "error");
     }
-    //} else {window.alert('Incorrect username or password.')}
   };
 
   handleSubmitP = async (event) => {
@@ -118,7 +119,8 @@ class App extends Component {
         });
       }
     } else {
-      window.alert("Incorrect username or password.");
+      swal("Contraseña incorrecta", "Vuelva a intentar", "error");
+      // window.alert("Incorrect username or password.");
     }
     //} else {window.alert('Incorrect username or password.')}
   };
