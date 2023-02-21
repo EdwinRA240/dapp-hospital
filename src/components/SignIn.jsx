@@ -163,19 +163,31 @@ class App extends Component {
   }
 
   handleValidateP = () => {
-    if (this.validateP == true){
+    // console.log(this.state.validateP);
+    if (this.state.validateP == true){
       this.setState({
         validateP: false,
         validateM: true
+      })
+    }else{
+      this.setState({
+        validateP: true,
+        validateM: false
       })
     }
   };
 
   handleValidateM = () => {
-    if (this.validateM == true){
+    // console.log(this.state.validateM);
+    if (this.state.validateM == true){
       this.setState({
         validateM: false,
         validateP: true
+      })
+    }else{
+      this.setState({
+        validateM: true,
+        validateP: false
       })
     }
   };
@@ -192,7 +204,7 @@ class App extends Component {
         }}
       >
         <Grid container spacing={2}>
-          {this.validateP && (
+          {this.state.validateP && (
             <Grid item xs={12} sm={6}>
               <Item>
                 {" "}
@@ -265,7 +277,7 @@ class App extends Component {
             </Grid>
           )}
 
-          {!this.validateP && (
+          {(!this.state.validateP) && (
             <Grid item xs={12} sm={6}>
               <Item>
                 {" "}
@@ -296,7 +308,7 @@ class App extends Component {
               </Item>
             </Grid>
           )}
-          {this.validateM && (<Grid item xs={12} sm={6}>
+          {this.state.validateM && (<Grid item xs={12} sm={6}>
             <Item>
               {" "}
               <Container
@@ -373,7 +385,7 @@ class App extends Component {
               </Container>
             </Item>
           </Grid>)}
-          {!this.validateM && (
+          {(!this.state.validateM) && (
             <Grid item xs={12} sm={6}>
               <Item>
                 {" "}
