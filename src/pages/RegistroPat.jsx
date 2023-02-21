@@ -22,7 +22,9 @@ class App extends Component {
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
-      await window.ethereum.request({ method: "eth_requestAccounts" });
+      await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
     }
     if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
@@ -45,7 +47,9 @@ class App extends Component {
       const contract = new web3.eth.Contract(abi, direccion);
       this.setState({ contract });
       console.log(contract);
-      const sol = await contract.methods.getPatientInfo(cuenta[0]).call();
+      const sol = await contract.methods
+        .getPatientInfo(cuenta[0])
+        .call();
       console.log(sol);
     } else {
       window.alert("Contrato Inteligente no desplegado en esta red");
@@ -54,19 +58,42 @@ class App extends Component {
 
   handleChange = async (event) => {
     event.preventDefault();
-    this.setState({ nombre: document.getElementById("nombre").value });
-    this.setState({ apellidos: document.getElementById("apellidos").value });
-    this.setState({ telefono: document.getElementById("telefono").value });
-    this.setState({ correo: document.getElementById("correo").value });
-    this.setState({ address: document.getElementById("address").value });
+    this.setState({
+      nombre: document.getElementById("nombre").value,
+    });
+    this.setState({
+      apellidos: document.getElementById("apellidos").value,
+    });
+    this.setState({
+      telefono: document.getElementById("telefono").value,
+    });
+    this.setState({
+      correo: document.getElementById("correo").value,
+    });
+    this.setState({
+      address: document.getElementById("address").value,
+    });
     this.setState({ pass: document.getElementById("pass").value });
 
-    this.setState({nomValid : /^[a-zA-Z ]+$/.test(this.state.nombre)});
-    this.setState({apeValid : /^[a-zA-Z ]+$/.test(this.state.apellidos)});
-    this.setState({telValid : /^[0-9]+$/.test(this.state.telefono)});
-    this.setState({corValid : /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.state.correo)});
-    this.setState({pasValid : /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-_])[A-Za-z\d@_-]{6,}$/.test(this.state.pass)});
-    
+    this.setState({
+      nomValid: /^[a-zA-Z ]+$/.test(this.state.nombre),
+    });
+    this.setState({
+      apeValid: /^[a-zA-Z ]+$/.test(this.state.apellidos),
+    });
+    this.setState({ telValid: /^[0-9]+$/.test(this.state.telefono) });
+    this.setState({
+      corValid:
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+          this.state.correo
+        ),
+    });
+    this.setState({
+      pasValid:
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-_])[A-Za-z\d@_-]{6,}$/.test(
+          this.state.pass
+        ),
+    });
   };
 
   enviar = async (event) => {
@@ -74,78 +101,102 @@ class App extends Component {
 
     if (!this.state.nomValid) {
       //alert("El nombre debe contener solo letras");
-      this.setState({span:"El nombre lleva solo letras"});
-
+      this.setState({ span: "El nombre lleva solo letras" });
     } else {
-        this.setState({span:""});
+      this.setState({ span: "" });
     }
 
     if (!this.state.apeValid) {
       //alert("El nombre debe contener solo letras");
-      this.setState({span2:"El apellido lleva solo letras"});
-
+      this.setState({ span2: "El apellido lleva solo letras" });
     } else {
-        this.setState({span2:""});
+      this.setState({ span2: "" });
     }
 
     if (!this.state.telValid) {
       //alert("El nombre debe contener solo letras");
-      this.setState({span3:"El telefono lleva solo letras"});
-
+      this.setState({ span3: "El telefono lleva solo letras" });
     } else {
-        this.setState({span3:""});
+      this.setState({ span3: "" });
     }
 
     if (!this.state.corValid) {
       //alert("El nombre debe contener solo letras");
-      this.setState({span4:"No cumple con el formato de un correo electronico"});
-
+      this.setState({
+        span4: "No cumple con el formato de un correo electronico",
+      });
     } else {
-        this.setState({span4:""});
+      this.setState({ span4: "" });
     }
 
     if (!this.state.pasValid) {
       //alert("El nombre debe contener solo letras");
-      this.setState({span5:"Debe llevar al menos 1 mayusacula, un signo especial (- _) y almenos 6 caracteres "});
-
+      this.setState({
+        span5:
+          "Debe llevar al menos 1 mayusacula, un signo especial (- _) y almenos 6 caracteres ",
+      });
     } else {
-        this.setState({span5:""});
+      this.setState({ span5: "" });
     }
 
-    
-
-    if (!this.state.nombre || !this.state.apellidos || !this.state.telefono || !this.state.address ||
-         !this.state.correo || !this.state.pass) {
-        alert("Todos los campos son obligatorios");
-    }else{
-      if (this.state.nomValid && this.state.apeValid && this.state.telValid && this.state.corValid &&
-         this.state.pasValid) {
-
+    if (
+      !this.state.nombre ||
+      !this.state.apellidos ||
+      !this.state.telefono ||
+      !this.state.address ||
+      !this.state.correo ||
+      !this.state.pass
+    ) {
+      swal("Error", "Todos los campos son obligatorios", "error");
+    } else {
+      if (
+        this.state.nomValid &&
+        this.state.apeValid &&
+        this.state.telValid &&
+        this.state.corValid &&
+        this.state.pasValid
+      ) {
         if (this.state.cuenta == this.state.address) {
           try {
-          await this.state.contract.methods
-            .addPatient(
-              this.state.nombre,
-              this.state.apellidos,
-              this.state.telefono,
-              this.state.address,
-              this.state.correo,
-              this.state.pass
-            )
-            .send({ from: this.state.cuenta })
-            .then((r) => {
-              window.alert("Registro existoso");
-              window.location.assign("signin");
-            })}catch (error) {
-                           window.alert("Error al crear el usuario, por el siguiente error: " + error.message);
-                          };;
+            await this.state.contract.methods
+              .addPatient(
+                this.state.nombre,
+                this.state.apellidos,
+                this.state.telefono,
+                this.state.address,
+                this.state.correo,
+                this.state.pass
+              )
+              .send({ from: this.state.cuenta })
+              .then((r) => {
+                swal(
+                  "Registro exitoso",
+                  "Presiona el boton para continuar",
+                  "success"
+                ).then(() => {
+                  window.location.assign("SignIn");
+                });
+              });
+          } catch (error) {
+            if (error.code == -32603) {
+              swal(
+                "Error",
+                "Clave o llave publica no valida",
+                "error"
+              );
+            } else {
+              swal("Error", "Se cancelo la transaccion", "error");
+            }
+          }
         } else {
-          alert(
-            "La public address ingresada no coincide con la de la cuenta activa de metamask"
+          swal(
+            "Error",
+            "La public address ingresada no coincide con la de la cuenta activa de metamask",
+            "error"
           );
         }
       } else {
-        alert('Llene correctamente los campos')
+        swal("Error", "Llene correctamente los campos", "error");
       }
     }
   };
@@ -167,12 +218,11 @@ class App extends Component {
       telValid: null,
       corValid: null,
       pasValid: null,
-      span:null,
-      span2:null,
-      span3:null,
-      span4:null,
-      span5:null,
-
+      span: null,
+      span2: null,
+      span3: null,
+      span4: null,
+      span5: null,
     };
   }
 
@@ -195,7 +245,10 @@ class App extends Component {
               id="nombre"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span}</span>}{" "}
+            </Typography>
 
             <TextField
               fullWidth
@@ -204,7 +257,10 @@ class App extends Component {
               id="apellidos"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span2}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span2}</span>}{" "}
+            </Typography>
 
             <TextField
               fullWidth
@@ -213,7 +269,10 @@ class App extends Component {
               id="telefono"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span3}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span3}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -221,7 +280,10 @@ class App extends Component {
               id="correo"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span4}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span4}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -237,10 +299,17 @@ class App extends Component {
               type="password"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span5}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span5}</span>}{" "}
+            </Typography>
           </FormGroup>
 
-          <Stack sx={{ mt: 2, justifyContent: "end" }} direction="row" spacing={2}>
+          <Stack
+            sx={{ mt: 2, justifyContent: "end" }}
+            direction="row"
+            spacing={2}
+          >
             <Button onClick={this.enviar} variant="contained">
               Crear
             </Button>

@@ -35,12 +35,14 @@ class App extends Component {
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
-      await window.ethereum.request({ method: "eth_requestAccounts" });
+      await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
     }
     if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
-      window.alert("Inicia sesion en Metamask");
+      swal("Atencion", "Inicia sesion en Metamask", "warning");
     }
   }
 
@@ -64,20 +66,30 @@ class App extends Component {
       this.setState({ contract });
       console.log("ContraroIf: " + typeof contract);
       const sol = await contract.methods.getMedInfo(cuenta[0]).call();
-      await contract.methods.getPatientInfo(cuenta[0]).call(console.log);
+      await contract.methods
+        .getPatientInfo(cuenta[0])
+        .call(console.log);
       console.log("SOl-Cuenta: " + sol);
       this.setState(sol);
     } else {
-      window.alert("Contrato Inteligente no desplegado en esta red");
+      swal(
+        "Atencion",
+        "Contrato Inteligente no desplegado en esta red",
+        "warning"
+      );
     }
   }
 
   handleSubmitM = async (event) => {
-    this.setState({ address: document.getElementById("addressM").value });
+    this.setState({
+      address: document.getElementById("addressM").value,
+    });
     this.setState({ pass: document.getElementById("passM").value });
 
     //if (this.state.sol[5] == this.state.pass){
-    const data2 = await this.state.contract.methods.medExists(this.state.cuenta).call();
+    const data2 = await this.state.contract.methods
+      .medExists(this.state.cuenta)
+      .call();
     const data = await this.state.contract.methods
       .loginMed(this.state.cuenta, this.state.pass)
       .call();
@@ -97,7 +109,9 @@ class App extends Component {
   };
 
   handleSubmitP = async (event) => {
-    this.setState({ address: document.getElementById("addressP").value });
+    this.setState({
+      address: document.getElementById("addressP").value,
+    });
     this.setState({ pass: document.getElementById("passP").value });
 
     //if (this.state.sol[5] == this.state.pass){
@@ -146,13 +160,22 @@ class App extends Component {
     return (
       <Container
         fixed
-        sx={{ flexGrow: 1, mt: 15, display: "flex", whiteSpace: "normal" }}
+        sx={{
+          flexGrow: 1,
+          mt: 15,
+          display: "flex",
+          whiteSpace: "normal",
+        }}
       >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Item>
               {" "}
-              <Container component="main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
+              <Container
+                component="main"
+                maxWidth="xs"
+                sx={{ mt: 1, mb: 5 }}
+              >
                 <CssBaseline />
                 <Box
                   sx={{
@@ -190,7 +213,9 @@ class App extends Component {
                       autoComplete="current-password"
                     />
                     <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
+                      control={
+                        <Checkbox value="remember" color="primary" />
+                      }
                       label="Recuerdame"
                     />
                     <Button
@@ -221,7 +246,11 @@ class App extends Component {
           <Grid item xs={12} sm={6}>
             <Item>
               {" "}
-              <Container component="Main" maxWidth="xs" sx={{ mt: 1, mb: 5 }}>
+              <Container
+                component="Main"
+                maxWidth="xs"
+                sx={{ mt: 1, mb: 5 }}
+              >
                 <CssBaseline />
                 <Box
                   sx={{
@@ -259,7 +288,9 @@ class App extends Component {
                       autoComplete="current-password"
                     />
                     <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
+                      control={
+                        <Checkbox value="remember" color="primary" />
+                      }
                       label="Recuerdame"
                     />
                     <Button

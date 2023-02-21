@@ -21,7 +21,9 @@ class App extends Component {
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
-      await window.ethereum.request({ method: "eth_requestAccounts" });
+      await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
     }
     if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
@@ -53,27 +55,43 @@ class App extends Component {
 
   handleChange = async (event) => {
     event.preventDefault();
-    this.setState({ nombre: document.getElementById("nombre").value });
-    this.setState({ apellidos: document.getElementById("apellidos").value });
-    this.setState({ telefono: document.getElementById("telefono").value });
-    this.setState({ correo: document.getElementById("correo").value });
-    this.setState({ address: document.getElementById("address").value });
+    this.setState({
+      nombre: document.getElementById("nombre").value,
+    });
+    this.setState({
+      apellidos: document.getElementById("apellidos").value,
+    });
+    this.setState({
+      telefono: document.getElementById("telefono").value,
+    });
+    this.setState({
+      correo: document.getElementById("correo").value,
+    });
+    this.setState({
+      address: document.getElementById("address").value,
+    });
     this.setState({ pass: document.getElementById("pass").value });
     this.setState({ id: document.getElementById("id").value });
     this.setState({ esp: document.getElementById("esp").value });
 
-    this.setState({ nomValid: /^[a-zA-Z ]+$/.test(this.state.nombre) });
-    this.setState({ apeValid: /^[a-zA-Z ]+$/.test(this.state.apellidos) });
-    this.setState({ telValid: /^[0-9]+$/.test(this.state.telefono) });
     this.setState({
-      corValid: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-        this.state.correo
-      ),
+      nomValid: /^[a-zA-Z ]+$/.test(this.state.nombre),
     });
     this.setState({
-      pasValid: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-_])[A-Za-z\d@_-]{6,}$/.test(
-        this.state.pass
-      ),
+      apeValid: /^[a-zA-Z ]+$/.test(this.state.apellidos),
+    });
+    this.setState({ telValid: /^[0-9]+$/.test(this.state.telefono) });
+    this.setState({
+      corValid:
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+          this.state.correo
+        ),
+    });
+    this.setState({
+      pasValid:
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-_])[A-Za-z\d@_-]{6,}$/.test(
+          this.state.pass
+        ),
     });
     this.setState({ espValid: /^[a-zA-Z ]+$/.test(this.state.esp) });
   };
@@ -100,7 +118,9 @@ class App extends Component {
     }
 
     if (!this.state.corValid) {
-      this.setState({ span4: "No cumple con el formato de un correo electronico" });
+      this.setState({
+        span4: "No cumple con el formato de un correo electronico",
+      });
     } else {
       this.setState({ span4: "" });
     }
@@ -128,11 +148,7 @@ class App extends Component {
       !this.state.pass
     ) {
       // alert("Todos los campos son obligatorios");
-      swal(
-        "Error",
-        "Todos los campos son obligatorios",
-        "error"
-      );
+      swal("Error", "Todos los campos son obligatorios", "error");
     } else {
       if (
         this.state.nomValid &&
@@ -168,27 +184,17 @@ class App extends Component {
               });
           } catch (error) {
             JSON.stringify(error);
-            console.log(error);
-            console.log(error.code);
-            console.log(error.stack);
 
-            // 0x37E9DFb12160E9d7970d5696a4D70Be8A4efd234
-            
-            if(error.code == -32603){
+            if (error.code == -32603) {
               swal(
                 "Error",
                 "Clave o llave publica no valida",
                 "error"
               );
-            }else{
-              swal(
-                "Error",
-                "Se cancelo la transaccion",
-                "error"
-              );
+            } else {
+              swal("Error", "Se cancelo la transaccion", "error");
             }
-        }
-        
+          }
         } else {
           swal(
             "Error",
@@ -197,12 +203,7 @@ class App extends Component {
           );
         }
       } else {
-        // alert("Llene correctamente los campos");
-        swal(
-          "Error",
-          "Llene correctamente los campos",
-          "error"
-        );
+        swal("Error", "Llene correctamente los campos", "error");
       }
     }
   };
@@ -256,7 +257,10 @@ class App extends Component {
               id="nombre"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -264,7 +268,10 @@ class App extends Component {
               id="apellidos"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span2}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span2}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -272,7 +279,10 @@ class App extends Component {
               id="telefono"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span3}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span3}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -280,7 +290,10 @@ class App extends Component {
               id="correo"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span4}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span4}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -295,7 +308,10 @@ class App extends Component {
               id="esp"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span6}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span6}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               required
@@ -313,10 +329,17 @@ class App extends Component {
               id="pass"
               onChange={this.handleChange}
             />
-            <Typography color="red"> {<span>{this.state.span5}</span>} </Typography>
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span5}</span>}{" "}
+            </Typography>
           </FormGroup>
 
-          <Stack sx={{ mt: 2, justifyContent: "end" }} direction="row" spacing={2}>
+          <Stack
+            sx={{ mt: 2, justifyContent: "end" }}
+            direction="row"
+            spacing={2}
+          >
             <Button onClick={this.enviar} variant="contained">
               Crear
             </Button>
