@@ -17,6 +17,8 @@ import Typography from "@mui/material/Typography";
 import Web3 from "web3";
 import Contrato from "/build/contracts/Contrato.json";
 import swal from "sweetalert";
+import metamask from "./../assets/metamask.svg";
+import { CardMedia } from "@mui/material";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -76,7 +78,7 @@ class App extends Component {
     } else {
       swal(
         "Atencion",
-        "Contrato Inteligente no desplegado en esta red",
+        "Contrato Inteligente no desplegado en la red",
         "warning"
       );
     }
@@ -155,8 +157,28 @@ class App extends Component {
       passM: [],
       passP:[],
       contract: null,
+      validateP: true,
+      validateM: false,
     };
   }
+
+  handleValidateP = () => {
+    if (this.validateP == true){
+      this.setState({
+        validateP: false,
+        validateM: true
+      })
+    }
+  };
+
+  handleValidateM = () => {
+    if (this.validateM == true){
+      this.setState({
+        validateM: false,
+        validateP: true
+      })
+    }
+  };
 
   render() {
     return (
@@ -170,82 +192,111 @@ class App extends Component {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <Item>
-              {" "}
-              <Container
-                component="main"
-                maxWidth="xs"
-                sx={{ mt: 1, mb: 5 }}
-              >
-                <CssBaseline />
-                <Box
-                  sx={{
-                    marginTop: 5,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+          {this.validateP && (
+            <Grid item xs={12} sm={6}>
+              <Item>
+                {" "}
+                <Container
+                  component="main"
+                  maxWidth="xs"
+                  sx={{ mt: 1, mb: 5 }}
                 >
-                  <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                    <LockOutlinedIcon />
-                  </Avatar>
-                  <Typography component="h1" variant="h5">
-                    Inicio de sesion de Pacientes
-                  </Typography>
-                  <Box component="form" noValidate sx={{ mt: 1 }}>
-                    <TextField
-                      required
-                      margin="normal"
-                      fullWidth
-                      name="useer"
-                      id="addressP"
-                      onChange={this.handleChangeP}
-                      label="Public Address Patient "
-                      autoComplete="Public Address Patient "
-                      autoFocus
-                    />
-                    <TextField
-                      required
-                      margin="normal"
-                      fullWidth
-                      name="password"
-                      id="passP"
-                      onChange={this.handleChangeP}
-                      label="Password"
-                      type="password"
-                      autoComplete="current-password"
-                    />
-                    {/*<FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Recuerdame"
-                    />*/}
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      onClick={this.handleSubmitP}
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      Iniciar Sesion
-                    </Button>
-                    <Grid container>
-                      <Grid item xs>
-                        <Link href="PassPat" variant="body2">
-                          ¿Olvidaste tu contraseña?
-                        </Link>
+                  <CssBaseline />
+                  <Box
+                    sx={{
+                      marginTop: 5,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                      <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                      Inicio de sesion de Pacientes
+                    </Typography>
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
+                      <TextField
+                        required
+                        margin="normal"
+                        fullWidth
+                        name="useer"
+                        id="addressP"
+                        label="Public Address Patient "
+                        autoComplete="Public Address Patient "
+                        autoFocus
+                      />
+                      <TextField
+                        required
+                        margin="normal"
+                        fullWidth
+                        name="password"
+                        id="passP"
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                      />
+
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        onClick={this.handleSubmitP}
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Iniciar Sesion
+                      </Button>
+                      <Grid container>
+                        <Grid item xs>
+                          <Link href="PassPat" variant="body2">
+                            ¿Olvidaste tu contraseña?
+                          </Link>
+                        </Grid>
+                        <Grid item>
+                          <Link href="/registroPat" variant="body2">
+                            {"¿No tienes cuenta? Inscribete aqui"}
+                          </Link>
+                        </Grid>
                       </Grid>
-                      <Grid item>
-                        <Link href="/registroPat" variant="body2">
-                          {"¿No tienes cuenta? Inscribete aqui"}
-                        </Link>
-                      </Grid>
-                    </Grid>
+                    </Box>
                   </Box>
-                </Box>
-              </Container>
-            </Item>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+                </Container>
+              </Item>
+            </Grid>
+          )}
+
+          {!this.validateP && (
+            <Grid item xs={12} sm={6}>
+              <Item>
+                {" "}
+                <Container
+                  component="main"
+                  maxWidth="xs"
+                  sx={{ mt: 1, mb: 5 }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={metamask}
+                    sx={{
+                      maxWidth: "30%",
+                      margin: "auto",
+                      p: 2,
+                    }}
+                  />
+
+                  <Button
+                    onClick={this.handleValidateP}
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Soy un paciente
+                  </Button>
+                </Container>
+              </Item>
+            </Grid>
+          )}
+          {this.validateM && (<Grid item xs={12} sm={6}>
             <Item>
               {" "}
               <Container
@@ -291,10 +342,12 @@ class App extends Component {
                       type="password"
                       autoComplete="current-password"
                     />
-                    {/*<FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
+                    <FormControlLabel
+                      control={
+                        <Checkbox value="remember" color="primary" />
+                      }
                       label="Recuerdame"
-                    />*/}
+                    />
                     <Button
                       onClick={this.handleSubmitM}
                       fullWidth
@@ -319,7 +372,38 @@ class App extends Component {
                 </Box>
               </Container>
             </Item>
-          </Grid>
+          </Grid>)}
+          {!this.validateM && (
+            <Grid item xs={12} sm={6}>
+              <Item>
+                {" "}
+                <Container
+                  component="main"
+                  maxWidth="xs"
+                  sx={{ mt: 1, mb: 5 }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={metamask}
+                    sx={{
+                      maxWidth: "30%",
+                      margin: "auto",
+                      p: 2,
+                    }}
+                  />
+
+                  <Button
+                    onClick={this.handleValidateM}
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Soy un medico
+                  </Button>
+                </Container>
+              </Item>
+            </Grid>
+          )}
         </Grid>
       </Container>
     );
