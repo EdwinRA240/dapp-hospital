@@ -64,13 +64,15 @@ class App extends Component {
       const direccion = coneccion_data.address;
       const contract = new web3.eth.Contract(abi, direccion);
       this.setState({ contract });
-      console.log("ContraroIf: " + typeof contract);
-      const sol = await contract.methods.getMedInfo(cuenta[0]).call();
+      console.log("ContraroIf: "+typeof(contract));
+      const passM = await contract.methods.getMedInfo(cuenta[0]).call();
+      const passP = await contract.methods.getPatientInfo(cuenta[0]).call();
+      this.setState({passM});
+      this.setState({passP});
       await contract.methods
         .getPatientInfo(cuenta[0])
         .call(console.log);
       console.log("SOl-Cuenta: " + sol);
-      this.setState(sol);
     } else {
       swal(
         "Atencion",
@@ -80,13 +82,16 @@ class App extends Component {
     }
   }
 
-  handleSubmitM = async (event) => {
-    this.setState({
-      address: document.getElementById("addressM").value,
-    });
-    this.setState({ pass: document.getElementById("passM").value });
+  handleChangeM = async (event) => {
+        event.preventDefault()
+        this.setState({ address: document.getElementById("addressM").value });
+        this.setState({ pass: document.getElementById("passM").value });
 
-    //if (this.state.sol[5] == this.state.pass){
+    }
+
+  handleSubmitM = async (event) => {
+
+    if (this.state.passM[5] == this.state.pass & this.state.passM[3] == this.state.address){
     const data2 = await this.state.contract.methods
       .medExists(this.state.cuenta)
       .call();
@@ -103,18 +108,15 @@ class App extends Component {
           window.location.assign("MainMed");
         });
       }
+    }
     } else {
       swal("Contraseña incorrecta", "Vuelva a intentar", "error");
     }
   };
 
   handleSubmitP = async (event) => {
-    this.setState({
-      address: document.getElementById("addressP").value,
-    });
-    this.setState({ pass: document.getElementById("passP").value });
 
-    //if (this.state.sol[5] == this.state.pass){
+    if (this.state.passP[5] == this.state.pass & this.state.passP[3] == this.state.address ){
     const data2 = await this.state.contract.methods
       .patientExists(this.state.cuenta)
       .call();
@@ -129,14 +131,13 @@ class App extends Component {
           "Presiona el boton para continuar",
           "success"
         ).then(() => {
-          window.location.assign("MainPat");
+          window.location.assign("MainMed");
         });
       }
+    }
     } else {
       swal("Contraseña incorrecta", "Vuelva a intentar", "error");
-      // window.alert("Incorrect username or password.");
     }
-    //} else {window.alert('Incorrect username or password.')}
   };
 
   constructor(props) {
@@ -151,7 +152,8 @@ class App extends Component {
       cuenta: "",
       data: false,
       data2: false,
-      sol: [],
+      passM: [],
+      passP:[],
       contract: null,
     };
   }
@@ -198,6 +200,7 @@ class App extends Component {
                       fullWidth
                       name="useer"
                       id="addressP"
+                      onChange={this.handleChangeP}
                       label="Public Address Patient "
                       autoComplete="Public Address Patient "
                       autoFocus
@@ -208,16 +211,15 @@ class App extends Component {
                       fullWidth
                       name="password"
                       id="passP"
+                      onChange={this.handleChangeP}
                       label="Password"
                       type="password"
                       autoComplete="current-password"
                     />
-                    <FormControlLabel
-                      control={
-                        <Checkbox value="remember" color="primary" />
-                      }
+                    {/*<FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
                       label="Recuerdame"
-                    />
+                    />*/}
                     <Button
                       fullWidth
                       variant="contained"
@@ -273,6 +275,7 @@ class App extends Component {
                       fullWidth
                       name="useer"
                       id="addressM"
+                      onChange={this.handleChangeM}
                       label="Public Address Doctor"
                       autoComplete="Public Address Doctor"
                       autoFocus
@@ -283,16 +286,15 @@ class App extends Component {
                       fullWidth
                       name="password"
                       id="passM"
+                      onChange={this.handleChangeM}
                       label="Password"
                       type="password"
                       autoComplete="current-password"
                     />
-                    <FormControlLabel
-                      control={
-                        <Checkbox value="remember" color="primary" />
-                      }
+                    {/*<FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
                       label="Recuerdame"
-                    />
+                    />*/}
                     <Button
                       onClick={this.handleSubmitM}
                       fullWidth

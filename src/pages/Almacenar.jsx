@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Web3 from 'web3'
 import {Buffer} from "buffer";
 window.Buffer = Buffer; 
+import swal from "sweetalert";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import {
   Button,
@@ -86,6 +87,8 @@ class App extends Component {
         trat:'',
         dir:'',
         date:'',
+        state:'',
+        note:'',
         sol:[null],
     };
     }
@@ -104,7 +107,7 @@ class App extends Component {
         }
     }
 
-    onSubmit = async (event) => {
+    handleChange = async (event) => {
         event.preventDefault()
         this.setState({dir: document.getElementById("dir").value})
         this.setState({nombre: document.getElementById("nombre").value})
@@ -112,19 +115,64 @@ class App extends Component {
         this.setState({diag: document.getElementById("diag").value})
         this.setState({trat: document.getElementById("trat").value})
         this.setState({date: document.getElementById("date").value})
+        this.setState({state: document.getElementById("state").value})
+        this.setState({note: document.getElementById("note").value})
 
+        
+
+    }
+
+    onSubmit = async (event) => {
+        event.preventDefault()
         console.log("Mandando archivo ...")
+        if(!this.state.buffer){
+            const hHash='Sin archivo adjunto'
+            try {
+            await this.state.contract.methods.addRecord(this.state.dir,this.state.cuenta,this.state.nombre,this.state.edad,
+                this.state.diag,this.state.trat,this.state.date,hHash,this.state.state,this.state.note).send({from:this.state.cuenta}).then((r)=>{
+                    this.setState({hHash})
+                    this.setState({dir})
+                    //window.alert('Expediente almacenado con exito  ')
+                    swal(
+                            "Almacenamiento Exitoso",
+                            "El expediente clinico se a almacenado correctamente",
+                            "success"
+                        ).then(() => {
+                                window.location.assign("MainMed")
+                            });
+            })}catch (error) {
+                       //window.alert("Error al Almacenar el ECE, por el siguiente error: " + error.message);
+                        swal(
+                                "Error",
+                                "Error al Almacenar el ECE, por el siguiente error: " + error.message,
+                                "error"
+                        ); 
+                      };
+        }
         if(this.state.buffer){
             const result = await ipfs.add(this.state.buffer);
             const hHash = result.path
             console.log("Hash del archivo en la ipfs:",hHash)
-            this.state.contract.methods.addRecord(this.state.dir,this.state.cuenta,this.state.nombre,this.state.edad,
-                this.state.diag,this.state.trat,this.state.date,hHash).send({from:this.state.cuenta}).then((r)=>{
+            try {
+            await this.state.contract.methods.addRecord(this.state.dir,this.state.cuenta,this.state.nombre,this.state.edad,
+                this.state.diag,this.state.trat,this.state.date,hHash,this.state.state,this.state.note).send({from:this.state.cuenta}).then((r)=>{
                     this.setState({hHash})
                     this.setState({dir})
-                    window.alert('Expediente almacenado con exito  ')
-                     window.location.assign("mainMed")
-            })
+                    //window.alert('Expediente almacenado con exito  ')
+                    swal(
+                            "Almacenamiento Exitoso",
+                            "El expediente clinico se a almacenado correctamente",
+                            "success"
+                        ).then(() => {
+                                window.location.assign("MainMed")
+                            });
+            })}catch (error) {
+                      swal(
+                                "Error",
+                                "Error al Almacenar el ECE, por el siguiente error: " + error.message,
+                                "error"
+                        );
+                      };
         }
     }
    
@@ -147,36 +195,56 @@ class App extends Component {
             sx={{ mt: 2 }}
             label="Public Adress Patient"
             id="dir"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Nombre Completo del paciente"
             id="nombre"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Edad del paciente"
             id="edad"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Diagnostico del paciente"
             id="diag"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Tratamiento del paciente"
             id="trat"
+            onChange={this.handleChange}
+          />
+          <TextField
+            fullWidth
+            sx={{ mt: 2 }}
+            label="Estado"
+            id="state"
+            onChange={this.handleChange}
           />
           <TextField
             fullWidth
             sx={{ mt: 2 }}
             label="Fecha"
             id="date"
+            onChange={this.handleChange}
+          />
+          <TextField
+            fullWidth
+            sx={{ mt: 2 }}
+            label="Notas adicionales"
+            id="note"
+            onChange={this.handleChange}
           />
           <Typography textAlign= 'center' sx={{ mt: 2 }}>Adjunte archivo:</Typography> <input   type='file' onChange = {this.captureFile}/>
           
