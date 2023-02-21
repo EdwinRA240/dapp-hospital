@@ -17,8 +17,9 @@ import Typography from "@mui/material/Typography";
 import Web3 from "web3";
 import Contrato from "/build/contracts/Contrato.json";
 import swal from "sweetalert";
-import metamask from "./../assets/metamask.svg";
-import { CardMedia } from "@mui/material";
+import { CardMedia } from "@mui/material";    
+import medico from "./../assets/medico.png";
+import patient from "./../assets/patient.png";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -280,7 +281,6 @@ class App extends Component {
           {(!this.state.validateP) && (
             <Grid item xs={12} sm={6}>
               <Item>
-                {" "}
                 <Container
                   component="main"
                   maxWidth="xs"
@@ -288,9 +288,9 @@ class App extends Component {
                 >
                   <CardMedia
                     component="img"
-                    image={metamask}
+                    image={patient}
                     sx={{
-                      maxWidth: "30%",
+                      maxWidth: "100%",
                       margin: "auto",
                       p: 2,
                     }}
@@ -396,9 +396,9 @@ class App extends Component {
                 >
                   <CardMedia
                     component="img"
-                    image={metamask}
+                    image={medico}
                     sx={{
-                      maxWidth: "30%",
+                      maxWidth: "100%",
                       margin: "auto",
                       p: 2,
                     }}
