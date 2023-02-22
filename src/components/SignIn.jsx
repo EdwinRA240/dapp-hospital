@@ -354,12 +354,6 @@ class App extends Component {
                       type="password"
                       autoComplete="current-password"
                     />
-                    <FormControlLabel
-                      control={
-                        <Checkbox value="remember" color="primary" />
-                      }
-                      label="Recuerdame"
-                    />
                     <Button
                       onClick={this.handleSubmitM}
                       fullWidth
