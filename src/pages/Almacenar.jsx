@@ -12,7 +12,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Contrato from '/build/contracts/Contrato.json'
+import Contrato from '/build/contracts/Contrato.json';
+import Footer from '../components/Footer';
 
 const projectid='2HE6500liSrLAhibQqMO1xM0bkq'
 const projectsecret='1ec2056ba2d6fd362d71a52f4e5c6ed0'
@@ -179,8 +180,8 @@ class App extends Component {
 
   render() {
     return (
-       
-        <Container
+      <>
+      <Container
         maxWidth="sm"
         sx={{
           mt: 15,
@@ -256,6 +257,8 @@ class App extends Component {
         </Stack>
       
     </Container>
+    <Footer/>
+      </>
     );
   }
 }

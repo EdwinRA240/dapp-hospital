@@ -17,7 +17,7 @@ import Typography from "@mui/material/Typography";
 import Web3 from "web3";
 import Contrato from "/build/contracts/Contrato.json";
 import swal from "sweetalert";
-import { CardMedia } from "@mui/material";    
+import { CardMedia } from "@mui/material";
 import medico from "./../assets/medico.png";
 import patient from "./../assets/patient.png";
 
@@ -67,11 +67,15 @@ class App extends Component {
       const direccion = coneccion_data.address;
       const contract = new web3.eth.Contract(abi, direccion);
       this.setState({ contract });
-      console.log("ContraroIf: "+typeof(contract));
-      const passM = await contract.methods.getMedInfo(cuenta[0]).call();
-      const passP = await contract.methods.getPatientInfo(cuenta[0]).call();
-      this.setState({passM});
-      this.setState({passP});
+      console.log("ContraroIf: " + typeof contract);
+      const passM = await contract.methods
+        .getMedInfo(cuenta[0])
+        .call();
+      const passP = await contract.methods
+        .getPatientInfo(cuenta[0])
+        .call();
+      this.setState({ passM });
+      this.setState({ passP });
       await contract.methods
         .getPatientInfo(cuenta[0])
         .call(console.log);
@@ -86,58 +90,71 @@ class App extends Component {
   }
 
   handleChangeM = async (event) => {
-        event.preventDefault()
-        this.setState({ address: document.getElementById("addressM").value });
-        this.setState({ pass: document.getElementById("passM").value });
+    event.preventDefault();
+    this.setState({
+      address: document.getElementById("addressM").value,
+    });
+    this.setState({ pass: document.getElementById("passM").value });
+  };
 
-    }
+  handleChangeP = async (event) => {
+    event.preventDefault();
+    this.setState({
+      address: document.getElementById("addressP").value,
+    });
+    this.setState({ pass: document.getElementById("passP").value });
+  };
 
   handleSubmitM = async (event) => {
-
-    if (this.state.passM[5] == this.state.pass & this.state.passM[3] == this.state.address){
-    const data2 = await this.state.contract.methods
-      .medExists(this.state.cuenta)
-      .call();
-    const data = await this.state.contract.methods
-      .loginMed(this.state.cuenta, this.state.pass)
-      .call();
-    if (data2 == true) {
-      if (data == true) {
-        swal(
-          "Inicio de sesion correcto",
-          "Presiona el boton para continuar",
-          "success"
-        ).then(() => {
-          window.location.assign("MainMed");
-        });
+    if (
+      (this.state.passM[5] == this.state.pass) &
+      (this.state.passM[3] == this.state.address)
+    ) {
+      const data2 = await this.state.contract.methods
+        .medExists(this.state.cuenta)
+        .call();
+      const data = await this.state.contract.methods
+        .loginMed(this.state.cuenta, this.state.pass)
+        .call();
+      if (data2 == true) {
+        if (data == true) {
+          swal(
+            "Inicio de sesion correcto",
+            "Presiona el boton para continuar",
+            "success"
+          ).then(() => {
+            window.location.assign("MainMed");
+          });
+        }
       }
-    }
     } else {
       swal("Contraseña incorrecta", "Vuelva a intentar", "error");
     }
   };
 
   handleSubmitP = async (event) => {
+    if (
+      (this.state.passP[5] == this.state.pass) &
+      (this.state.passP[3] == this.state.address)
+    ) {
+      const data2 = await this.state.contract.methods
+        .patientExists(this.state.cuenta)
+        .call();
+      const data = await this.state.contract.methods
+        .loginPatient(this.state.cuenta, this.state.pass)
+        .call();
 
-    if (this.state.passP[5] == this.state.pass & this.state.passP[3] == this.state.address ){
-    const data2 = await this.state.contract.methods
-      .patientExists(this.state.cuenta)
-      .call();
-    const data = await this.state.contract.methods
-      .loginPatient(this.state.cuenta, this.state.pass)
-      .call();
-
-    if (data2 == true) {
-      if (data == true) {
-        swal(
-          "Inicio de sesion correcto",
-          "Presiona el boton para continuar",
-          "success"
-        ).then(() => {
-          window.location.assign("MainMed");
-        });
+      if (data2 == true) {
+        if (data == true) {
+          swal(
+            "Inicio de sesion correcto",
+            "Presiona el boton para continuar",
+            "success"
+          ).then(() => {
+            window.location.assign("MainPat");
+          });
+        }
       }
-    }
     } else {
       swal("Contraseña incorrecta", "Vuelva a intentar", "error");
     }
@@ -156,7 +173,7 @@ class App extends Component {
       data: false,
       data2: false,
       passM: [],
-      passP:[],
+      passP: [],
       contract: null,
       validateP: true,
       validateM: false,
@@ -165,31 +182,31 @@ class App extends Component {
 
   handleValidateP = () => {
     // console.log(this.state.validateP);
-    if (this.state.validateP == true){
+    if (this.state.validateP == true) {
       this.setState({
         validateP: false,
-        validateM: true
-      })
-    }else{
+        validateM: true,
+      });
+    } else {
       this.setState({
         validateP: true,
-        validateM: false
-      })
+        validateM: false,
+      });
     }
   };
 
   handleValidateM = () => {
     // console.log(this.state.validateM);
-    if (this.state.validateM == true){
+    if (this.state.validateM == true) {
       this.setState({
         validateM: false,
-        validateP: true
-      })
-    }else{
+        validateP: true,
+      });
+    } else {
       this.setState({
         validateM: true,
-        validateP: false
-      })
+        validateP: false,
+      });
     }
   };
 
@@ -239,6 +256,7 @@ class App extends Component {
                         label="Public Address Patient "
                         autoComplete="Public Address Patient "
                         autoFocus
+                        onChange={this.handleChangeP}
                       />
                       <TextField
                         required
@@ -249,6 +267,7 @@ class App extends Component {
                         label="Password"
                         type="password"
                         autoComplete="current-password"
+                        onChange={this.handleChangeP}
                       />
 
                       <Button
@@ -278,7 +297,7 @@ class App extends Component {
             </Grid>
           )}
 
-          {(!this.state.validateP) && (
+          {!this.state.validateP && (
             <Grid item xs={12} sm={6}>
               <Item>
                 <Container
@@ -308,78 +327,80 @@ class App extends Component {
               </Item>
             </Grid>
           )}
-          {this.state.validateM && (<Grid item xs={12} sm={6}>
-            <Item>
-              {" "}
-              <Container
-                component="Main"
-                maxWidth="xs"
-                sx={{ mt: 1, mb: 5 }}
-              >
-                <CssBaseline />
-                <Box
-                  sx={{
-                    marginTop: 5,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
+          {this.state.validateM && (
+            <Grid item xs={12} sm={6}>
+              <Item>
+                {" "}
+                <Container
+                  component="Main"
+                  maxWidth="xs"
+                  sx={{ mt: 1, mb: 5 }}
                 >
-                  <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                    <LockOutlinedIcon />
-                  </Avatar>
-                  <Typography component="h1" variant="h5">
-                    Inicio de sesion de Medicos
-                  </Typography>
-                  <Box component="form" noValidate sx={{ mt: 1 }}>
-                    <TextField
-                      required
-                      margin="normal"
-                      fullWidth
-                      name="useer"
-                      id="addressM"
-                      onChange={this.handleChangeM}
-                      label="Public Address Doctor"
-                      autoComplete="Public Address Doctor"
-                      autoFocus
-                    />
-                    <TextField
-                      required
-                      margin="normal"
-                      fullWidth
-                      name="password"
-                      id="passM"
-                      onChange={this.handleChangeM}
-                      label="Password"
-                      type="password"
-                      autoComplete="current-password"
-                    />
-                    <Button
-                      onClick={this.handleSubmitM}
-                      fullWidth
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      Iniciar Sesion
-                    </Button>
-                    <Grid container>
-                      <Grid item xs>
-                        <Link href="PassMed" variant="body2">
-                          ¿Olvidaste tu contraseña?
-                        </Link>
+                  <CssBaseline />
+                  <Box
+                    sx={{
+                      marginTop: 5,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                      <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                      Inicio de sesion de Medicos
+                    </Typography>
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
+                      <TextField
+                        required
+                        margin="normal"
+                        fullWidth
+                        name="useer"
+                        id="addressM"
+                        onChange={this.handleChangeM}
+                        label="Public Address Doctor"
+                        autoComplete="Public Address Doctor"
+                        autoFocus
+                      />
+                      <TextField
+                        required
+                        margin="normal"
+                        fullWidth
+                        name="password"
+                        id="passM"
+                        onChange={this.handleChangeM}
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                      />
+                      <Button
+                        onClick={this.handleSubmitM}
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Iniciar Sesion
+                      </Button>
+                      <Grid container>
+                        <Grid item xs>
+                          <Link href="PassMed" variant="body2">
+                            ¿Olvidaste tu contraseña?
+                          </Link>
+                        </Grid>
+                        <Grid item>
+                          <Link href="/registroMed" variant="body2">
+                            {"¿No tienes cuenta? Inscribete aqui"}
+                          </Link>
+                        </Grid>
                       </Grid>
-                      <Grid item>
-                        <Link href="/registroMed" variant="body2">
-                          {"¿No tienes cuenta? Inscribete aqui"}
-                        </Link>
-                      </Grid>
-                    </Grid>
+                    </Box>
                   </Box>
-                </Box>
-              </Container>
-            </Item>
-          </Grid>)}
-          {(!this.state.validateM) && (
+                </Container>
+              </Item>
+            </Grid>
+          )}
+          {!this.state.validateM && (
             <Grid item xs={12} sm={6}>
               <Item>
                 {" "}
