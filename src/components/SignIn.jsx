@@ -85,6 +85,15 @@ class App extends Component {
     }
   }
 
+  handleCancel = async (event) => {
+        event.preventDefault()
+        this.setState({
+        validateP: false,
+        validateM: false
+        })
+
+    }
+
   handleChangeM = async (event) => {
         event.preventDefault()
         this.setState({ address: document.getElementById("addressM").value });
@@ -158,7 +167,7 @@ class App extends Component {
       passM: [],
       passP:[],
       contract: null,
-      validateP: true,
+      validateP: false,
       validateM: false,
     };
   }
@@ -204,6 +213,14 @@ class App extends Component {
           whiteSpace: "normal",
         }}
       >
+
+       {(!this.state.validateP) & (!this.state.validateM) && (
+          <Typography variant="h3" align="center" color="text.primary" >
+              ¿ Quién eres ?
+            </Typography> 
+        )}
+
+        
         <Grid container spacing={2}>
           {this.state.validateP && (
             <Grid item xs={12} sm={6}>
@@ -271,6 +288,13 @@ class App extends Component {
                           </Link>
                         </Grid>
                       </Grid>
+                      <Button
+                        variant="contained"
+                        onClick={this.handleCancel}
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                      Cancelar
+                      </Button>
                     </Box>
                   </Box>
                 </Container>
@@ -380,6 +404,13 @@ class App extends Component {
                         </Link>
                       </Grid>
                     </Grid>
+                    <Button
+                        variant="contained"
+                        onClick={this.handleCancel}
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                      Cancelar
+                      </Button>
                   </Box>
                 </Box>
               </Container>
