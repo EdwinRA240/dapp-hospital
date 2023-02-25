@@ -14,12 +14,12 @@ const footer = () => {
           color="text.secondary"
           component="p"
         >
-          Proyecto de Titulacion
+          Proyecto de Titulación
         </Typography>
         <Typography variant="body2" color="text.secondary" align="center">
           {"Copyright © "}
           <Link color="inherit" href="#">
-            esimecu.com
+            www.esimecu.com.mx
           </Link>{" "}
           {new Date().getFullYear()}
           {"."}

@@ -9,8 +9,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -20,6 +18,7 @@ import swal from "sweetalert";
 import { CardMedia } from "@mui/material";
 import medico from "./../assets/medico.png";
 import patient from "./../assets/patient.png";
+import Footer from '../components/Footer';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -79,7 +78,7 @@ class App extends Component {
       await contract.methods
         .getPatientInfo(cuenta[0])
         .call(console.log);
-      console.log("SOl-Cuenta: " + sol);
+      console.log("SOl-Cuenta: " + cuenta);
     } else {
       swal(
         "Atencion",
@@ -175,7 +174,7 @@ class App extends Component {
       passM: [],
       passP: [],
       contract: null,
-      validateP: true,
+      validateP: false,
       validateM: false,
     };
   }
@@ -212,26 +211,25 @@ class App extends Component {
 
   render() {
     return (
+      <>
       <Container
         fixed
         sx={{
           flexGrow: 1,
-          mt: 15,
+          mt: 13,
           display: "flex",
           whiteSpace: "normal",
         }}
       >
-        <Grid container spacing={2}>
+        <Grid container alignItems="center" spacing={2}>
           {this.state.validateP && (
             <Grid item xs={12} sm={6}>
               <Item>
-                {" "}
                 <Container
                   component="main"
                   maxWidth="xs"
                   sx={{ mt: 1, mb: 5 }}
                 >
-                  <CssBaseline />
                   <Box
                     sx={{
                       marginTop: 5,
@@ -244,7 +242,7 @@ class App extends Component {
                       <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                      Inicio de sesion de Pacientes
+                      Inicio de sesión de Pacientes
                     </Typography>
                     <Box component="form" noValidate sx={{ mt: 1 }}>
                       <TextField
@@ -253,8 +251,8 @@ class App extends Component {
                         fullWidth
                         name="useer"
                         id="addressP"
-                        label="Public Address Patient "
-                        autoComplete="Public Address Patient "
+                        label="Llave pública"
+                        autoComplete="Llave pública "
                         autoFocus
                         onChange={this.handleChangeP}
                       />
@@ -264,19 +262,18 @@ class App extends Component {
                         fullWidth
                         name="password"
                         id="passP"
-                        label="Password"
+                        label="Contraseña"
                         type="password"
                         autoComplete="current-password"
                         onChange={this.handleChangeP}
                       />
-
                       <Button
                         fullWidth
                         variant="contained"
                         onClick={this.handleSubmitP}
                         sx={{ mt: 3, mb: 2 }}
                       >
-                        Iniciar Sesion
+                        Iniciar Sesión
                       </Button>
                       <Grid container>
                         <Grid item xs>
@@ -286,7 +283,7 @@ class App extends Component {
                         </Grid>
                         <Grid item>
                           <Link href="/registroPat" variant="body2">
-                            {"¿No tienes cuenta? Inscribete aqui"}
+                            {"¿No tienes cuenta? Regístrate aquí"}
                           </Link>
                         </Grid>
                       </Grid>
@@ -296,7 +293,6 @@ class App extends Component {
               </Item>
             </Grid>
           )}
-
           {!this.state.validateP && (
             <Grid item xs={12} sm={6}>
               <Item>
@@ -309,12 +305,11 @@ class App extends Component {
                     component="img"
                     image={patient}
                     sx={{
-                      maxWidth: "100%",
+                      maxWidth: "70%",
                       margin: "auto",
                       p: 2,
                     }}
                   />
-
                   <Button
                     onClick={this.handleValidateP}
                     fullWidth
@@ -330,13 +325,11 @@ class App extends Component {
           {this.state.validateM && (
             <Grid item xs={12} sm={6}>
               <Item>
-                {" "}
                 <Container
                   component="Main"
                   maxWidth="xs"
                   sx={{ mt: 1, mb: 5 }}
                 >
-                  <CssBaseline />
                   <Box
                     sx={{
                       marginTop: 5,
@@ -349,7 +342,7 @@ class App extends Component {
                       <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                      Inicio de sesion de Medicos
+                      Inicio de sesión de Médicos
                     </Typography>
                     <Box component="form" noValidate sx={{ mt: 1 }}>
                       <TextField
@@ -359,8 +352,8 @@ class App extends Component {
                         name="useer"
                         id="addressM"
                         onChange={this.handleChangeM}
-                        label="Public Address Doctor"
-                        autoComplete="Public Address Doctor"
+                        label="Llave pública"
+                        autoComplete="Llave pública"
                         autoFocus
                       />
                       <TextField
@@ -370,7 +363,7 @@ class App extends Component {
                         name="password"
                         id="passM"
                         onChange={this.handleChangeM}
-                        label="Password"
+                        label="Contraseña"
                         type="password"
                         autoComplete="current-password"
                       />
@@ -380,7 +373,7 @@ class App extends Component {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                       >
-                        Iniciar Sesion
+                        Iniciar Sesión
                       </Button>
                       <Grid container>
                         <Grid item xs>
@@ -390,7 +383,7 @@ class App extends Component {
                         </Grid>
                         <Grid item>
                           <Link href="/registroMed" variant="body2">
-                            {"¿No tienes cuenta? Inscribete aqui"}
+                            {"¿No tienes cuenta? Regístrate aquí"}
                           </Link>
                         </Grid>
                       </Grid>
@@ -403,7 +396,6 @@ class App extends Component {
           {!this.state.validateM && (
             <Grid item xs={12} sm={6}>
               <Item>
-                {" "}
                 <Container
                   component="main"
                   maxWidth="xs"
@@ -413,7 +405,7 @@ class App extends Component {
                     component="img"
                     image={medico}
                     sx={{
-                      maxWidth: "100%",
+                      maxWidth: "70%",
                       margin: "auto",
                       p: 2,
                     }}
@@ -425,7 +417,7 @@ class App extends Component {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Soy un medico
+                    Soy un médico
                   </Button>
                 </Container>
               </Item>
@@ -433,6 +425,8 @@ class App extends Component {
           )}
         </Grid>
       </Container>
+      <Footer/>
+      </>
     );
   }
 }
