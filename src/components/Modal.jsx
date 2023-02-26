@@ -38,15 +38,15 @@ const MyModal = (props) => {
     <Modal open={open} onClose={onClose} style={customStyle}>
       <div style={containerStyle}>
         <div style={textContainerStyle}>
-          <Typography textAlign='center'>Expediente Clinico Electronico</Typography>
-          <Typography>Medico que atendió: {message}</Typography>
-          <Typography>Nombre del paciente: {message2}</Typography>
-          <Typography>Edad del paciente: {message3}</Typography>
-          <Typography>Diagnostico del paciente: {message4}</Typography>
-          <Typography>Tratambiento del paciente: {message5}</Typography>
-          <Typography>Fecha en que se realizó: {message6}</Typography>
-          <Typography>Estado: {message7}</Typography>
-          <Typography>Notas adicionales: {message8}</Typography>
+          <Typography variant="h5" textAlign='center'>Expediente Clínico Electrónico</Typography><br/>
+          <Typography>Médico que atendió: {message}</Typography><br/> 
+          <Typography>Nombre del paciente: {message2}</Typography><br/> 
+          <Typography>Edad del paciente: {message3}</Typography><br/> 
+          <Typography>Diagnóstico del paciente: {message4}</Typography><br/> 
+          <Typography>Tratamiento del paciente: {message5}</Typography><br/> 
+          <Typography>Fecha en que se realizó: {message6}</Typography><br/> 
+          <Typography>Estado: {message7}</Typography><br/> 
+          <Typography>Notas adicionales: {message8}</Typography><br/> 
           <Button onClick={onClose} variant="contained">Cerrar</Button>
         </div>
         {message9 !== 'Sin archivo adjunto' ? (

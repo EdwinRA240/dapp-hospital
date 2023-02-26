@@ -70,7 +70,11 @@ class App extends Component {
             console.log(sol[0][6])
             console.log(sol[0][7])
         }else{
-            window.alert('Contrato Inteligente no desplegado en esta red')
+            swal(
+                "Atención",
+                "Contrato inteligente no desplegado en la red",
+                "warning"
+            );
         }
     }
 
@@ -136,7 +140,7 @@ class App extends Component {
                     //window.alert('Expediente almacenado con exito  ')
                     swal(
                             "Almacenamiento Exitoso",
-                            "El expediente clinico se a almacenado correctamente",
+                            "El expediente clínico se a almacenado correctamente",
                             "success"
                         ).then(() => {
                                 window.location.assign("MainMed")
@@ -162,7 +166,7 @@ class App extends Component {
                     //window.alert('Expediente almacenado con exito  ')
                     swal(
                             "Almacenamiento Exitoso",
-                            "El expediente clinico se a almacenado correctamente",
+                            "El expediente clínico se a almacenado correctamente",
                             "success"
                         ).then(() => {
                                 window.location.assign("MainMed")
@@ -188,13 +192,13 @@ class App extends Component {
         }}
       >
      
-        <Typography>Almacenar expediente clinico </Typography>
+        <Typography>Almacenar expediente clínico </Typography>
 
         <FormGroup >
         <TextField
             fullWidth
             sx={{ mt: 2 }}
-            label="Public Adress Patient"
+            label="Llave pública del paciente"
             id="dir"
             onChange={this.handleChange}
           />
@@ -215,7 +219,7 @@ class App extends Component {
           <TextField
             fullWidth
             sx={{ mt: 2 }}
-            label="Diagnostico del paciente"
+            label="Diagnóstico del paciente"
             id="diag"
             onChange={this.handleChange}
           />

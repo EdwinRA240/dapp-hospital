@@ -50,7 +50,11 @@ class App extends Component {
             console.log(contract)
 
         }else{
-            window.alert('Contrato Inteligente no desplegado en esta red')
+            swal(
+                "Atención",
+                "Contrato inteligente no desplegado en la red",
+                "warning"
+            );
         }
     }
 
@@ -78,6 +82,7 @@ class App extends Component {
         note:'',
         sol:[null],
         sol2:[null],
+        registros:[null],
         modalOpen: false,
         modalmessage: '',
         modalmessage2: '',
@@ -263,7 +268,7 @@ class App extends Component {
           {Object.keys(this.state.registrosPorDiagnostico).map(
             (diagnostico) => (
               <div key={diagnostico}>
-                <Typography variant="h5">Expedientes de {diagnostico}</Typography>
+                <Typography variant="h5">Expedientes de {diagnostico} del paciente {this.state.registros[0][2]}</Typography>
                 <Typography variant="body1">
                   <br/> Cantidad de expedientes:{" "} 
                   {this.state.registrosPorDiagnostico[diagnostico].length}
@@ -271,8 +276,7 @@ class App extends Component {
                 {this.state.registrosPorDiagnostico[diagnostico].map((item,j) => (
                     <Typography><lo key={j}>
                         <br/> 
-                        Expediente {j+1} de {diagnostico} <br/>
-                        Nombre del paciente: {item.patientName}<br/>
+                        Expediente {j+1} <br/>
                         Tratamiento del paciente: {item.treatment}<br/>      
                         Fecha en que se realizó:  {item.date}<br/>
                         Estado: {item.state} 

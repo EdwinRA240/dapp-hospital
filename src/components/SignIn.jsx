@@ -118,8 +118,8 @@ class App extends Component {
       if (data2 == true) {
         if (data == true) {
           swal(
-            "Inicio de sesion correcto",
-            "Presiona el boton para continuar",
+            "Inicio de sesión correcto",
+            "Presiona el botón para continuar",
             "success"
           ).then(() => {
             window.location.assign("MainMed");

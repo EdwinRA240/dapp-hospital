@@ -49,7 +49,11 @@ class App extends Component {
             console.log(sol)
             this.setState({sol})
         }else{
-            window.alert('Contrato Inteligente no desplegado en esta red')
+           swal(
+                "Atención",
+                "Contrato inteligente no desplegado en la red",
+                "warning"
+            );
         }
     }
 
@@ -72,11 +76,19 @@ class App extends Component {
                 this.setState({buttonPressed2: false}) 
                            
             } else{
-                window.alert("El correo ingresado no es el de esta cuenta")
+                swal(
+                        "Atención",
+                        "El correo ingresado no es el de esta cuenta",
+                        "error"
+                    );
             }      
                 
         } else{
-            window.alert("La public address ingresada no coincide con la de la cuenta activa de metamask")
+            swal(
+                        "Atención",
+                        "La Llave pública ingresada no coincide con la de la cuenta activa de metamask",
+                        "error"
+                    );
         }
 
     }
@@ -119,7 +131,7 @@ class App extends Component {
           <TextField
             fullWidth
             sx={{ mt: 2 }}
-            label="Correo Electronico"
+            label="Correo Electrónico"
             id="correo"
             onChange={this.handleChange}
           />
@@ -127,7 +139,7 @@ class App extends Component {
           <TextField
             fullWidth
             sx={{ mt: 2 }}
-            label="Public Adress"
+            label="Llave Pública"
             id="address"
             onChange={this.handleChange}
           />
