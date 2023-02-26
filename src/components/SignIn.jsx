@@ -44,7 +44,7 @@ class App extends Component {
     if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
-      swal("Atencion", "Inicia sesion en Metamask", "warning");
+      swal("Atención", "Inicia sesión en Metamask", "warning");
     }
   }
 
@@ -81,8 +81,8 @@ class App extends Component {
       console.log("SOl-Cuenta: " + cuenta);
     } else {
       swal(
-        "Atencion",
-        "Contrato Inteligente no desplegado en la red",
+        "Atención",
+        "Contrato inteligente no desplegado en la red",
         "warning"
       );
     }
@@ -146,8 +146,8 @@ class App extends Component {
       if (data2 == true) {
         if (data == true) {
           swal(
-            "Inicio de sesion correcto",
-            "Presiona el boton para continuar",
+            "Inicio de sesión correcto",
+            "Presiona el botón para continuar",
             "success"
           ).then(() => {
             window.location.assign("MainPat");
@@ -216,7 +216,7 @@ class App extends Component {
         fixed
         sx={{
           flexGrow: 1,
-          mt: 13,
+          mt: 15,
           display: "flex",
           whiteSpace: "normal",
         }}

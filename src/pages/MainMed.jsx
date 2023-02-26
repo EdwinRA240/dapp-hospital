@@ -74,16 +74,16 @@ class App extends Component {
               {/* {this.state.solo[1]} */}
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Address: {this.state.cuenta}
+              Llave pública: {this.state.cuenta}
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Id de empleado: {this.state.solo[6]}
+              ID de empleado: {this.state.solo[6]}
             </Typography>
             <CardMedia
               component="img"
               image={medico}
               sx={{
-                maxWidth: "30%",
+                maxWidth: "20%",
                 margin: "auto",
                 p: 2,
               }}

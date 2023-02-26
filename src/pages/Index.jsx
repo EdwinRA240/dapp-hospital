@@ -23,33 +23,26 @@ const Login = () => {
         .then((result) => {
           setCuenta(result[0]);
           setButtonText(null);
-          location.href = "/Signin";
+          location.href = "/SignIn";
         })
         .catch((error) => {
           setButtonText(error.message);
+          swal("Error", error.message, "warning");
           alert(error.message);
         });
     } else {
-      resetButtonText("Necesitas tener Metamask instalado");
-      alert("Necesitas tener Metamask instalado");
+      // resetButtonText("Necesitas tener Metamask instalado");
+      swal("Alerta", "Necesitas tener Metamask instalado", "warning");
     }
   };
 
   return (
     <>
-
-      {/*
-          De la mano al agregar alert 
-      <Button variant="contained" onClick={conectar}>
-              {buttonText}
-              {cuenta}
-            </Button> */}
-
       <Box
         sx={{
           bgcolor: "background.paper",
-          pt: 20,
-          pb: 15,
+          pt: 15,
+          pb: 10,
         }}
       >
         <Container maxWidth="sm">
@@ -63,7 +56,7 @@ const Login = () => {
           </Typography>
           <Typography variant="h5" align="center" color="text.secondary" paragraph>
             Necesitas ingresar con una wallet Ethereum en Metamask para poder hacer uso de
-            la DApp
+            esta DApp.
           </Typography>
           <CardMedia
             component="img"
@@ -76,7 +69,7 @@ const Login = () => {
           />
           <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
             <Button variant="contained" onClick={conectar}>
-              Iniciar sesion
+              Iniciar sesión
             </Button>
             <Button variant="outlined" href="https://metamask.io/" target="_blank">
               Conocer más

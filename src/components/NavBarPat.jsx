@@ -15,7 +15,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 const pages = ["Consultar ECE"];
-const settings = ["Sign out"];
+const settings = ["Cerrar Sesión"];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
