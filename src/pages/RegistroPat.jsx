@@ -243,6 +243,7 @@ class App extends Component {
 
           <FormGroup>
             <TextField
+              required
               fullWidth
               sx={{ mt: 2 }}
               label="Nombre"
@@ -255,6 +256,7 @@ class App extends Component {
             </Typography>
 
             <TextField
+              required
               fullWidth
               sx={{ mt: 2 }}
               label="Apellidos"
@@ -267,6 +269,7 @@ class App extends Component {
             </Typography>
 
             <TextField
+              required
               fullWidth
               sx={{ mt: 2 }}
               label="Numero de Teléfono"
@@ -278,6 +281,7 @@ class App extends Component {
               {<span>{this.state.span3}</span>}{" "}
             </Typography>
             <TextField
+              required
               fullWidth
               sx={{ mt: 2 }}
               label="Correo Electrónico"
@@ -289,6 +293,7 @@ class App extends Component {
               {<span>{this.state.span4}</span>}{" "}
             </Typography>
             <TextField
+              required
               fullWidth
               sx={{ mt: 2 }}
               label="Llave pública"
@@ -296,6 +301,7 @@ class App extends Component {
               onChange={this.handleChange}
             />
             <TextField
+              required
               fullWidth
               sx={{ mt: 2 }}
               label="Contraseña"

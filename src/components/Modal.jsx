@@ -14,12 +14,13 @@ const MyModal = (props) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white'
+    //backgroundColor: 'white',
   };
   
   const frameStyle = {
     width: '50%',
-    height: '500px',
+    height: '90%',
+    margin: '10px'
   };
 
   const containerStyle = {
@@ -27,11 +28,14 @@ const MyModal = (props) => {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'white',
+    width: '80%',
+    height: '80%'
   };
 
   const textContainerStyle = {
     flex: 1,
-    margin: '20px',
+    margin: '50px',
   };
 
   return (
