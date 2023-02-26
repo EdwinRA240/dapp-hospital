@@ -50,10 +50,10 @@ class App extends Component {
       console.log(sol);
     } else {
       swal(
-                "Atención",
-                "Contrato inteligente no desplegado en la red",
-                "warning"
-            );
+        "Atención",
+        "Contrato inteligente no desplegado en la red",
+        "warning"
+      );
     }
   }
 
@@ -79,10 +79,10 @@ class App extends Component {
     this.setState({ esp: document.getElementById("esp").value });
 
     this.setState({
-      nomValid: /^[a-zA-Z ]+$/.test(this.state.nombre),
+      nomValid: /^[a-zA-ZáéííÁÉ ]+$/.test(this.state.nombre),
     });
     this.setState({
-      apeValid: /^[a-zA-Z ]+$/.test(this.state.apellidos),
+      apeValid: /^[a-zA-ZáéííÁÉ ]+$/.test(this.state.apellidos),
     });
     this.setState({ telValid: /^[0-9]+$/.test(this.state.telefono) });
     this.setState({
@@ -97,7 +97,9 @@ class App extends Component {
           this.state.pass
         ),
     });
-    this.setState({ espValid: /^[a-zA-Z ]+$/.test(this.state.esp) });
+    this.setState({
+      espValid: /^[a-zA-ZáéííÁÉ ]+$/.test(this.state.esp),
+    });
   };
 
   enviar = async (event) => {
