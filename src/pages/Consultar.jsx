@@ -270,10 +270,11 @@ class App extends Component {
 
            {this.state.buttonPressed && (
         <Stack spacing={2} sx={{ mt: 2 }}>
+            <Typography variant="h5">Expedientes del paciente {this.state.registros[0][2]}</Typography>
           {Object.keys(this.state.registrosPorDiagnostico).map(
             (diagnostico) => (
               <div key={diagnostico}>
-                <Typography variant="h5">Expedientes de {diagnostico} del paciente {this.state.registros[0][2]}</Typography>
+                <Typography variant="h5">Expedientes de {diagnostico}</Typography>
                 <Typography variant="body1">
                   <br/> Cantidad de expedientes:{" "} 
                   {this.state.registrosPorDiagnostico[diagnostico].length}

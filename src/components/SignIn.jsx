@@ -127,7 +127,7 @@ class App extends Component {
         }
       }
     } else {
-      swal("Contraseña incorrecta", "Vuelva a intentar", "error");
+      swal("Cuenta o contraseña incorrecta", "Vuelva a intentar", "error");
     }
   };
 
@@ -155,7 +155,7 @@ class App extends Component {
         }
       }
     } else {
-      swal("Contraseña incorrecta", "Vuelva a intentar", "error");
+      swal("Cuenta o contraseña incorrecta", "Vuelva a intentar", "error");
     }
   };
 
