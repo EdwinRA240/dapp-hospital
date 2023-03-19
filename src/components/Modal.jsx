@@ -1,7 +1,7 @@
 import { Modal,
 Typography,
 Button, } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 
 const MyModal = (props) => {
 
@@ -14,7 +14,6 @@ const MyModal = (props) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    //backgroundColor: 'white',
   };
   
   const frameStyle = {

@@ -1,7 +1,6 @@
-import React from "react";
+import {React, useState} from "react";
 import Footer from "../components/Footer";
-import { useState } from "react";
-import metamask from "./../assets/metamask.svg";
+import expediente from "./../assets/expediente.svg";
 import {
   Box,
   Button,
@@ -60,9 +59,9 @@ const Login = () => {
           </Typography>
           <CardMedia
             component="img"
-            image={metamask}
+            image={expediente}
             sx={{
-              maxWidth: "30%",
+              maxWidth: "50%",
               margin: "auto",
               p: 2
             }}

@@ -5,9 +5,6 @@ const footer = () => {
   return (
     <>
       <Box sx={{ bgcolor: "background.paper", p: 3, mt: 5 }} component="footer">
-        {/* <Typography variant="h6" align="center" gutterBottom>
-          ESIMECU
-        </Typography> */}
         <Typography
           variant="subtitle1"
           align="center"
