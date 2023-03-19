@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import Contrato from '/build/contracts/Contrato.json'
+import Footer from "/src/components/Footer";
 
 class App extends Component {
 
@@ -239,7 +240,8 @@ class App extends Component {
   render() {
     return (
        
-            <Container maxWidth="sm">
+    <>     
+    <Container maxWidth="sm">
       <Typography
         variant="h6"
         component="a"
@@ -265,10 +267,11 @@ class App extends Component {
 
            {this.state.buttonPressed && (
         <Stack spacing={2} sx={{ mt: 2 }}>
+                            <Typography variant="h5">Expedientes del paciente {this.state.registros[0][2]}</Typography>
           {Object.keys(this.state.registrosPorDiagnostico).map(
             (diagnostico) => (
               <div key={diagnostico}>
-                <Typography variant="h5">Expedientes de {diagnostico} del paciente {this.state.registros[0][2]}</Typography>
+                <Typography variant="h5">Expedientes de {diagnostico} </Typography>
                 <Typography variant="body1">
                   <br/> Cantidad de expedientes:{" "} 
                   {this.state.registrosPorDiagnostico[diagnostico].length}
@@ -321,6 +324,8 @@ class App extends Component {
 
         <br/>    
     </Container>
+    {/* <Footer /> */}
+    </>
     );
   }
 }
