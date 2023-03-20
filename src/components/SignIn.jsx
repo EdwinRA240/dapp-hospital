@@ -54,30 +54,25 @@ class App extends Component {
     console.log("Cuenta actual: " + cuenta);
 
     const coneccion_id = await web3.eth.net.getId();
-    console.log("Conexion: " + coneccion_id);
+    // console.log("Conexion: " + coneccion_id);
 
     const coneccion_data = Contrato.networks[coneccion_id];
-    console.log("ConexionData: " + typeof coneccion_data);
-    console.log(coneccion_data == true);
+    // console.log("ConexionData: " + typeof coneccion_data);
+    // console.log(coneccion_data);
 
     if (coneccion_data) {
       const abi = Contrato.abi;
       const direccion = coneccion_data.address;
       const contract = new web3.eth.Contract(abi, direccion);
       this.setState({ contract });
-      console.log("ContraroIf: " + typeof contract);
-      const passM = await contract.methods
-        .getMedInfo(cuenta[0])
-        .call();
-      const passP = await contract.methods
-        .getPatientInfo(cuenta[0])
-        .call();
+      // console.log("ContraroIf: " + contract[0]);
+      const passM = await contract.methods.getMedInfo(cuenta[0]).call();
       this.setState({ passM });
+      const passP = await contract.methods.getPatientInfo(cuenta[0]).call();
       this.setState({ passP });
-      await contract.methods
-        .getPatientInfo(cuenta[0])
-        .call(console.log);
-      console.log("SOl-Cuenta: " + cuenta);
+      await contract.methods.getMedInfo(cuenta[0]).call(console.log);
+      await contract.methods.getPatientInfo(cuenta[0]).call(console.log);
+      // console.log("SOl-Cuenta: " + cuenta);
     } else {
       swal(
         "Atención",
@@ -126,15 +121,11 @@ class App extends Component {
         }
       }
     } else {
-      swal(
-        "Cuenta o contraseña incorrecta",
-        "Vuelva a intentar",
-        "error"
-      );
+      swal("Cuenta o contraseña incorrecta", "Vuelva a intentar", "error");
     }
   };
 
-  handleSubmitP = async (event) => {
+  handleSubmitP = async () => {
     if (
       (this.state.passP[5] == this.state.pass) &
       (this.state.passP[3] == this.state.address)
@@ -158,11 +149,7 @@ class App extends Component {
         }
       }
     } else {
-      swal(
-        "Cuenta o contraseña incorrecta",
-        "Vuelva a intentar",
-        "error"
-      );
+      swal("Cuenta o contraseña incorrecta", "Vuelva a intentar", "error");
     }
   };
 
@@ -245,9 +232,7 @@ class App extends Component {
                         alignItems: "center",
                       }}
                     >
-                      <Avatar
-                        sx={{ m: 1, bgcolor: "secondary.main" }}
-                      >
+                      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                         <LockOutlinedIcon />
                       </Avatar>
                       <Typography component="h1" variant="h5">
@@ -354,9 +339,7 @@ class App extends Component {
                         alignItems: "center",
                       }}
                     >
-                      <Avatar
-                        sx={{ m: 1, bgcolor: "secondary.main" }}
-                      >
+                      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                         <LockOutlinedIcon />
                       </Avatar>
                       <Typography component="h1" variant="h5">
