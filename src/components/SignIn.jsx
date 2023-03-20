@@ -253,7 +253,7 @@ class App extends Component {
                       <Typography component="h1" variant="h5">
                         Inicio de sesión de Pacientes
                       </Typography>
-                      <Box component="form" noValidate sx={{ mt: 1 }}>
+                      <Box component="form" noValidate sx={{ mt: 2 }}>
                         <TextField
                           required
                           margin="normal"
@@ -362,7 +362,7 @@ class App extends Component {
                       <Typography component="h1" variant="h5">
                         Inicio de sesión de Médicos
                       </Typography>
-                      <Box component="form" noValidate sx={{ mt: 1 }}>
+                      <Box component="form" noValidate sx={{ mt: 2 }}>
                         <TextField
                           required
                           margin="normal"
