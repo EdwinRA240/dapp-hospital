@@ -253,7 +253,7 @@ class App extends Component {
                       <Typography component="h1" variant="h5">
                         Inicio de sesión de Pacientes
                       </Typography>
-                      <Box component="form" noValidate sx={{ mt: 3 }}>
+                      <Box component="form" noValidate sx={{ mt: 1 }}>
                         <TextField
                           required
                           margin="normal"
@@ -299,7 +299,7 @@ class App extends Component {
                           </Grid>
                           <Grid item>
                             <Link href="/registroPat" variant="body2">
-                              {"¿No tienes cuenta? Regístrate aquí"}
+                              {" ¿No tienes cuenta? Regístrate aquí"}
                             </Link>
                           </Grid>
                         </Grid>
@@ -362,7 +362,7 @@ class App extends Component {
                       <Typography component="h1" variant="h5">
                         Inicio de sesión de Médicos
                       </Typography>
-                      <Box component="form" noValidate sx={{ mt: 3 }}>
+                      <Box component="form" noValidate sx={{ mt: 1 }}>
                         <TextField
                           required
                           margin="normal"
@@ -408,7 +408,7 @@ class App extends Component {
                           </Grid>
                           <Grid item>
                             <Link href="/registroMed" variant="body2">
-                              {"¿No tienes cuenta? Regístrate aquí"}
+                              {" ¿No tienes cuenta? Regístrate aquí"}
                             </Link>
                           </Grid>
                         </Grid>
