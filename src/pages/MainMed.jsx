@@ -4,6 +4,9 @@ import Contrato from "/build/contracts/Contrato.json";
 import Web3 from "web3";
 import medico from "./../assets/medico.png";
 import Footer from "../components/Footer";
+import NavBarMed from "../components/NavBarMed";
+import NavBar from "../components/NavBar";
+import NoAuth from "../components/NoAuth";
 
 class App extends Component {
   async componentWillMount() {
@@ -59,8 +62,19 @@ class App extends Component {
   }
 
   render() {
+
+    if (this.state.solo[0] == undefined) {
+      return (
+        <>
+          <NavBar />
+          <NoAuth />
+        </>
+      );
+    }
+
     return (
       <>
+      <NavBarMed />
         <Box
           sx={{
             bgcolor: "background.paper",
@@ -73,9 +87,9 @@ class App extends Component {
               Bienvenido {this.state.solo[0]}
               {/* {this.state.solo[1]} */}
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            {/* <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Llave pública: {this.state.cuenta}
-            </Typography>
+            </Typography> */}
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               ID de empleado: {this.state.solo[6]}
             </Typography>

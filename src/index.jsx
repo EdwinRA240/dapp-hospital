@@ -17,6 +17,7 @@ import NavBarPat from "./components/NavBarPat";
 import Almacenar from "./pages/Almacenar";
 import SignIn from "./pages/SignIn";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import NoAuth from "./components/NoAuth";
 
 // import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 
@@ -38,12 +39,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<><NotFound/> <NavBar/></>} />
+          <Route path="/NoAuth" element={<><NoAuth/> <NavBar/></>} />
           <Route path="/" element={<><Index /> <NavBar /></>}  />
-          <Route path="Signin" element={<><SignIn/><NavBar/> </>}/>
-          <Route path="PassPat" element={<><PassPat/><NavBar/> </>}/>
-          <Route path="PassMed" element={<><PassMed/><NavBar/> </>}/>
-          <Route path="/MainMed" element={<><MainMed/> <NavBarMed/></>} />
-          <Route path="/MainPat" element={<><MainPat/> <NavBarPat/></>} />
+          <Route path="/Signin" element={<><SignIn/><NavBar/> </>}/>
+          <Route path="/PassPat" element={<PassPat />}/>
+          <Route path="/PassMed" element={<PassMed />}/>
+          <Route path="/MainMed" element={<MainMed />} />
+          <Route path="/MainPat" element={<MainPat />} />
           <Route path="/Consultar" element={<><Consultar/> <NavBarMed/></>} />
           <Route path="/ConsultarPat" element={<><ConsultarPat/> <NavBarPat/></>} />
           <Route path="/Almacenar" element={<><Almacenar/> <NavBarMed/></>} />

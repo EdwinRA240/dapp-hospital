@@ -7,7 +7,6 @@ import Grid from "@mui/material/Grid";
 import { Container } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -18,7 +17,7 @@ import swal from "sweetalert";
 import { CardMedia } from "@mui/material";
 import medico from "./../assets/medico.png";
 import patient from "./../assets/patient.png";
-import Footer from '../components/Footer';
+import Footer from "../components/Footer";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -104,7 +103,7 @@ class App extends Component {
     this.setState({ pass: document.getElementById("passP").value });
   };
 
-  handleSubmitM = async (event) => {
+  handleSubmitM = async () => {
     if (
       (this.state.passM[5] == this.state.pass) &
       (this.state.passM[3] == this.state.address)
@@ -127,7 +126,11 @@ class App extends Component {
         }
       }
     } else {
-      swal("Cuenta o contraseña incorrecta", "Vuelva a intentar", "error");
+      swal(
+        "Cuenta o contraseña incorrecta",
+        "Vuelva a intentar",
+        "error"
+      );
     }
   };
 
@@ -155,7 +158,11 @@ class App extends Component {
         }
       }
     } else {
-      swal("Cuenta o contraseña incorrecta", "Vuelva a intentar", "error");
+      swal(
+        "Cuenta o contraseña incorrecta",
+        "Vuelva a intentar",
+        "error"
+      );
     }
   };
 
@@ -212,220 +219,238 @@ class App extends Component {
   render() {
     return (
       <>
-      <Container
-        fixed
-        sx={{
-          flexGrow: 1,
-          mt: 15,
-          display: "flex",
-          whiteSpace: "normal",
-        }}
-      >
-        <Grid container alignItems="center" spacing={2}>
-          {this.state.validateP && (
-            <Grid item xs={12} sm={6}>
-              <Item>
-                <Container
-                  component="main"
-                  maxWidth="xs"
-                  sx={{ mt: 1, mb: 5 }}
-                >
-                  <Box
-                    sx={{
-                      marginTop: 5,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
+        <Container
+          fixed
+          sx={{
+            flexGrow: 1,
+            mt: 15,
+            display: "flex",
+            whiteSpace: "normal",
+          }}
+        >
+          <Grid container alignItems="center" spacing={2}>
+            {this.state.validateP && (
+              <Grid item xs={12} sm={6}>
+                <Item>
+                  <Container
+                    component="main"
+                    maxWidth="xs"
+                    sx={{ mt: 1, mb: 5 }}
                   >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                      <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                      Inicio de sesión de Pacientes
-                    </Typography>
-                    <Box component="form" noValidate sx={{ mt: 1 }}>
-                      <TextField
-                        required
-                        margin="normal"
-                        fullWidth
-                        name="useer"
-                        id="addressP"
-                        label="Llave pública"
-                        autoComplete="Llave pública "
-                        autoFocus
-                        onChange={this.handleChangeP}
-                      />
-                      <TextField
-                        required
-                        margin="normal"
-                        fullWidth
-                        name="password"
-                        id="passP"
-                        label="Contraseña"
-                        type="password"
-                        autoComplete="current-password"
-                        onChange={this.handleChangeP}
-                      />
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        onClick={this.handleSubmitP}
-                        sx={{ mt: 3, mb: 2 }}
+                    <Box
+                      sx={{
+                        marginTop: 5,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Avatar
+                        sx={{ m: 1, bgcolor: "secondary.main" }}
                       >
-                        Iniciar Sesión
-                      </Button>
-                      <Grid container>
-                        <Grid item xs>
-                          <Link href="PassPat" variant="body2">
-                            ¿Olvidaste tu contraseña?
-                          </Link>
+                        <LockOutlinedIcon />
+                      </Avatar>
+                      <Typography component="h1" variant="h5">
+                        Inicio de sesión de Pacientes
+                      </Typography>
+                      <Box component="form" noValidate sx={{ mt: 3 }}>
+                        <TextField
+                          required
+                          margin="normal"
+                          fullWidth
+                          name="useer"
+                          id="addressP"
+                          label="Llave pública"
+                          autoComplete="Llave pública "
+                          autoFocus
+                          onChange={this.handleChangeP}
+                        />
+                        <TextField
+                          required
+                          margin="normal"
+                          fullWidth
+                          name="password"
+                          id="passP"
+                          label="Contraseña"
+                          type="password"
+                          autoComplete="current-password"
+                          onChange={this.handleChangeP}
+                        />
+                        <Typography
+                          variant="caption"
+                          display="block"
+                          align="right"
+                        >
+                          Campos obligatorios*
+                        </Typography>
+                        <Button
+                          fullWidth
+                          variant="contained"
+                          onClick={this.handleSubmitP}
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Iniciar Sesión
+                        </Button>
+                        <Grid container>
+                          <Grid item xs>
+                            <Link href="PassPat" variant="body2">
+                              ¿Olvidaste tu contraseña?
+                            </Link>
+                          </Grid>
+                          <Grid item>
+                            <Link href="/registroPat" variant="body2">
+                              {"¿No tienes cuenta? Regístrate aquí"}
+                            </Link>
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <Link href="/registroPat" variant="body2">
-                            {"¿No tienes cuenta? Regístrate aquí"}
-                          </Link>
-                        </Grid>
-                      </Grid>
+                      </Box>
                     </Box>
-                  </Box>
-                </Container>
-              </Item>
-            </Grid>
-          )}
-          {!this.state.validateP && (
-            <Grid item xs={12} sm={6}>
-              <Item>
-                <Container
-                  component="main"
-                  maxWidth="xs"
-                  sx={{ mt: 1, mb: 5 }}
-                >
-                  <CardMedia
-                    component="img"
-                    image={patient}
-                    sx={{
-                      maxWidth: "70%",
-                      margin: "auto",
-                      p: 2,
-                    }}
-                  />
-                  <Button
-                    onClick={this.handleValidateP}
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                  </Container>
+                </Item>
+              </Grid>
+            )}
+            {!this.state.validateP && (
+              <Grid item xs={12} sm={6}>
+                <Item>
+                  <Container
+                    component="main"
+                    maxWidth="xs"
+                    sx={{ mt: 1, mb: 5 }}
                   >
-                    Soy un paciente
-                  </Button>
-                </Container>
-              </Item>
-            </Grid>
-          )}
-          {this.state.validateM && (
-            <Grid item xs={12} sm={6}>
-              <Item>
-                <Container
-                  component="Main"
-                  maxWidth="xs"
-                  sx={{ mt: 1, mb: 5 }}
-                >
-                  <Box
-                    sx={{
-                      marginTop: 5,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
+                    <CardMedia
+                      component="img"
+                      image={patient}
+                      sx={{
+                        maxWidth: "70%",
+                        margin: "auto",
+                        p: 2,
+                      }}
+                    />
+                    <Button
+                      onClick={this.handleValidateP}
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      Soy un paciente
+                    </Button>
+                  </Container>
+                </Item>
+              </Grid>
+            )}
+            {this.state.validateM && (
+              <Grid item xs={12} sm={6}>
+                <Item>
+                  <Container
+                    component="Main"
+                    maxWidth="xs"
+                    sx={{ mt: 1, mb: 5 }}
                   >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                      <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                      Inicio de sesión de Médicos
-                    </Typography>
-                    <Box component="form" noValidate sx={{ mt: 1 }}>
-                      <TextField
-                        required
-                        margin="normal"
-                        fullWidth
-                        name="useer"
-                        id="addressM"
-                        onChange={this.handleChangeM}
-                        label="Llave pública"
-                        autoComplete="Llave pública"
-                        autoFocus
-                      />
-                      <TextField
-                        required
-                        margin="normal"
-                        fullWidth
-                        name="password"
-                        id="passM"
-                        onChange={this.handleChangeM}
-                        label="Contraseña"
-                        type="password"
-                        autoComplete="current-password"
-                      />
-                      <Button
-                        onClick={this.handleSubmitM}
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                    <Box
+                      sx={{
+                        marginTop: 5,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Avatar
+                        sx={{ m: 1, bgcolor: "secondary.main" }}
                       >
-                        Iniciar Sesión
-                      </Button>
-                      <Grid container>
-                        <Grid item xs>
-                          <Link href="PassMed" variant="body2">
-                            ¿Olvidaste tu contraseña?
-                          </Link>
+                        <LockOutlinedIcon />
+                      </Avatar>
+                      <Typography component="h1" variant="h5">
+                        Inicio de sesión de Médicos
+                      </Typography>
+                      <Box component="form" noValidate sx={{ mt: 3 }}>
+                        <TextField
+                          required
+                          margin="normal"
+                          fullWidth
+                          name="useer"
+                          id="addressM"
+                          onChange={this.handleChangeM}
+                          label="Llave pública"
+                          autoComplete="Llave pública"
+                          autoFocus
+                        />
+                        <TextField
+                          required
+                          margin="normal"
+                          fullWidth
+                          name="password"
+                          id="passM"
+                          onChange={this.handleChangeM}
+                          label="Contraseña"
+                          type="password"
+                          autoComplete="current-password"
+                        />
+                        <Typography
+                          variant="caption"
+                          display="block"
+                          align="right"
+                        >
+                          Campos obligatorios*
+                        </Typography>
+                        <Button
+                          onClick={this.handleSubmitM}
+                          fullWidth
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Iniciar Sesión
+                        </Button>
+                        <Grid container>
+                          <Grid item xs>
+                            <Link href="PassMed" variant="body2">
+                              ¿Olvidaste tu contraseña?
+                            </Link>
+                          </Grid>
+                          <Grid item>
+                            <Link href="/registroMed" variant="body2">
+                              {"¿No tienes cuenta? Regístrate aquí"}
+                            </Link>
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <Link href="/registroMed" variant="body2">
-                            {"¿No tienes cuenta? Regístrate aquí"}
-                          </Link>
-                        </Grid>
-                      </Grid>
+                      </Box>
                     </Box>
-                  </Box>
-                </Container>
-              </Item>
-            </Grid>
-          )}
-          {!this.state.validateM && (
-            <Grid item xs={12} sm={6}>
-              <Item>
-                <Container
-                  component="main"
-                  maxWidth="xs"
-                  sx={{ mt: 1, mb: 5 }}
-                >
-                  <CardMedia
-                    component="img"
-                    image={medico}
-                    sx={{
-                      maxWidth: "70%",
-                      margin: "auto",
-                      p: 2,
-                    }}
-                  />
+                  </Container>
+                </Item>
+              </Grid>
+            )}
+            {!this.state.validateM && (
+              <Grid item xs={12} sm={6}>
+                <Item>
+                  <Container
+                    component="main"
+                    maxWidth="xs"
+                    sx={{ mt: 1, mb: 5 }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={medico}
+                      sx={{
+                        maxWidth: "70%",
+                        margin: "auto",
+                        p: 2,
+                      }}
+                    />
 
-                  <Button
-                    onClick={this.handleValidateM}
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Soy un médico
-                  </Button>
-                </Container>
-              </Item>
-            </Grid>
-          )}
-        </Grid>
-      </Container>
-      <Footer/>
+                    <Button
+                      onClick={this.handleValidateM}
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      Soy un médico
+                    </Button>
+                  </Container>
+                </Item>
+              </Grid>
+            )}
+          </Grid>
+        </Container>
+        <Footer />
       </>
     );
   }

@@ -94,7 +94,7 @@ class App extends Component {
     });
     this.setState({
       pasValid:
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[-_])[A-Za-z\d@_-]{6,}$/.test(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@#$%^&+=_!.-]{6,}$/.test(
           this.state.pass
         ),
     });
@@ -104,28 +104,24 @@ class App extends Component {
     event.preventDefault();
 
     if (!this.state.nomValid) {
-      //alert("El nombre debe contener solo letras");
-      this.setState({ span: "El nombre lleva sólo  letras" });
+      this.setState({ span: "El nombre lleva sólo letras" });
     } else {
       this.setState({ span: "" });
     }
 
     if (!this.state.apeValid) {
-      //alert("El nombre debe contener solo letras");
-      this.setState({ span2: "El apellido lleva sólo  letras" });
+      this.setState({ span2: "El apellido lleva sólo letras" });
     } else {
       this.setState({ span2: "" });
     }
 
     if (!this.state.telValid) {
-      //alert("El nombre debe contener solo letras");
-      this.setState({ span3: "El teléfono lleva sólo  letras" });
+      this.setState({ span3: "El teléfono lleva sólo números" });
     } else {
       this.setState({ span3: "" });
     }
 
     if (!this.state.corValid) {
-      //alert("El nombre debe contener solo letras");
       this.setState({
         span4: "No cumple con el formato de un correo electrónico",
       });
@@ -134,10 +130,9 @@ class App extends Component {
     }
 
     if (!this.state.pasValid) {
-      //alert("El nombre debe contener solo letras");
       this.setState({
         span5:
-          "Debe llevar al menos 1 mayúsacula, un signo especial (- _) y al menos 6 caracteres ",
+          "Debe contener al menos 1 mayúscula, 1 minúscula, un signo especial y al menos 6 caracteres",
       });
     } else {
       this.setState({ span5: "" });
