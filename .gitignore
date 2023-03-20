@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-/build/contracts/Contrato.json
+#Ignorar contratos
+Contrato.json
 Migrations.json
