@@ -63,7 +63,7 @@ class App extends Component {
 
   render() {
 
-    if (this.state.solo[0] == undefined) {
+    if (this.state.solo[0] == undefined || this.state.solo[0] == null || this.state.solo[0] == "") {
       return (
         <>
           <NavBar />
