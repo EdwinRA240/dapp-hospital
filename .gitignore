@@ -23,5 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
-build/contracts/Contrato.json
+/build/contracts/Contrato.json
 Migrations.json
