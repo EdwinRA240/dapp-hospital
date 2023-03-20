@@ -4,7 +4,6 @@ import MyModal from "/src/components/Modal.jsx";
 import swal from "sweetalert";
 import { Buffer } from "buffer";
 window.Buffer = Buffer;
-import { create as ipfsHttpClient } from "ipfs-http-client";
 import {
   Button,
   Container,
@@ -14,7 +13,6 @@ import {
   Typography,
 } from "@mui/material";
 import Contrato from "/build/contracts/Contrato.json";
-import Footer from "/src/components/Footer";
 
 class App extends Component {
   async componentWillMount() {
@@ -143,15 +141,15 @@ class App extends Component {
   consulta = async (event) => {
     event.preventDefault();
 
+    console.log(this.state.dir);
     const registros = await this.state.contract.methods
-      .getRecords(this.state.cuenta)
+      .getRecords(this.state.dir)
       .call();
     console.log(registros);
     this.setState({ registros });
     if (registros.length == 0) {
       //alert("El paciente no tiene expedientes registrados");
-      swal("Error", "No tienes expedientes registrados", "error");
-      return;
+      swal("Error", "El paciente no tiene expedientes registrados", "error");
       return;
     }
     console.log(registros[0][1]);
@@ -237,119 +235,116 @@ class App extends Component {
 
   render() {
     return (
-      <>
-        <Container
-          maxWidth="sm"
-          sx={{
-            mt: 12,
-          }}
+      <Container
+        maxWidth="sm"
+        sx={{
+          mt: 12,
+        }}
+      >
+        <Typography
+          variant="h5"
+          align="center"
+          color="text.primary"
+          gutterBottom
         >
-          <Typography
-            variant="h5"
-            align="center"
-            color="text.primary"
-            gutterBottom
-          >
+          Consulta
+        </Typography>
+
+        <FormGroup>
+          <TextField
+            fullWidth
+            sx={{ mt: 2 }}
+            label="LLave pública del paciente"
+            id="dir"
+            onChange={this.handleChange}
+          />
+        </FormGroup>
+
+        <Stack sx={{ mt: 2, justifyContent: "end" }} direction="row">
+          <Button variant="contained" onClick={this.consulta}>
             Consulta
-          </Typography>
+          </Button>
+        </Stack>
 
-          <Stack
-            sx={{ mt: 2, justifyContent: "end" }}
-            direction="row"
-            spacing={2}
-          >
-            <Button variant="contained" onClick={this.consulta}>
-              Consulta
-            </Button>
-          </Stack>
-
-          {this.state.buttonPressed && (
-            <Stack spacing={2} sx={{ mt: 2 }}>
-              <Typography variant="h5">
-                Expedientes del paciente {this.state.registros[0][2]}
-              </Typography>
-              {Object.keys(this.state.registrosPorDiagnostico).map(
-                (diagnostico) => (
-                  <div key={diagnostico}>
-                    <Typography variant="h5">
-                      Expedientes de {diagnostico}{" "}
-                    </Typography>
-                    <Typography variant="body1">
-                      <br /> Cantidad de expedientes:{" "}
-                      {this.state.registrosPorDiagnostico[diagnostico].length}
-                    </Typography>
-                    {this.state.registrosPorDiagnostico[diagnostico].map(
-                      (item, j) => (
-                        <Typography>
-                          <lo key={j}>
-                            <br />
-                            Expediente {j + 1} <br />
-                            Tratamiento del paciente: {item.treatment}
-                            <br />
-                            Fecha en que se realizó: {item.date}
-                            <br />
-                            Estado: {item.state}
-                            <Stack
-                              sx={{ mt: 2, justifyContent: "end" }}
-                              direction="row"
-                              spacing={2}
+        {this.state.buttonPressed && (
+          <Stack sx={{ mt: 2 }}>
+            <Typography variant="h5" align="center" sx={{ mb: 2 }}>
+              Expedientes del paciente {this.state.registros[0][2]}
+            </Typography>
+            {Object.keys(this.state.registrosPorDiagnostico).map(
+              (diagnostico) => (
+                <div key={diagnostico}>
+                  <Typography variant="h6" fontWeight="semibold">
+                    Expedientes de {diagnostico}
+                  </Typography>
+                  <Typography variant="body1">
+                    Cantidad de expedientes:{" "}
+                    {this.state.registrosPorDiagnostico[diagnostico].length}
+                  </Typography>
+                  <br />
+                  {this.state.registrosPorDiagnostico[diagnostico].map(
+                    (item, j) => (
+                      <Typography>
+                        <lo key={j}>
+                          Expediente {j + 1} <br />
+                          Tratamiento del paciente: {item.treatment}
+                          <br />
+                          Fecha en que se realizó: {item.date}
+                          <br />
+                          Estado: {item.state}
+                          <Stack sx={{ justifyContent: "end" }} direction="row">
+                            <Button
+                              variant="contained"
+                              key={j}
+                              onClick={(event) => {
+                                this.elegir(
+                                  event,
+                                  this.setState({ ind: j }),
+                                  this.setState({ diag2: diagnostico })
+                                );
+                                this.handleOpenModal(
+                                  event,
+                                  item.adressM,
+                                  item.patientName,
+                                  item.age,
+                                  item.diagnosis,
+                                  item.treatment,
+                                  item.date,
+                                  item.state,
+                                  item.note,
+                                  item.fileHash
+                                );
+                              }}
                             >
-                              <Button
-                                variant="contained"
-                                key={j}
-                                onClick={(event) => {
-                                  this.elegir(
-                                    event,
-                                    this.setState({ ind: j }),
-                                    this.setState({
-                                      diag2: diagnostico,
-                                    })
-                                  );
-                                  this.handleOpenModal(
-                                    event,
-                                    item.adressM,
-                                    item.patientName,
-                                    item.age,
-                                    item.diagnosis,
-                                    item.treatment,
-                                    item.date,
-                                    item.state,
-                                    item.note,
-                                    item.fileHash
-                                  );
-                                }}
-                              >
-                                Ver ECE completo
-                              </Button>
-                            </Stack>
-                            <MyModal
-                              open={this.state.modalOpen}
-                              onClose={this.handleCloseModal}
-                              message={this.state.modalmessage}
-                              message2={this.state.modalmessage2}
-                              message3={this.state.modalmessage3}
-                              message4={this.state.modalmessage4}
-                              message5={this.state.modalmessage5}
-                              message6={this.state.modalmessage6}
-                              message7={this.state.modalmessage7}
-                              message8={this.state.modalmessage8}
-                              message9={this.state.modalmessage9}
-                            />
-                            <br />
-                          </lo>
-                        </Typography>
-                      )
-                    )}
-                  </div>
-                )
-              )}
-            </Stack>
-          )}
+                              Ver ECE
+                            </Button>
+                          </Stack>
+                          <MyModal
+                            open={this.state.modalOpen}
+                            onClose={this.handleCloseModal}
+                            message={this.state.modalmessage}
+                            message2={this.state.modalmessage2}
+                            message3={this.state.modalmessage3}
+                            message4={this.state.modalmessage4}
+                            message5={this.state.modalmessage5}
+                            message6={this.state.modalmessage6}
+                            message7={this.state.modalmessage7}
+                            message8={this.state.modalmessage8}
+                            message9={this.state.modalmessage9}
+                          />
+                        </lo>
+                      </Typography>
+                    )
+                  )}
+                  <br />
+                </div>
+              )
+            )}
+          </Stack>
+        )}
 
-          <br />
-        </Container>
-        {/* <Footer /> */}
-      </>
+        <br />
+      </Container>
     );
   }
 }

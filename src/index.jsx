@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainMed from "./pages/MainMed";
 import MainPat from "./pages/MainPat";
 import NotFound from "./pages/NotFound";
-import Consultar from "./pages/Consultar";
+import ConsultarMed from "./pages/ConsultarMed";
 import ConsultarPat from "./pages/ConsultarPat";
 import Index from "./pages/Index";
 import RegistroMed from "./pages/RegistroMed";
@@ -46,7 +46,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/PassMed" element={<PassMed />}/>
           <Route path="/MainMed" element={<MainMed />} />
           <Route path="/MainPat" element={<MainPat />} />
-          <Route path="/Consultar" element={<><Consultar/> <NavBarMed/></>} />
+          <Route path="/ConsultarMed" element={<><ConsultarMed/> <NavBarMed/></>} />
           <Route path="/ConsultarPat" element={<><ConsultarPat/> <NavBarPat/></>} />
           <Route path="/Almacenar" element={<><Almacenar/> <NavBarMed/></>} />
           <Route path="/registroMed" element={<><RegistroMed/> <NavBar/></>} />
