@@ -54,8 +54,7 @@ const Login = () => {
             Bienvenido
           </Typography>
           <Typography variant="h5" align="center" color="text.secondary" paragraph>
-            Necesitas ingresar con una wallet Ethereum en Metamask para poder hacer uso de
-            esta DApp.
+            Sistema de Expedientes Clinicos Electronicos
           </Typography>
           <CardMedia
             component="img"

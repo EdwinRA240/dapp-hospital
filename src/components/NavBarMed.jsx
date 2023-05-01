@@ -93,7 +93,7 @@ function NavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} href={`/${page.split(" ",1)}`}>
+                <MenuItem key={page} onClick={handleCloseNavMenu} href={`/${page.split(" ",1)}Med`}>
                   <Typography textAlign="center" variant="h6">
                     {page}
                   </Typography>
@@ -128,7 +128,7 @@ function NavBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
-                href={`/${page.split(" ",1)}`}
+                href={`/${page.split(" ",1)}Med`}
               >
                 {page}
               </Button>
@@ -137,7 +137,7 @@ function NavBar() {
 
           {/* Ajustes */}
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Abrir configuración">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" />
               </IconButton>

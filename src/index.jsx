@@ -48,7 +48,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/MainPat" element={<MainPat />} />
           <Route path="/ConsultarMed" element={<><ConsultarMed/> <NavBarMed/></>} />
           <Route path="/ConsultarPat" element={<><ConsultarPat/> <NavBarPat/></>} />
-          <Route path="/Almacenar" element={<><Almacenar/> <NavBarMed/></>} />
+          <Route path="/AlmacenarMed" element={<><Almacenar/> <NavBarMed/></>} />
           <Route path="/registroMed" element={<><RegistroMed/> <NavBar/></>} />
           <Route path="/registroPat" element={<><RegistroPat/> <NavBar/></>} />
         </Routes>
