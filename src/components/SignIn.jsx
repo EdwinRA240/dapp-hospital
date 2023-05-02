@@ -23,11 +23,11 @@ const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: "center",
+  align: "center",
   color: theme.palette.text.secondary,
 }));
 
-class App extends Component {
+class SignIn extends Component {
   async componentWillMount() {
     await this.loadWeb3();
     await this.loadBloackchainData();
@@ -433,9 +433,9 @@ class App extends Component {
             )}
           </Grid>
         </Container>
-        <Footer />
+        <Footer style={{ mt: 50}}/>
       </>
     );
   }
 }
-export default App;
+export default SignIn;

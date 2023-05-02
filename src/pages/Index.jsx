@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import Footer from "../components/Footer";
 import expediente from "./../assets/expediente.svg";
 import {
@@ -6,14 +6,15 @@ import {
   Button,
   CardMedia,
   Container,
+  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
+import MetamaskImage from "./../assets/metamask.svg";
 
 const Login = () => {
   const [buttonText, setButtonText] = useState("Conexion a Metamask");
   const [cuenta, setCuenta] = useState(null);
-  //Al agregar alert se ocupa
 
   const conectar = () => {
     if (window.ethereum && window.ethereum.isMetaMask) {
@@ -30,7 +31,6 @@ const Login = () => {
           alert(error.message);
         });
     } else {
-      // resetButtonText("Necesitas tener Metamask instalado");
       swal("Alerta", "Necesitas tener Metamask instalado", "warning");
     }
   };
@@ -45,16 +45,12 @@ const Login = () => {
         }}
       >
         <Container maxWidth="sm">
-          <Typography
-            variant="h3"
-            align="center"
-            color="text.primary"
-            gutterBottom
-          >
-            Bienvenido
+          <Typography variant="h3" align="center" color="text.primary" gutterBottom>
+            ¡Hola!
           </Typography>
           <Typography variant="h5" align="center" color="text.secondary" paragraph>
-            Sistema de Expedientes Clinicos Electronicos
+            Bienvenido al sistema de Expedientes Clínicos Electrónicos (ECE). Para acceder
+            a el sistema, por favor incia sesion con una cuenta de MetaMask.
           </Typography>
           <CardMedia
             component="img"
@@ -62,7 +58,7 @@ const Login = () => {
             sx={{
               maxWidth: "50%",
               margin: "auto",
-              p: 2
+              p: 2,
             }}
           />
           <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
@@ -71,6 +67,9 @@ const Login = () => {
             </Button>
             <Button variant="outlined" href="https://metamask.io/" target="_blank">
               Conocer más
+              <IconButton>
+                <img src={MetamaskImage} alt="icono" style={{width: "20px", padding: "0px"}} />
+              </IconButton>
             </Button>
           </Stack>
         </Container>

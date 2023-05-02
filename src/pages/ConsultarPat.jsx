@@ -51,11 +51,7 @@ class App extends Component {
       this.setState({ contract });
       console.log(contract);
     } else {
-      swal(
-        "Atención",
-        "Contrato inteligente no desplegado en la red",
-        "warning"
-      );
+      swal("Atención", "Contrato inteligente no desplegado en la red", "warning");
     }
   }
 
@@ -174,9 +170,7 @@ class App extends Component {
   elegir = async (event, param, param2) => {
     event.preventDefault();
     console.log(this.state.ind);
-    const sol = await this.state.contract.methods
-      .getRecords(this.state.dir)
-      .call();
+    const sol = await this.state.contract.methods.getRecords(this.state.dir).call();
     console.log(sol);
     console.log(this.state.diag2);
     console.log(this.state.registrosPorDiagnostico);
@@ -244,20 +238,11 @@ class App extends Component {
             mt: 12,
           }}
         >
-          <Typography
-            variant="h5"
-            align="center"
-            color="text.primary"
-            gutterBottom
-          >
+          <Typography variant="h5" align="center" color="text.primary" gutterBottom>
             Consulta
           </Typography>
 
-          <Stack
-            sx={{ mt: 2, justifyContent: "end" }}
-            direction="row"
-            spacing={2}
-          >
+          <Stack sx={{ mt: 2, justifyContent: "end" }} direction="row" spacing={2}>
             <Button variant="contained" onClick={this.consulta}>
               Consulta
             </Button>
@@ -268,81 +253,75 @@ class App extends Component {
               <Typography variant="h5">
                 Expedientes del paciente {this.state.registros[0][2]}
               </Typography>
-              {Object.keys(this.state.registrosPorDiagnostico).map(
-                (diagnostico) => (
-                  <div key={diagnostico}>
-                    <Typography variant="h5">
-                      Expedientes de {diagnostico}{" "}
+              {Object.keys(this.state.registrosPorDiagnostico).map((diagnostico) => (
+                <div key={diagnostico}>
+                  <Typography variant="h5">Expedientes de {diagnostico} </Typography>
+                  <Typography variant="body1">
+                    <br /> Cantidad de expedientes:{" "}
+                    {this.state.registrosPorDiagnostico[diagnostico].length}
+                  </Typography>
+                  {this.state.registrosPorDiagnostico[diagnostico].map((item, j) => (
+                    <Typography>
+                      <lo key={j}>
+                        <br />
+                        Expediente {j + 1} <br />
+                        Tratamiento del paciente: {item.treatment}
+                        <br />
+                        Fecha en que se realizó: {item.date}
+                        <br />
+                        Estado: {item.state}
+                        <Stack
+                          sx={{ mt: 2, justifyContent: "end" }}
+                          direction="row"
+                          spacing={2}
+                        >
+                          <Button
+                            variant="contained"
+                            key={j}
+                            onClick={(event) => {
+                              this.elegir(
+                                event,
+                                this.setState({ ind: j }),
+                                this.setState({
+                                  diag2: diagnostico,
+                                })
+                              );
+                              this.handleOpenModal(
+                                event,
+                                item.adressM,
+                                item.patientName,
+                                item.age,
+                                item.diagnosis,
+                                item.treatment,
+                                item.date,
+                                item.state,
+                                item.note,
+                                item.fileHash
+                              );
+                            }}
+                          >
+                            Ver ECE completo
+                          </Button>
+                        </Stack>
+                        <MyModal
+                          open={this.state.modalOpen}
+                          onClose={this.handleCloseModal}
+                          message={this.state.modalmessage}
+                          message2={this.state.modalmessage2}
+                          message3={this.state.modalmessage3}
+                          message4={this.state.modalmessage4}
+                          message5={this.state.modalmessage5}
+                          message6={this.state.modalmessage6}
+                          message7={this.state.modalmessage7}
+                          message8={this.state.modalmessage8}
+                          message9={this.state.modalmessage9}
+                        />
+                        <br />
+                      </lo>
                     </Typography>
-                    <Typography variant="body1">
-                      <br /> Cantidad de expedientes:{" "}
-                      {this.state.registrosPorDiagnostico[diagnostico].length}
-                    </Typography>
-                    {this.state.registrosPorDiagnostico[diagnostico].map(
-                      (item, j) => (
-                        <Typography>
-                          <lo key={j}>
-                            <br />
-                            Expediente {j + 1} <br />
-                            Tratamiento del paciente: {item.treatment}
-                            <br />
-                            Fecha en que se realizó: {item.date}
-                            <br />
-                            Estado: {item.state}
-                            <Stack
-                              sx={{ mt: 2, justifyContent: "end" }}
-                              direction="row"
-                              spacing={2}
-                            >
-                              <Button
-                                variant="contained"
-                                key={j}
-                                onClick={(event) => {
-                                  this.elegir(
-                                    event,
-                                    this.setState({ ind: j }),
-                                    this.setState({
-                                      diag2: diagnostico,
-                                    })
-                                  );
-                                  this.handleOpenModal(
-                                    event,
-                                    item.adressM,
-                                    item.patientName,
-                                    item.age,
-                                    item.diagnosis,
-                                    item.treatment,
-                                    item.date,
-                                    item.state,
-                                    item.note,
-                                    item.fileHash
-                                  );
-                                }}
-                              >
-                                Ver ECE completo
-                              </Button>
-                            </Stack>
-                            <MyModal
-                              open={this.state.modalOpen}
-                              onClose={this.handleCloseModal}
-                              message={this.state.modalmessage}
-                              message2={this.state.modalmessage2}
-                              message3={this.state.modalmessage3}
-                              message4={this.state.modalmessage4}
-                              message5={this.state.modalmessage5}
-                              message6={this.state.modalmessage6}
-                              message7={this.state.modalmessage7}
-                              message8={this.state.modalmessage8}
-                              message9={this.state.modalmessage9}
-                            />
-                            <br />
-                          </lo>
-                        </Typography>
-                      )
-                    )}
-                  </div>
-                )
-              )}
+                  ))}
+                </div>
+              ))}
             </Stack>
           )}
 

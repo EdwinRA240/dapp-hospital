@@ -7,7 +7,11 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import {
   Button,
   Container,
+  FormControl,
   FormGroup,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
@@ -17,9 +21,7 @@ import Footer from "../components/Footer";
 
 const projectid = "2HE6500liSrLAhibQqMO1xM0bkq";
 const projectsecret = "1ec2056ba2d6fd362d71a52f4e5c6ed0";
-const auth =
-  "Basic " +
-  Buffer.from(projectid + ":" + projectsecret).toString("base64");
+const auth = "Basic " + Buffer.from(projectid + ":" + projectsecret).toString("base64");
 const ipfs = ipfsHttpClient({
   host: "ipfs.infura.io",
   port: "5001",
@@ -77,11 +79,7 @@ class App extends Component {
       console.log(sol[0][6]);
       console.log(sol[0][7]);
     } else {
-      swal(
-        "Atención",
-        "Contrato inteligente no desplegado en la red",
-        "warning"
-      );
+      swal("Atención", "Contrato inteligente no desplegado en la red", "warning");
     }
   }
 
@@ -127,8 +125,9 @@ class App extends Component {
     this.setState({ diag: document.getElementById("diag").value });
     this.setState({ trat: document.getElementById("trat").value });
     this.setState({ date: document.getElementById("date").value });
-    this.setState({ state: document.getElementById("state").value });
+    this.setState({ state: document.getElementById("state").textContent });
     this.setState({ note: document.getElementById("note").value });
+    console.log(this.state);
   };
 
   onSubmit = async (event) => {
@@ -167,8 +166,7 @@ class App extends Component {
         //window.alert("Error al Almacenar el ECE, por el siguiente error: " + error.message);
         swal(
           "Error",
-          "Error al Almacenar el ECE, por el siguiente error: " +
-            error.message,
+          "Error al Almacenar el ECE, por el siguiente error: " + error.message,
           "error"
         );
       }
@@ -207,8 +205,7 @@ class App extends Component {
       } catch (error) {
         swal(
           "Error",
-          "Error al Almacenar el ECE, por el siguiente error: " +
-            error.message,
+          "Error al Almacenar el ECE, por el siguiente error: " + error.message,
           "error"
         );
       }
@@ -224,12 +221,7 @@ class App extends Component {
             mt: 12,
           }}
         >
-          <Typography
-            variant="h5"
-            align="center"
-            color="text.primary"
-            gutterBottom
-          >
+          <Typography variant="h5" align="center" color="text.primary" gutterBottom>
             Almacenar expediente clínico
           </Typography>
 
@@ -269,13 +261,19 @@ class App extends Component {
               id="trat"
               onChange={this.handleChange}
             />
-            <TextField
-              fullWidth
-              sx={{ mt: 2 }}
-              label="Estado"
-              id="state"
-              onChange={this.handleChange}
-            />
+            <FormControl fullWidth sx={{ mt: 2 }}>
+              <InputLabel>Estado</InputLabel>
+              <Select
+                label="Estado"
+                id="state"
+                onChange={this.handleChange}
+                onBlur={this.handleChange}
+              >
+                <MenuItem value={"Inicio"}>Inicio</MenuItem>
+                <MenuItem value={"En proceso"}>En proceso</MenuItem>
+                <MenuItem value={"Fin"}>Fin</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -290,21 +288,17 @@ class App extends Component {
               id="note"
               onChange={this.handleChange}
             />
-            <Typography textAlign="center" sx={{ mt: 2 }}>
+            <Typography align="center" sx={{ mt: 2 }}>
               Adjunte archivo:
             </Typography>{" "}
             <input type="file" onChange={this.captureFile} />
           </FormGroup>
 
-          <Stack
-            sx={{ mt: 2, justifyContent: "end" }}
-            direction="row"
-            spacing={2}
-          >
+          <Stack sx={{ mt: 2, justifyContent: "end" }} direction="row" spacing={2}>
             <Button onClick={this.onSubmit} variant="contained">
               Guardar
             </Button>
-            <Button href="mainMed">Cancel</Button>
+            <Button href="MainMed">Cancel</Button>
           </Stack>
         </Container>
         <Footer />

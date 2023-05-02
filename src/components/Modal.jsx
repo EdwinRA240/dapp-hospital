@@ -41,7 +41,7 @@ const MyModal = (props) => {
     <Modal open={open} onClose={onClose} style={customStyle}>
       <div style={containerStyle}>
         <div style={textContainerStyle}>
-          <Typography variant="h5" textAlign='center'>Expediente Clínico Electrónico</Typography><br/>
+          <Typography variant="h5" align='center'>Expediente Clínico Electrónico</Typography><br/>
           <Typography>Médico que atendió: {message}</Typography><br/> 
           <Typography>Nombre del paciente: {message2}</Typography><br/> 
           <Typography>Edad del paciente: {message3}</Typography><br/> 

@@ -8,7 +8,7 @@ const NotFound = () => {
         <Typography
           variant="h6"
           component="a"
-          href="/main"
+          href="/Main"
           sx={{
             mt: 15,
             mr: 2,

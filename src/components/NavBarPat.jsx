@@ -11,8 +11,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import StorageIcon from "@mui/icons-material/Storage";
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import { Link } from "react-router-dom";
 
 const pages = ["Consultar ECE"];
 const settings = ["Cerrar Sesión"];
@@ -46,7 +46,7 @@ function NavBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/mainPat"
+            href="/MainPat"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -93,17 +93,17 @@ function NavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} href={`/${page.split(" ",1) +"Pat"}`}>
-                  <Typography textAlign="center" variant="h6">
+                <MenuItem onClick={handleCloseNavMenu} key={page}>
+                  <Link to={`/${page.split(" ", 1)}Pat`} onClick={handleCloseNavMenu}>
                     {page}
-                  </Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
           {/* Nav and Menu Escritorio */}
-          <StorageIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <LocalHospitalIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -128,7 +128,7 @@ function NavBar() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
-                href={`/${page.split(" ",1) +"Pat"}`}
+                href={`/${page.split(" ", 1) + "Pat"}`}
               >
                 {page}
               </Button>
@@ -161,7 +161,7 @@ function NavBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Button href="/SignIn" textAlign="center">
+                  <Button href="/SignIn" align="center">
                     {setting}
                   </Button>
                 </MenuItem>
