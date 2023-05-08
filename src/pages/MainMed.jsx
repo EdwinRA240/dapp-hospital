@@ -1,4 +1,4 @@
-import { Box, CardMedia, Container, Stack, Typography } from "@mui/material";
+import { Box, CardMedia, CircularProgress, Container, Stack, Typography } from "@mui/material";
 import React, { Component } from "react";
 import Contrato from "/build/contracts/Contrato.json";
 import Web3 from "web3";
@@ -58,23 +58,38 @@ class App extends Component {
       cuenta: "",
       solo: "",
       contract: null,
+      loading: true,
     };
   }
 
   render() {
+    const loading = this.state;
 
     if (this.state.solo[0] == undefined || this.state.solo[0] == null || this.state.solo[0] == "") {
       return (
         <>
           <NavBar />
-          <NoAuth />
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <NoAuth />
+          )}
         </>
       );
     }
 
     return (
       <>
-      <NavBarMed />
+        <NavBarMed />
         <Box
           sx={{
             bgcolor: "background.paper",

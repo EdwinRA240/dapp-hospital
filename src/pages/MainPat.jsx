@@ -9,9 +9,20 @@ import NavBarPat from "../components/NavBarPat";
 import NavBar from "../components/NavBar";
 
 class App extends Component {
-  async componentWillMount() {
-    await this.loadWeb3();
-    await this.loadBloackchainData();
+  constructor(props) {
+    super(props);
+    this.state = {
+      nombre: "",
+      apellidos: "",
+      telefono: "",
+      correo: "",
+      address: "",
+      pass: "",
+      cuenta: "",
+      solo: "",
+      contract: null,
+      loading: true,
+    };
   }
 
   async loadWeb3() {
@@ -41,35 +52,43 @@ class App extends Component {
     const contract = new web3.eth.Contract(abi, direccion);
     this.setState({ contract });
     console.log(contract);
-    const solo = await contract.methods
-      .getPatientInfo(cuenta[0])
-      .call();
+    const solo = await contract.methods.getPatientInfo(cuenta[0]).call();
     console.log(solo[0]);
     this.setState({ solo });
     console.log(solo);
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      nombre: "",
-      apellidos: "",
-      telefono: "",
-      correo: "",
-      address: "",
-      pass: "",
-      cuenta: "",
-      solo: "",
-      contract: null,
-    };
+  async componentWillMount() {
+    await this.loadWeb3();
+    await this.loadBloackchainData();
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+      });
+    }, 3000);
   }
 
   render() {
-      if (this.state.solo[0] == undefined || this.state.solo[0] == null || this.state.solo[0] == "") {
+    const { loading } = this.state;
+
+    if (this.state.solo[0] == undefined || this.state.solo[0] == null || this.state.solo[0] == "") {
       return (
         <>
           <NavBar />
-          <NoAuth />
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <NoAuth />
+          )}
         </>
       );
     }
@@ -85,12 +104,7 @@ class App extends Component {
           }}
         >
           <Container maxWidth="lg">
-            <Typography
-              variant="h3"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
+            <Typography variant="h3" align="center" color="text.primary" gutterBottom>
               Bienvenido {this.state.solo[0]}
             </Typography>
             {/* <Typography
