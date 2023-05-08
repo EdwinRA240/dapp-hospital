@@ -73,7 +73,7 @@ class SignIn extends Component {
     }
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
     await this.loadWeb3();
     await this.loadBloackchainData();
     setTimeout(() => {
