@@ -48,8 +48,13 @@ const Login = () => {
                 ¡Hola!
               </Typography>
               <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                Bienvenido al sistema de Expedientes Clínicos Electrónicos (ECE). Para acceder a el
-                sistema, por favor incia sesion con una cuenta de MetaMask.
+                Bienvenido al Sistema de
+              </Typography>
+              <Typography variant="h5" align="center" color="text.secondary" paragraph>
+                Expedientes Clínicos Electrónicos (ECE).
+              </Typography>
+              <Typography variant="h5" align="center" color="text.secondary" paragraph>
+                Para acceder al sistema, por favor inicia sesión con una cuenta de MetaMask.
               </Typography>
               <CardMedia
                 component="img"
