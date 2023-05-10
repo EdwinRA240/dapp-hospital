@@ -66,9 +66,7 @@ class App extends Component {
       this.setState({ contract });
       console.log(contract);
       console.log("Hash recuperado de blockchain");
-      const sol = await contract.methods
-        .getRecords("0x4de142Df30828aeCda612C026bacc6CA7C50554B")
-        .call();
+      const sol = await contract.methods.getRecords("0x4de142Df30828aeCda612C026bacc6CA7C50554B").call();
       console.log(sol[0]);
       console.log(sol[0][0]);
       console.log(sol[0][1]);
@@ -99,6 +97,12 @@ class App extends Component {
       state: "",
       note: "",
       sol: [null],
+      nomValid: null,
+      ageValid: null,
+      dateValid: null,
+      span: null,
+      span2: null,
+      span3: null,
     };
   }
 
@@ -128,6 +132,12 @@ class App extends Component {
     this.setState({ state: document.getElementById("state").textContent });
     this.setState({ note: document.getElementById("note").value });
     console.log(this.state);
+
+    this.setState({
+      nomValid: /^[a-zA-ZáéííÁÉ ]+$/.test(this.state.nombre),
+    });
+    this.setState({ ageValid: /^[0-9]{1,3}$/.test(this.state.edad) });
+    this.setState({ dateValid: /^([1-9]|[1-2][0-9]|[3][0-1])\/(0[1-9]|1[0-2])\/\d{4}$/.test(this.state.date) });
   };
 
   onSubmit = async (event) => {
@@ -158,114 +168,89 @@ class App extends Component {
       !this.state.trat ||
       !this.state.date ||
       !this.state.state ||
-      !this.state.note 
-
+      !this.state.note
     ) {
       // alert("Todos los campos son obligatorios");
       swal("Error", "Todos los campos son obligatorios", "error");
     } else {
-      if (
-        this.state.nomValid &&
-        this.state.ageValid &&
-        this.state.dateValid 
-      ) {
-          if (!this.state.buffer) {
-            const hHash = "Sin archivo adjunto";
-            try {
-              await this.state.contract.methods
-                .addRecord(
-                  this.state.dir,
-                  this.state.cuenta,
-                  this.state.nombre,
-                  this.state.edad,
-                  this.state.diag,
-                  this.state.trat,
-                  this.state.date,
-                  hHash,
-                  this.state.state,
-                  this.state.note
-                )
-                .send({ from: this.state.cuenta })
-                .then((r) => {
-                  this.setState({ hHash });
-                  this.setState({ dir });
-                  //window.alert('Expediente almacenado con exito  ')
-                  swal(
-                    "Almacenamiento Exitoso",
-                    "El expediente clínico se a almacenado correctamente",
-                    "success"
-                  ).then(() => {
+      if (this.state.nomValid && this.state.ageValid && this.state.dateValid) {
+        if (!this.state.buffer) {
+          const hHash = "Sin archivo adjunto";
+          try {
+            await this.state.contract.methods
+              .addRecord(
+                this.state.dir,
+                this.state.cuenta,
+                this.state.nombre,
+                this.state.edad,
+                this.state.diag,
+                this.state.trat,
+                this.state.date,
+                hHash,
+                this.state.state,
+                this.state.note
+              )
+              .send({ from: this.state.cuenta })
+              .then((r) => {
+                this.setState({ hHash });
+                this.setState({ dir });
+                //window.alert('Expediente almacenado con exito  ')
+                swal("Almacenamiento Exitoso", "El expediente clínico se a almacenado correctamente", "success").then(
+                  () => {
                     window.location.assign("MainMed");
-                  });
-                });
-            } catch (error) {
-              JSON.stringify(error);
-                if (error.code == -32603) {
-                  swal(
-                    "Error",
-                    "El paciente con la Llave pública ingresada no existe",
-                    "error"
-                  );
-                }
-                if (error.code == "INVALID_ARGUMENT") {
-                  swal(
-                    "Error",
-                    "Clave o llave publica no valida",
-                    "error"
-                  );
-                } 
+                  }
+                );
+              });
+          } catch (error) {
+            JSON.stringify(error);
+            if (error.code == -32603) {
+              swal("Error", "El paciente con la Llave pública ingresada no existe", "error");
+            }
+            if (error.code == "INVALID_ARGUMENT") {
+              swal("Error", "Clave o llave publica no valida", "error");
             }
           }
-          if (this.state.buffer) {
-            const result = await ipfs.add(this.state.buffer);
-            const hHash = result.path;
-            console.log("Hash del archivo en la ipfs:", hHash);
-            try {
-              await this.state.contract.methods
-                .addRecord(
-                  this.state.dir,
-                  this.state.cuenta,
-                  this.state.nombre,
-                  this.state.edad,
-                  this.state.diag,
-                  this.state.trat,
-                  this.state.date,
-                  hHash,
-                  this.state.state,
-                  this.state.note
-                )
-                .send({ from: this.state.cuenta })
-                .then((r) => {
-                  this.setState({ hHash });
-                  this.setState({ dir });
-                  //window.alert('Expediente almacenado con exito  ')
-                  swal(
-                    "Almacenamiento Exitoso",
-                    "El expediente clínico se a almacenado correctamente",
-                    "success"
-                  ).then(() => {
+        }
+        if (this.state.buffer) {
+          const result = await ipfs.add(this.state.buffer);
+          const hHash = result.path;
+          console.log("Hash del archivo en la ipfs:", hHash);
+          try {
+            await this.state.contract.methods
+              .addRecord(
+                this.state.dir,
+                this.state.cuenta,
+                this.state.nombre,
+                this.state.edad,
+                this.state.diag,
+                this.state.trat,
+                this.state.date,
+                hHash,
+                this.state.state,
+                this.state.note
+              )
+              .send({ from: this.state.cuenta })
+              .then((r) => {
+                this.setState({ hHash });
+                this.setState({ dir });
+                //window.alert('Expediente almacenado con exito  ')
+                swal("Almacenamiento Exitoso", "El expediente clínico se a almacenado correctamente", "success").then(
+                  () => {
                     window.location.assign("MainMed");
-                  });
-                });
-            } catch (error) {
-             JSON.stringify(error);
-                if (error.code == -32603) {
-                  swal(
-                    "Error",
-                    "El paciente con la Llave pública ingresada no existe",
-                    "error"
-                  );
-                }
-                if (error.code == "INVALID_ARGUMENT") {
-                  swal(
-                    "Error",
-                    "Clave o llave publica no valida",
-                    "error"
-                  );
-                } 
+                  }
+                );
+              });
+          } catch (error) {
+            JSON.stringify(error);
+            if (error.code == -32603) {
+              swal("Error", "El paciente con la Llave pública ingresada no existe", "error");
+            }
+            if (error.code == "INVALID_ARGUMENT") {
+              swal("Error", "Clave o llave publica no valida", "error");
             }
           }
-        }else {
+        }
+      } else {
         swal("Error", "Llene correctamente los campos", "error");
       }
     }
@@ -299,21 +284,9 @@ class App extends Component {
               id="nombre"
               onChange={this.handleChange}
             />
-            <Typography color="red">
-              {" "}
-              {<span>{this.state.span}</span>}{" "}
-            </Typography>
-            <TextField
-              fullWidth
-              sx={{ mt: 2 }}
-              label="Edad del paciente"
-              id="edad"
-              onChange={this.handleChange}
-            />
-              <Typography color="red">
-              {" "}
-              {<span>{this.state.span2}</span>}{" "}
-            </Typography>
+            <Typography color="red"> {<span>{this.state.span}</span>} </Typography>
+            <TextField fullWidth sx={{ mt: 2 }} label="Edad del paciente" id="edad" onChange={this.handleChange} />
+            <Typography color="red"> {<span>{this.state.span2}</span>} </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -330,35 +303,15 @@ class App extends Component {
             />
             <FormControl fullWidth sx={{ mt: 2 }}>
               <InputLabel>Estado</InputLabel>
-              <Select
-                label="Estado"
-                id="state"
-                onChange={this.handleChange}
-                onBlur={this.handleChange}
-              >
+              <Select label="Estado" id="state" onChange={this.handleChange} onBlur={this.handleChange}>
                 <MenuItem value={"Inicio"}>Inicio</MenuItem>
                 <MenuItem value={"En proceso"}>En proceso</MenuItem>
                 <MenuItem value={"Fin"}>Fin</MenuItem>
               </Select>
             </FormControl>
-            <TextField
-              fullWidth
-              sx={{ mt: 2 }}
-              label="Fecha"
-              id="date"
-              onChange={this.handleChange}
-            />
-            <Typography color="red">
-              {" "}
-              {<span>{this.state.span3}</span>}{" "}
-            </Typography>
-            <TextField
-              fullWidth
-              sx={{ mt: 2 }}
-              label="Notas adicionales"
-              id="note"
-              onChange={this.handleChange}
-            />
+            <TextField fullWidth sx={{ mt: 2 }} label="Fecha" id="date" onChange={this.handleChange} />
+            <Typography color="red"> {<span>{this.state.span3}</span>} </Typography>
+            <TextField fullWidth sx={{ mt: 2 }} label="Notas adicionales" id="note" onChange={this.handleChange} />
             <Typography align="center" sx={{ mt: 2 }}>
               Adjunte archivo:
             </Typography>{" "}
