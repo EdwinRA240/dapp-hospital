@@ -213,6 +213,7 @@ class SignIn extends Component {
               sx={{
                 flexGrow: 1,
                 mt: 15,
+                mb: 10,
                 display: "flex",
                 whiteSpace: "normal",
               }}
@@ -411,7 +412,7 @@ class SignIn extends Component {
                 )}
               </Grid>
             </Container>
-            <Footer style={{ mt: 50 }} />
+            <Footer />
           </>
         )}
       </>

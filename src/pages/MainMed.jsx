@@ -93,8 +93,8 @@ class App extends Component {
         <Box
           sx={{
             bgcolor: "background.paper",
-            pt: 15,
-            pb: 5,
+            pt: 20,
+            pb: 15,
           }}
         >
           <Container maxWidth="lg">
