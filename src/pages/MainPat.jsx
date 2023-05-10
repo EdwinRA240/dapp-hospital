@@ -1,4 +1,4 @@
-import { Box, CardMedia,CircularProgress, Container, Typography } from "@mui/material";
+import { Box, CardMedia, Container, Typography } from "@mui/material";
 import React, { Component } from "react";
 import Contrato from "/build/contracts/Contrato.json";
 import Web3 from "web3";
