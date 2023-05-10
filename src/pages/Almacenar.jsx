@@ -132,82 +132,141 @@ class App extends Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
-    console.log("Mandando archivo ...");
-    if (!this.state.buffer) {
-      const hHash = "Sin archivo adjunto";
-      try {
-        await this.state.contract.methods
-          .addRecord(
-            this.state.dir,
-            this.state.cuenta,
-            this.state.nombre,
-            this.state.edad,
-            this.state.diag,
-            this.state.trat,
-            this.state.date,
-            hHash,
-            this.state.state,
-            this.state.note
-          )
-          .send({ from: this.state.cuenta })
-          .then((r) => {
-            this.setState({ hHash });
-            this.setState({ dir });
-            //window.alert('Expediente almacenado con exito  ')
-            swal(
-              "Almacenamiento Exitoso",
-              "El expediente clínico se a almacenado correctamente",
-              "success"
-            ).then(() => {
-              window.location.assign("MainMed");
-            });
-          });
-      } catch (error) {
-        //window.alert("Error al Almacenar el ECE, por el siguiente error: " + error.message);
-        swal(
-          "Error",
-          "Error al Almacenar el ECE, por el siguiente error: " + error.message,
-          "error"
-        );
-      }
+    if (!this.state.nomValid) {
+      this.setState({ span: "El nombre lleva sólo letras" });
+    } else {
+      this.setState({ span: "" });
     }
-    if (this.state.buffer) {
-      const result = await ipfs.add(this.state.buffer);
-      const hHash = result.path;
-      console.log("Hash del archivo en la ipfs:", hHash);
-      try {
-        await this.state.contract.methods
-          .addRecord(
-            this.state.dir,
-            this.state.cuenta,
-            this.state.nombre,
-            this.state.edad,
-            this.state.diag,
-            this.state.trat,
-            this.state.date,
-            hHash,
-            this.state.state,
-            this.state.note
-          )
-          .send({ from: this.state.cuenta })
-          .then((r) => {
-            this.setState({ hHash });
-            this.setState({ dir });
-            //window.alert('Expediente almacenado con exito  ')
-            swal(
-              "Almacenamiento Exitoso",
-              "El expediente clínico se a almacenado correctamente",
-              "success"
-            ).then(() => {
-              window.location.assign("MainMed");
-            });
-          });
-      } catch (error) {
-        swal(
-          "Error",
-          "Error al Almacenar el ECE, por el siguiente error: " + error.message,
-          "error"
-        );
+
+    if (!this.state.ageValid) {
+      this.setState({ span2: "La edad lleva sólo números" });
+    } else {
+      this.setState({ span2: "" });
+    }
+
+    if (!this.state.dateValid) {
+      this.setState({ span3: "El formato de la fecha es: dd/mm/yyyy" });
+    } else {
+      this.setState({ span3: "" });
+    }
+    console.log("Mandando archivo ...");
+    if (
+      !this.state.dir ||
+      !this.state.nombre ||
+      !this.state.edad ||
+      !this.state.diag ||
+      !this.state.trat ||
+      !this.state.date ||
+      !this.state.state ||
+      !this.state.note 
+
+    ) {
+      // alert("Todos los campos son obligatorios");
+      swal("Error", "Todos los campos son obligatorios", "error");
+    } else {
+      if (
+        this.state.nomValid &&
+        this.state.ageValid &&
+        this.state.dateValid 
+      ) {
+          if (!this.state.buffer) {
+            const hHash = "Sin archivo adjunto";
+            try {
+              await this.state.contract.methods
+                .addRecord(
+                  this.state.dir,
+                  this.state.cuenta,
+                  this.state.nombre,
+                  this.state.edad,
+                  this.state.diag,
+                  this.state.trat,
+                  this.state.date,
+                  hHash,
+                  this.state.state,
+                  this.state.note
+                )
+                .send({ from: this.state.cuenta })
+                .then((r) => {
+                  this.setState({ hHash });
+                  this.setState({ dir });
+                  //window.alert('Expediente almacenado con exito  ')
+                  swal(
+                    "Almacenamiento Exitoso",
+                    "El expediente clínico se a almacenado correctamente",
+                    "success"
+                  ).then(() => {
+                    window.location.assign("MainMed");
+                  });
+                });
+            } catch (error) {
+              JSON.stringify(error);
+                if (error.code == -32603) {
+                  swal(
+                    "Error",
+                    "El paciente con la Llave pública ingresada no existe",
+                    "error"
+                  );
+                }
+                if (error.code == "INVALID_ARGUMENT") {
+                  swal(
+                    "Error",
+                    "Clave o llave publica no valida",
+                    "error"
+                  );
+                } 
+            }
+          }
+          if (this.state.buffer) {
+            const result = await ipfs.add(this.state.buffer);
+            const hHash = result.path;
+            console.log("Hash del archivo en la ipfs:", hHash);
+            try {
+              await this.state.contract.methods
+                .addRecord(
+                  this.state.dir,
+                  this.state.cuenta,
+                  this.state.nombre,
+                  this.state.edad,
+                  this.state.diag,
+                  this.state.trat,
+                  this.state.date,
+                  hHash,
+                  this.state.state,
+                  this.state.note
+                )
+                .send({ from: this.state.cuenta })
+                .then((r) => {
+                  this.setState({ hHash });
+                  this.setState({ dir });
+                  //window.alert('Expediente almacenado con exito  ')
+                  swal(
+                    "Almacenamiento Exitoso",
+                    "El expediente clínico se a almacenado correctamente",
+                    "success"
+                  ).then(() => {
+                    window.location.assign("MainMed");
+                  });
+                });
+            } catch (error) {
+             JSON.stringify(error);
+                if (error.code == -32603) {
+                  swal(
+                    "Error",
+                    "El paciente con la Llave pública ingresada no existe",
+                    "error"
+                  );
+                }
+                if (error.code == "INVALID_ARGUMENT") {
+                  swal(
+                    "Error",
+                    "Clave o llave publica no valida",
+                    "error"
+                  );
+                } 
+            }
+          }
+        }else {
+        swal("Error", "Llene correctamente los campos", "error");
       }
     }
   };
@@ -240,6 +299,10 @@ class App extends Component {
               id="nombre"
               onChange={this.handleChange}
             />
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -247,6 +310,10 @@ class App extends Component {
               id="edad"
               onChange={this.handleChange}
             />
+              <Typography color="red">
+              {" "}
+              {<span>{this.state.span2}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
@@ -281,6 +348,10 @@ class App extends Component {
               id="date"
               onChange={this.handleChange}
             />
+            <Typography color="red">
+              {" "}
+              {<span>{this.state.span3}</span>}{" "}
+            </Typography>
             <TextField
               fullWidth
               sx={{ mt: 2 }}
