@@ -11,18 +11,17 @@ const MyModal = (props) => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "70%",
-    heigth: "100%",
     bgcolor: "background.paper",
     border: "2px solid #0000",
-    boxShadow: 50,
+    width: "70%",
+    oxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
     p: 4,
   };
 
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
-        <Typography variant="h5" align="center">
+        <Typography variant="h4" align="center" style={{marginBottom: "15px"}}>
           Expediente Clínico Electrónico
         </Typography>
         <Grid container spacing={4}>
@@ -34,12 +33,28 @@ const MyModal = (props) => {
             <Typography sx={{ mt: 1 }}>Tratamiento del paciente: {message5}</Typography>
             <Typography sx={{ mt: 1 }}>Fecha en que se realizó: {message6}</Typography>
             <Typography sx={{ mt: 1 }}>Estado: {message7}</Typography>
-            <Typography>Notas adicionales: {message8}</Typography>
+            <Typography sx={{ mt: 1 }}>Notas adicionales: {message8}</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} lg={6}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            lg={6}
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          >
             {message9 !== "Sin archivo adjunto" ? (
-              <Box sx={{ display: "flex", justifyContent: "center", minWidth: "10px" }}>
-                <iframe src={link} />
+              <Box
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <iframe src={link} 
+                style={{ width: '100%', height: '100%', border: 'none' }}
+                />
               </Box>
             ) : (
               ""
