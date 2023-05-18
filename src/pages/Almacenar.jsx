@@ -155,7 +155,7 @@ class App extends Component {
     }
 
     if (!this.state.dateValid) {
-      this.setState({ span3: "El formato de la fecha es: dd/mm/yyyy" });
+      this.setState({ span3: "El formato de la fecha es: dd/mm/aaaa" });
     } else {
       this.setState({ span3: "" });
     }
@@ -201,14 +201,26 @@ class App extends Component {
                   }
                 );
               });
-          } catch (error) {
-            JSON.stringify(error);
-            if (error.code == -32603) {
-              swal("Error", "El paciente con la Llave pública ingresada no existe", "error");
-            }
+          }catch (error) {
             if (error.code == "INVALID_ARGUMENT") {
-              swal("Error", "Clave o llave publica no valida", "error");
+                swal("Error", "Llave publica no valida", "error");
+            } 
+            else{
+              if (error.message.includes("La addresd que estas ingresando no esta registrada, el paciente no existe")) {
+              swal(
+                    "Error",
+                    "La llave pùblica que estas ingresando no esta registrada, el paciente no existe",
+                    "error"
+                  );
+              } 
+              else {
+                swal(
+                    "Error",
+                    "Transaccion cancelada",
+                    "error"
+                );
             }
+          }
           }
         }
         if (this.state.buffer) {
@@ -241,13 +253,25 @@ class App extends Component {
                 );
               });
           } catch (error) {
-            JSON.stringify(error);
-            if (error.code == -32603) {
-              swal("Error", "El paciente con la Llave pública ingresada no existe", "error");
-            }
             if (error.code == "INVALID_ARGUMENT") {
-              swal("Error", "Clave o llave publica no valida", "error");
+                swal("Error", "Llave publica no valida", "error");
+            } 
+            else{
+              if (error.message.includes("La addresd que estas ingresando no esta registrada, el paciente no existe")) {
+              swal(
+                    "Error",
+                    "La llave pùblica que estas ingresando no esta registrada, el paciente no existe",
+                    "error"
+                  );
+              } 
+              else {
+                swal(
+                    "Error",
+                    "Transaccion cancelada",
+                    "error"
+                );
             }
+          }
           }
         }
       } else {
@@ -255,7 +279,6 @@ class App extends Component {
       }
     }
   };
-
   render() {
     return (
       <>
@@ -309,7 +332,7 @@ class App extends Component {
                 <MenuItem value={"Fin"}>Fin</MenuItem>
               </Select>
             </FormControl>
-            <TextField fullWidth sx={{ mt: 2 }} label="Fecha" id="date" onChange={this.handleChange} />
+            <TextField fullWidth sx={{ mt: 2 }} label="Fecha (dd/mm/aaaa)" id="date" onChange={this.handleChange} />
             <Typography color="red"> {<span>{this.state.span3}</span>} </Typography>
             <TextField fullWidth sx={{ mt: 2 }} label="Notas adicionales" id="note" onChange={this.handleChange} />
             <Typography align="center" sx={{ mt: 2 }}>

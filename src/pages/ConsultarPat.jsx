@@ -138,7 +138,7 @@ class App extends Component {
 
   consulta = async (event) => {
     event.preventDefault();
-
+    this.setState({ registrosPorDiagnostico: {} });
     const registros = await this.state.contract.methods
       .getRecords(this.state.cuenta)
       .call();

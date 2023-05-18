@@ -136,7 +136,7 @@ class App extends Component {
 
   consulta = async (event) => {
     event.preventDefault();
-
+    this.setState({ registrosPorDiagnostico: {} });
     console.log(this.state.dir);
     const registros = await this.state.contract.methods.getRecords(this.state.dir).call();
     console.log(registros);
@@ -239,7 +239,7 @@ class App extends Component {
           <TextField
             fullWidth
             sx={{ mt: 2 }}
-            label="LLave pública del paciente"
+            label="Llave pública del paciente"
             id="dir"
             onChange={this.handleChange}
           />

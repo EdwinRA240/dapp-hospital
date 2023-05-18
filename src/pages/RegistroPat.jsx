@@ -177,13 +177,13 @@ class App extends Component {
                 });
               });
           } catch (error) {
-            if (error.code == -32603) {
+            if (error.message.includes("La addresd que estas ingresando ya esta registrada, ya existe este paciente")) {
               swal(
-                "Error",
-                "Clave o llave publica no valida",
-                "error"
-              );
-            } else {
+                    "Error",
+                    "La llave pública que estas ingresando ya esta registrada, ya existe este paciente",
+                    "error"
+                  );
+              } else {
               swal("Error", "Se canceló la transacción", "error");
             }
           }
@@ -199,7 +199,6 @@ class App extends Component {
       }
     }
   };
-
   constructor(props) {
     super(props);
     this.state = {

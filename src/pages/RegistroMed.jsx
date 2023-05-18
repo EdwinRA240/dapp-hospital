@@ -189,18 +189,36 @@ class App extends Component {
                 });
               });
           } catch (error) {
-            JSON.stringify(error);
-
-            if (error.code == -32603) {
-              swal(
-                "Error",
-                "Clave o llave publica no valida",
-                "error"
-              );
-            } else {
-              swal("Error", "Se canceló la transacción", "error");
-            }
+            if (error.message.includes("El id de empleado no existe")) {
+                swal(
+                      "Error",
+                      "El id de empleado no existe",
+                      "error"
+                    );
+              } else {
+                if (error.message.includes("La addresd que estas ingresando ya esta registrada, ya existe este medico")) {
+                swal(
+                      "Error",
+                      "La llave pública que estas ingresando ya esta registrada, ya existe este médico",
+                      "error"
+                    );
+                } else {
+                if (error.message.includes("Este id ya esta en uso")) {
+                swal(
+                      "Error",
+                      "Este id ya esta en uso",
+                      "error"
+                    );
+                } else {
+                  swal(
+                      "Error",
+                      "Transaccion cancelada",
+                      "error"
+                    );
+                }
+              }
           }
+        }
         } else {
           swal(
             "Error",
